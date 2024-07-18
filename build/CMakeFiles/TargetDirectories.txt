@@ -1,0 +1,7 @@
+/home/tomasz/projects/sniffer/build/CMakeFiles/sniffer.dir
+/home/tomasz/projects/sniffer/build/CMakeFiles/edit_cache.dir
+/home/tomasz/projects/sniffer/build/CMakeFiles/rebuild_cache.dir
+/home/tomasz/projects/sniffer/build/lib/CMakeFiles/imgui.dir
+/home/tomasz/projects/sniffer/build/lib/CMakeFiles/imgui_backend.dir
+/home/tomasz/projects/sniffer/build/lib/CMakeFiles/edit_cache.dir
+/home/tomasz/projects/sniffer/build/lib/CMakeFiles/rebuild_cache.dir

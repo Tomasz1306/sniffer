@@ -1,0 +1,67 @@
+[
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.o -c /home/tomasz/projects/sniffer/src/controllers/MainController.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/controllers/MainController.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/main.cpp.o -c /home/tomasz/projects/sniffer/src/main.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/main.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o -c /home/tomasz/projects/sniffer/src/services/RenderService.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/services/RenderService.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o -c /home/tomasz/projects/sniffer/src/views/AnotherView.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/views/AnotherView.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/MainView.cpp.o -c /home/tomasz/projects/sniffer/src/views/MainView.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/views/MainView.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/View.cpp.o -c /home/tomasz/projects/sniffer/src/views/View.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/views/View.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui_backend.dir/backends/imgui_impl_glfw.cpp.o -c /home/tomasz/projects/sniffer/lib/backends/imgui_impl_glfw.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/backends/imgui_impl_glfw.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui_backend.dir/backends/imgui_impl_opengl3.cpp.o -c /home/tomasz/projects/sniffer/lib/backends/imgui_impl_opengl3.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/backends/imgui_impl_opengl3.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui.dir/imgui/imgui.cpp.o -c /home/tomasz/projects/sniffer/lib/imgui/imgui.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/imgui/imgui.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.o -c /home/tomasz/projects/sniffer/lib/imgui/imgui_demo.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/imgui/imgui_demo.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.o -c /home/tomasz/projects/sniffer/lib/imgui/imgui_draw.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/imgui/imgui_draw.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui.dir/imgui/imgui_tables.cpp.o -c /home/tomasz/projects/sniffer/lib/imgui/imgui_tables.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/imgui/imgui_tables.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build/lib",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/imgui.dir/imgui/imgui_widgets.cpp.o -c /home/tomasz/projects/sniffer/lib/imgui/imgui_widgets.cpp",
+  "file": "/home/tomasz/projects/sniffer/lib/imgui/imgui_widgets.cpp"
+}
+]

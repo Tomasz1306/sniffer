@@ -1,0 +1,2 @@
+/usr/bin/ar qc libimgui_backend.a CMakeFiles/imgui_backend.dir/backends/imgui_impl_glfw.cpp.o CMakeFiles/imgui_backend.dir/backends/imgui_impl_opengl3.cpp.o
+/usr/bin/ranlib libimgui_backend.a

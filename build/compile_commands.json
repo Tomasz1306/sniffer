@@ -1,32 +1,47 @@
 [
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.o -c /home/tomasz/projects/sniffer/src/controllers/MainController.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.o -c /home/tomasz/projects/sniffer/src/controllers/MainController.cpp",
   "file": "/home/tomasz/projects/sniffer/src/controllers/MainController.cpp"
 },
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/main.cpp.o -c /home/tomasz/projects/sniffer/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/main.cpp.o -c /home/tomasz/projects/sniffer/src/main.cpp",
   "file": "/home/tomasz/projects/sniffer/src/main.cpp"
 },
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o -c /home/tomasz/projects/sniffer/src/services/RenderService.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/models/Model.cpp.o -c /home/tomasz/projects/sniffer/src/models/Model.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/models/Model.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o -c /home/tomasz/projects/sniffer/src/models/PacketCaptureModel.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/models/PacketCaptureModel.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o -c /home/tomasz/projects/sniffer/src/services/RenderService.cpp",
   "file": "/home/tomasz/projects/sniffer/src/services/RenderService.cpp"
 },
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o -c /home/tomasz/projects/sniffer/src/views/AnotherView.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o -c /home/tomasz/projects/sniffer/src/views/AnotherView.cpp",
   "file": "/home/tomasz/projects/sniffer/src/views/AnotherView.cpp"
 },
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/MainView.cpp.o -c /home/tomasz/projects/sniffer/src/views/MainView.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/MainView.cpp.o -c /home/tomasz/projects/sniffer/src/views/MainView.cpp",
   "file": "/home/tomasz/projects/sniffer/src/views/MainView.cpp"
 },
 {
   "directory": "/home/tomasz/projects/sniffer/build",
-  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/View.cpp.o -c /home/tomasz/projects/sniffer/src/views/View.cpp",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o -c /home/tomasz/projects/sniffer/src/views/PacketCaptureView.cpp",
+  "file": "/home/tomasz/projects/sniffer/src/views/PacketCaptureView.cpp"
+},
+{
+  "directory": "/home/tomasz/projects/sniffer/build",
+  "command": "/usr/bin/c++  -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/tomasz/projects/sniffer/lib/backends -isystem /home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include/pcapplusplus -g -std=gnu++11 -o CMakeFiles/sniffer.dir/src/views/View.cpp.o -c /home/tomasz/projects/sniffer/src/views/View.cpp",
   "file": "/home/tomasz/projects/sniffer/src/views/View.cpp"
 },
 {

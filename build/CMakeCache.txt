@@ -144,7 +144,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=MyProject
+CMAKE_PROJECT_NAME:STATIC=Sniffer
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -208,14 +208,17 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Value Computed by CMake
-MyProject_BINARY_DIR:STATIC=/home/tomasz/projects/sniffer/build
+//Path to a library.
+COMMON_LIB:FILEPATH=/home/tomasz/projects/sniffer/lib/PcapPlusPlus/build/Common++/libCommon++.a
 
 //Value Computed by CMake
-MyProject_IS_TOP_LEVEL:STATIC=ON
+MojProjekt_BINARY_DIR:STATIC=/home/tomasz/projects/sniffer/build
 
 //Value Computed by CMake
-MyProject_SOURCE_DIR:STATIC=/home/tomasz/projects/sniffer
+MojProjekt_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+MojProjekt_SOURCE_DIR:STATIC=/home/tomasz/projects/sniffer
 
 //Path to a file.
 OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
@@ -244,23 +247,41 @@ OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
 //Path to a file.
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
+//Path to a library.
+PACKET_LIB:FILEPATH=/home/tomasz/projects/sniffer/lib/PcapPlusPlus/build/Packet++/libPacket++.a
+
+//Path to a library.
+PCAPPP_LIB:FILEPATH=PCAPPP_LIB-NOTFOUND
+
+//Path to a file.
+PCAP_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+PCAP_LIB:FILEPATH=/home/tomasz/projects/sniffer/lib/PcapPlusPlus/build/Pcap++/libPcap++.a
+
+//Path to a library.
+PCAP_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpcap.so
+
+//The directory containing a CMake configuration file for PcapPlusPlus.
+PcapPlusPlus_DIR:PATH=/home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/lib/cmake/pcapplusplus
+
+//No help, variable specified on the command line.
+PcapPlusPlus_ROOT:UNINITIALIZED=/home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09
+
+//Value Computed by CMake
+Sniffer_BINARY_DIR:STATIC=/home/tomasz/projects/sniffer/build
+
+//Value Computed by CMake
+Sniffer_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Sniffer_SOURCE_DIR:STATIC=/home/tomasz/projects/sniffer
+
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/glfw3
 
-//Dependencies for the target
-imgui_LIB_DEPENDS:STATIC=general;imgui_backend;
-
-//Dependencies for the target
-imgui_backend_LIB_DEPENDS:STATIC=general;glfw;general;OpenGL::GL;
-
-//Value Computed by CMake
-sniffer_BINARY_DIR:STATIC=/home/tomasz/projects/sniffer/build
-
-//Value Computed by CMake
-sniffer_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-sniffer_SOURCE_DIR:STATIC=/home/tomasz/projects/sniffer
+//The directory containing a CMake configuration file for pcapplusplus.
+pcapplusplus_DIR:PATH=pcapplusplus_DIR-NOTFOUND
 
 
 ########################
@@ -333,6 +354,8 @@ CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS
+CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
 //Name of external makefile project generator.
 CMAKE_EXTRA_GENERATOR:INTERNAL=
 //Name of generator.
@@ -343,6 +366,10 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
+//Have include pthread.h
+CMAKE_HAVE_PTHREAD_H:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/tomasz/projects/sniffer
@@ -410,6 +437,14 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]
+//Details about finding PCAP
+FIND_PACKAGE_MESSAGE_DETAILS_PCAP:INTERNAL=[/usr/lib/x86_64-linux-gnu/libpcap.so][/usr/include][v()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Have function pcap_setdirection
+HAVE_PCAP_DIRECTION:INTERNAL=1
+//Have function pcap_set_immediate_mode
+HAVE_PCAP_IMMEDIATE_MODE:INTERNAL=1
 //ADVANCED property for variable: OPENGL_EGL_INCLUDE_DIR
 OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_GLX_INCLUDE_DIR
@@ -428,4 +463,10 @@ OPENGL_glx_LIBRARY-ADVANCED:INTERNAL=1
 OPENGL_opengl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
 OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PCAP_INCLUDE_DIR
+PCAP_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PCAP_LIBRARY
+PCAP_LIBRARY-ADVANCED:INTERNAL=1
+//Test PCAP_LINKS_SOLO
+PCAP_LINKS_SOLO:INTERNAL=1
 

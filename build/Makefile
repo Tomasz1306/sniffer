@@ -203,6 +203,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/models/Model.o: src/models/Model.cpp.o
+.PHONY : src/models/Model.o
+
+# target to build an object file
+src/models/Model.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/Model.cpp.o
+.PHONY : src/models/Model.cpp.o
+
+src/models/Model.i: src/models/Model.cpp.i
+.PHONY : src/models/Model.i
+
+# target to preprocess a source file
+src/models/Model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/Model.cpp.i
+.PHONY : src/models/Model.cpp.i
+
+src/models/Model.s: src/models/Model.cpp.s
+.PHONY : src/models/Model.s
+
+# target to generate assembly for a file
+src/models/Model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/Model.cpp.s
+.PHONY : src/models/Model.cpp.s
+
+src/models/PacketCaptureModel.o: src/models/PacketCaptureModel.cpp.o
+.PHONY : src/models/PacketCaptureModel.o
+
+# target to build an object file
+src/models/PacketCaptureModel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o
+.PHONY : src/models/PacketCaptureModel.cpp.o
+
+src/models/PacketCaptureModel.i: src/models/PacketCaptureModel.cpp.i
+.PHONY : src/models/PacketCaptureModel.i
+
+# target to preprocess a source file
+src/models/PacketCaptureModel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.i
+.PHONY : src/models/PacketCaptureModel.cpp.i
+
+src/models/PacketCaptureModel.s: src/models/PacketCaptureModel.cpp.s
+.PHONY : src/models/PacketCaptureModel.s
+
+# target to generate assembly for a file
+src/models/PacketCaptureModel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.s
+.PHONY : src/models/PacketCaptureModel.cpp.s
+
 src/services/RenderService.o: src/services/RenderService.cpp.o
 .PHONY : src/services/RenderService.o
 
@@ -275,6 +323,30 @@ src/views/MainView.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/MainView.cpp.s
 .PHONY : src/views/MainView.cpp.s
 
+src/views/PacketCaptureView.o: src/views/PacketCaptureView.cpp.o
+.PHONY : src/views/PacketCaptureView.o
+
+# target to build an object file
+src/views/PacketCaptureView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o
+.PHONY : src/views/PacketCaptureView.cpp.o
+
+src/views/PacketCaptureView.i: src/views/PacketCaptureView.cpp.i
+.PHONY : src/views/PacketCaptureView.i
+
+# target to preprocess a source file
+src/views/PacketCaptureView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.i
+.PHONY : src/views/PacketCaptureView.cpp.i
+
+src/views/PacketCaptureView.s: src/views/PacketCaptureView.cpp.s
+.PHONY : src/views/PacketCaptureView.s
+
+# target to generate assembly for a file
+src/views/PacketCaptureView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.s
+.PHONY : src/views/PacketCaptureView.cpp.s
+
 src/views/View.o: src/views/View.cpp.o
 .PHONY : src/views/View.o
 
@@ -316,6 +388,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/models/Model.o"
+	@echo "... src/models/Model.i"
+	@echo "... src/models/Model.s"
+	@echo "... src/models/PacketCaptureModel.o"
+	@echo "... src/models/PacketCaptureModel.i"
+	@echo "... src/models/PacketCaptureModel.s"
 	@echo "... src/services/RenderService.o"
 	@echo "... src/services/RenderService.i"
 	@echo "... src/services/RenderService.s"
@@ -325,6 +403,9 @@ help:
 	@echo "... src/views/MainView.o"
 	@echo "... src/views/MainView.i"
 	@echo "... src/views/MainView.s"
+	@echo "... src/views/PacketCaptureView.o"
+	@echo "... src/views/PacketCaptureView.i"
+	@echo "... src/views/PacketCaptureView.s"
 	@echo "... src/views/View.o"
 	@echo "... src/views/View.i"
 	@echo "... src/views/View.s"

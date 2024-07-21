@@ -5,14 +5,17 @@
 #include <memory>
 
 #include "views/View.h"
+#include "models/Model.h"
 
-class MainController {
+class MainController : Model {
 public:
-    MainController();
+    MainController(std::shared_ptr<Model> model, std::shared_ptr<View> view);
     void run();
+    void update();
+    void display();
 private:
-    std::vector<std::shared_ptr<View>> views;
-    void setupViews();
+    std::shared_ptr<View> view;
+    std::shared_ptr<Model> model;
 };
 
 #endif // MAINCONTROLLER_H

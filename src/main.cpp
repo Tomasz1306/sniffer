@@ -1,9 +1,20 @@
 #include "controllers/MainController.h"
+#include "views/PacketCaptureView.h"
+#include "models/PacketCaptureModel.h"
+
 #include "imgui.h"
 #include "GLFW/glfw3.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+
+#include <Packet.h>
+#include <PcapFileDevice.h>
+#include <PcapLiveDevice.h>
+#include <PcapLiveDeviceList.h>
+#include <IPv4Layer.h>
+
 #include <iostream>
+#include <vector>
 
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
@@ -32,12 +43,29 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(0); // Włącz V-sync
+    //192.168.0.31
+    pcpp::PcapLiveDevice *dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("127.0.0.1");
+    if (dev == NULL)
+    {
+        std::cerr << "ERROR DEVICE " << std::endl;
+    }
 
+    if (!dev->open()) {
+        std::cerr << "ERROR DEVICE " << std::endl;
+    }
+    pcpp::RawPacketVector vec;
+    if (dev->startCapture(vec)) {
 
+    }
+
+    
+
+    
     // Ustawienia kontekstu ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigWindowsMoveFromTitleBarOnly = true;
 
     // Ustawienia stylu ImGui
     ImGui::StyleColorsDark();
@@ -46,8 +74,11 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    // Tworzenie widokow 
+    auto packetCaptureView = std::make_shared<PacketCaptureView>();
+    auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
     // Tworzenie głównego kontrolera aplikacji
-    MainController controller;
+    // MainController controller_PacketWindow();
 
     // Główna pętla aplikacji
     while (!glfwWindowShouldClose(window)) {
@@ -57,8 +88,29 @@ int main() {
         ImGui::NewFrame();
 
         // Renderowanie widoków
-        controller.run();
+ // Przetwarzaj przechwycone pakiety
+    for (pcpp::RawPacketVector::VectorIterator iter = vec.begin(); iter != vec.end(); iter++)
+    {
+        // Tworzymy obiekt Packet z RawPacket
+        pcpp::Packet parsedPacket(*iter);
 
+        // Wyświetl informacje o pakiecie
+        std::cout << "Packet captured at: " << (*iter)->getPacketTimeStamp().tv_sec << "." << (*iter)->getPacketTimeStamp().tv_sec << std::endl;
+        std::cout << "Packet length: " << (*iter)->getRawDataLen() << " bytes" << std::endl;
+
+        // Sprawdzamy, czy pakiet zawiera warstwę IP
+        if (parsedPacket.isPacketOfType(pcpp::IPv4))
+        {
+            pcpp::IPv4Layer* ipLayer = parsedPacket.getLayerOfType<pcpp::IPv4Layer>();
+            if (ipLayer != nullptr)
+            {
+                std::cout << "Source IP: " << ipLayer->getSrcIPAddress().toString() << std::endl;
+                std::cout << "Destination IP: " << ipLayer->getDstIPAddress().toString() << std::endl;
+            }
+        }
+
+        std::cout << std::endl;
+    }
         // Renderowanie ImGui
         ImGui::Render();
         int display_w, display_h;
@@ -72,7 +124,8 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
+    dev->stopCapture();
+    dev->close();
     // Clean up
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

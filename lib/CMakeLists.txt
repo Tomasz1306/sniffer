@@ -24,6 +24,8 @@ add_library(imgui_backend
     backends/imgui_impl_opengl3_loader.h
 )
 
+
+
 # Dodaj zależności
 target_link_libraries(imgui_backend glfw OpenGL::GL)
 target_link_libraries(imgui imgui_backend)
@@ -31,3 +33,5 @@ target_link_libraries(imgui imgui_backend)
 # Dodaj ścieżki do plików nagłówkowych
 target_include_directories(imgui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 target_include_directories(imgui_backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/backends ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
+
+

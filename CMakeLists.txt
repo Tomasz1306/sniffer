@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 project(Sniffer)
 
-# Włącz kompilację C++11
-set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_PREFIX_PATH "/home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09" ${CMAKE_PREFIX_PATH})
+# Włącz kompilację C++17
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Znajdź wymagane pakiety
@@ -23,7 +25,13 @@ file(GLOB_RECURSE HEADERS "include/*.h")
 add_subdirectory(lib)
 
 # Stwórz plik wykonywalny
-add_executable(sniffer ${SOURCES} ${HEADERS})
+add_executable(sniffer ${SOURCES} ${HEADERS}
+        include/controllers/FilterController.h
+        include/models/FilterModel.h
+        include/views/FilterView.h
+        src/controllers/FilterController.cpp
+        src/models/FilterModel.cpp
+        src/views/FilterView.cpp)
 
 
 # Połącz biblioteki z plikiem wykonywalnym

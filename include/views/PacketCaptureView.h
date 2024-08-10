@@ -4,13 +4,21 @@
 #include "imgui.h"
 #include "View.h"
 
+#include <Device.h>
+#include <Packet.h>
+
+#include <mutex>
+#include <vector>
+
 class PacketCaptureView : public View {
 
 
 public:
 
-    virtual ~PacketCaptureView() {};
-    void draw() override;
+    PacketCaptureView () {}
+    virtual ~PacketCaptureView() {}
+    void draw(const std::vector<pcpp::Packet> &packets);
+
 };
 
 

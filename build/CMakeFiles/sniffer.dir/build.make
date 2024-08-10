@@ -97,10 +97,24 @@ CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/controllers/MainController.cpp -o CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.s
 
+CMakeFiles/sniffer.dir/src/global/Global.cpp.o: CMakeFiles/sniffer.dir/flags.make
+CMakeFiles/sniffer.dir/src/global/Global.cpp.o: ../src/global/Global.cpp
+CMakeFiles/sniffer.dir/src/global/Global.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sniffer.dir/src/global/Global.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/global/Global.cpp.o -MF CMakeFiles/sniffer.dir/src/global/Global.cpp.o.d -o CMakeFiles/sniffer.dir/src/global/Global.cpp.o -c /home/tomasz/projects/sniffer/src/global/Global.cpp
+
+CMakeFiles/sniffer.dir/src/global/Global.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sniffer.dir/src/global/Global.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomasz/projects/sniffer/src/global/Global.cpp > CMakeFiles/sniffer.dir/src/global/Global.cpp.i
+
+CMakeFiles/sniffer.dir/src/global/Global.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/global/Global.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/global/Global.cpp -o CMakeFiles/sniffer.dir/src/global/Global.cpp.s
+
 CMakeFiles/sniffer.dir/src/main.cpp.o: CMakeFiles/sniffer.dir/flags.make
 CMakeFiles/sniffer.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/sniffer.dir/src/main.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sniffer.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sniffer.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/main.cpp.o -MF CMakeFiles/sniffer.dir/src/main.cpp.o.d -o CMakeFiles/sniffer.dir/src/main.cpp.o -c /home/tomasz/projects/sniffer/src/main.cpp
 
 CMakeFiles/sniffer.dir/src/main.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/sniffer.dir/src/main.cpp.s: cmake_force
 CMakeFiles/sniffer.dir/src/models/Model.cpp.o: CMakeFiles/sniffer.dir/flags.make
 CMakeFiles/sniffer.dir/src/models/Model.cpp.o: ../src/models/Model.cpp
 CMakeFiles/sniffer.dir/src/models/Model.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sniffer.dir/src/models/Model.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sniffer.dir/src/models/Model.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/models/Model.cpp.o -MF CMakeFiles/sniffer.dir/src/models/Model.cpp.o.d -o CMakeFiles/sniffer.dir/src/models/Model.cpp.o -c /home/tomasz/projects/sniffer/src/models/Model.cpp
 
 CMakeFiles/sniffer.dir/src/models/Model.cpp.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/sniffer.dir/src/models/Model.cpp.s: cmake_force
 CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o: CMakeFiles/sniffer.dir/flags.make
 CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o: ../src/models/PacketCaptureModel.cpp
 CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o -MF CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o.d -o CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o -c /home/tomasz/projects/sniffer/src/models/PacketCaptureModel.cpp
 
 CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.i: cmake_force
@@ -139,52 +153,24 @@ CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/models/PacketCaptureModel.cpp -o CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.s
 
-CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o: CMakeFiles/sniffer.dir/flags.make
-CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o: ../src/services/RenderService.cpp
-CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o -MF CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o.d -o CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o -c /home/tomasz/projects/sniffer/src/services/RenderService.cpp
+CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o: CMakeFiles/sniffer.dir/flags.make
+CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o: ../src/utils/Utils.cpp
+CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o -MF CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o.d -o CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o -c /home/tomasz/projects/sniffer/src/utils/Utils.cpp
 
-CMakeFiles/sniffer.dir/src/services/RenderService.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sniffer.dir/src/services/RenderService.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomasz/projects/sniffer/src/services/RenderService.cpp > CMakeFiles/sniffer.dir/src/services/RenderService.cpp.i
+CMakeFiles/sniffer.dir/src/utils/Utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sniffer.dir/src/utils/Utils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomasz/projects/sniffer/src/utils/Utils.cpp > CMakeFiles/sniffer.dir/src/utils/Utils.cpp.i
 
-CMakeFiles/sniffer.dir/src/services/RenderService.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/services/RenderService.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/services/RenderService.cpp -o CMakeFiles/sniffer.dir/src/services/RenderService.cpp.s
-
-CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o: CMakeFiles/sniffer.dir/flags.make
-CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o: ../src/views/AnotherView.cpp
-CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o -MF CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o.d -o CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o -c /home/tomasz/projects/sniffer/src/views/AnotherView.cpp
-
-CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomasz/projects/sniffer/src/views/AnotherView.cpp > CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.i
-
-CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/views/AnotherView.cpp -o CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.s
-
-CMakeFiles/sniffer.dir/src/views/MainView.cpp.o: CMakeFiles/sniffer.dir/flags.make
-CMakeFiles/sniffer.dir/src/views/MainView.cpp.o: ../src/views/MainView.cpp
-CMakeFiles/sniffer.dir/src/views/MainView.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sniffer.dir/src/views/MainView.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/views/MainView.cpp.o -MF CMakeFiles/sniffer.dir/src/views/MainView.cpp.o.d -o CMakeFiles/sniffer.dir/src/views/MainView.cpp.o -c /home/tomasz/projects/sniffer/src/views/MainView.cpp
-
-CMakeFiles/sniffer.dir/src/views/MainView.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sniffer.dir/src/views/MainView.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tomasz/projects/sniffer/src/views/MainView.cpp > CMakeFiles/sniffer.dir/src/views/MainView.cpp.i
-
-CMakeFiles/sniffer.dir/src/views/MainView.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/views/MainView.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/views/MainView.cpp -o CMakeFiles/sniffer.dir/src/views/MainView.cpp.s
+CMakeFiles/sniffer.dir/src/utils/Utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sniffer.dir/src/utils/Utils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tomasz/projects/sniffer/src/utils/Utils.cpp -o CMakeFiles/sniffer.dir/src/utils/Utils.cpp.s
 
 CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o: CMakeFiles/sniffer.dir/flags.make
 CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o: ../src/views/PacketCaptureView.cpp
 CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o -MF CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o.d -o CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o -c /home/tomasz/projects/sniffer/src/views/PacketCaptureView.cpp
 
 CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.i: cmake_force
@@ -198,7 +184,7 @@ CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.s: cmake_force
 CMakeFiles/sniffer.dir/src/views/View.cpp.o: CMakeFiles/sniffer.dir/flags.make
 CMakeFiles/sniffer.dir/src/views/View.cpp.o: ../src/views/View.cpp
 CMakeFiles/sniffer.dir/src/views/View.cpp.o: CMakeFiles/sniffer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/sniffer.dir/src/views/View.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sniffer.dir/src/views/View.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sniffer.dir/src/views/View.cpp.o -MF CMakeFiles/sniffer.dir/src/views/View.cpp.o.d -o CMakeFiles/sniffer.dir/src/views/View.cpp.o -c /home/tomasz/projects/sniffer/src/views/View.cpp
 
 CMakeFiles/sniffer.dir/src/views/View.cpp.i: cmake_force
@@ -213,12 +199,11 @@ CMakeFiles/sniffer.dir/src/views/View.cpp.s: cmake_force
 sniffer_OBJECTS = \
 "CMakeFiles/sniffer.dir/src/Listeners/Listener.cpp.o" \
 "CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.o" \
+"CMakeFiles/sniffer.dir/src/global/Global.cpp.o" \
 "CMakeFiles/sniffer.dir/src/main.cpp.o" \
 "CMakeFiles/sniffer.dir/src/models/Model.cpp.o" \
 "CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o" \
-"CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o" \
-"CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o" \
-"CMakeFiles/sniffer.dir/src/views/MainView.cpp.o" \
+"CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o" \
 "CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o" \
 "CMakeFiles/sniffer.dir/src/views/View.cpp.o"
 
@@ -227,12 +212,11 @@ sniffer_EXTERNAL_OBJECTS =
 
 sniffer: CMakeFiles/sniffer.dir/src/Listeners/Listener.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.o
+sniffer: CMakeFiles/sniffer.dir/src/global/Global.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/main.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/models/Model.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.o
-sniffer: CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o
-sniffer: CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o
-sniffer: CMakeFiles/sniffer.dir/src/views/MainView.cpp.o
+sniffer: CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/views/PacketCaptureView.cpp.o
 sniffer: CMakeFiles/sniffer.dir/src/views/View.cpp.o
 sniffer: CMakeFiles/sniffer.dir/build.make
@@ -246,7 +230,7 @@ sniffer: /usr/lib/x86_64-linux-gnu/libglfw.so.3.3
 sniffer: /usr/lib/x86_64-linux-gnu/libGLX.so
 sniffer: /usr/lib/x86_64-linux-gnu/libOpenGL.so
 sniffer: CMakeFiles/sniffer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable sniffer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tomasz/projects/sniffer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable sniffer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sniffer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

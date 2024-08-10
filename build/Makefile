@@ -203,6 +203,30 @@ src/controllers/MainController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/controllers/MainController.cpp.s
 .PHONY : src/controllers/MainController.cpp.s
 
+src/global/Global.o: src/global/Global.cpp.o
+.PHONY : src/global/Global.o
+
+# target to build an object file
+src/global/Global.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/global/Global.cpp.o
+.PHONY : src/global/Global.cpp.o
+
+src/global/Global.i: src/global/Global.cpp.i
+.PHONY : src/global/Global.i
+
+# target to preprocess a source file
+src/global/Global.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/global/Global.cpp.i
+.PHONY : src/global/Global.cpp.i
+
+src/global/Global.s: src/global/Global.cpp.s
+.PHONY : src/global/Global.s
+
+# target to generate assembly for a file
+src/global/Global.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/global/Global.cpp.s
+.PHONY : src/global/Global.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -275,77 +299,29 @@ src/models/PacketCaptureModel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/models/PacketCaptureModel.cpp.s
 .PHONY : src/models/PacketCaptureModel.cpp.s
 
-src/services/RenderService.o: src/services/RenderService.cpp.o
-.PHONY : src/services/RenderService.o
+src/utils/Utils.o: src/utils/Utils.cpp.o
+.PHONY : src/utils/Utils.o
 
 # target to build an object file
-src/services/RenderService.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/services/RenderService.cpp.o
-.PHONY : src/services/RenderService.cpp.o
+src/utils/Utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/utils/Utils.cpp.o
+.PHONY : src/utils/Utils.cpp.o
 
-src/services/RenderService.i: src/services/RenderService.cpp.i
-.PHONY : src/services/RenderService.i
-
-# target to preprocess a source file
-src/services/RenderService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/services/RenderService.cpp.i
-.PHONY : src/services/RenderService.cpp.i
-
-src/services/RenderService.s: src/services/RenderService.cpp.s
-.PHONY : src/services/RenderService.s
-
-# target to generate assembly for a file
-src/services/RenderService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/services/RenderService.cpp.s
-.PHONY : src/services/RenderService.cpp.s
-
-src/views/AnotherView.o: src/views/AnotherView.cpp.o
-.PHONY : src/views/AnotherView.o
-
-# target to build an object file
-src/views/AnotherView.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.o
-.PHONY : src/views/AnotherView.cpp.o
-
-src/views/AnotherView.i: src/views/AnotherView.cpp.i
-.PHONY : src/views/AnotherView.i
+src/utils/Utils.i: src/utils/Utils.cpp.i
+.PHONY : src/utils/Utils.i
 
 # target to preprocess a source file
-src/views/AnotherView.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.i
-.PHONY : src/views/AnotherView.cpp.i
+src/utils/Utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/utils/Utils.cpp.i
+.PHONY : src/utils/Utils.cpp.i
 
-src/views/AnotherView.s: src/views/AnotherView.cpp.s
-.PHONY : src/views/AnotherView.s
-
-# target to generate assembly for a file
-src/views/AnotherView.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/AnotherView.cpp.s
-.PHONY : src/views/AnotherView.cpp.s
-
-src/views/MainView.o: src/views/MainView.cpp.o
-.PHONY : src/views/MainView.o
-
-# target to build an object file
-src/views/MainView.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/MainView.cpp.o
-.PHONY : src/views/MainView.cpp.o
-
-src/views/MainView.i: src/views/MainView.cpp.i
-.PHONY : src/views/MainView.i
-
-# target to preprocess a source file
-src/views/MainView.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/MainView.cpp.i
-.PHONY : src/views/MainView.cpp.i
-
-src/views/MainView.s: src/views/MainView.cpp.s
-.PHONY : src/views/MainView.s
+src/utils/Utils.s: src/utils/Utils.cpp.s
+.PHONY : src/utils/Utils.s
 
 # target to generate assembly for a file
-src/views/MainView.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/views/MainView.cpp.s
-.PHONY : src/views/MainView.cpp.s
+src/utils/Utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sniffer.dir/build.make CMakeFiles/sniffer.dir/src/utils/Utils.cpp.s
+.PHONY : src/utils/Utils.cpp.s
 
 src/views/PacketCaptureView.o: src/views/PacketCaptureView.cpp.o
 .PHONY : src/views/PacketCaptureView.o
@@ -412,6 +388,9 @@ help:
 	@echo "... src/controllers/MainController.o"
 	@echo "... src/controllers/MainController.i"
 	@echo "... src/controllers/MainController.s"
+	@echo "... src/global/Global.o"
+	@echo "... src/global/Global.i"
+	@echo "... src/global/Global.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -421,15 +400,9 @@ help:
 	@echo "... src/models/PacketCaptureModel.o"
 	@echo "... src/models/PacketCaptureModel.i"
 	@echo "... src/models/PacketCaptureModel.s"
-	@echo "... src/services/RenderService.o"
-	@echo "... src/services/RenderService.i"
-	@echo "... src/services/RenderService.s"
-	@echo "... src/views/AnotherView.o"
-	@echo "... src/views/AnotherView.i"
-	@echo "... src/views/AnotherView.s"
-	@echo "... src/views/MainView.o"
-	@echo "... src/views/MainView.i"
-	@echo "... src/views/MainView.s"
+	@echo "... src/utils/Utils.o"
+	@echo "... src/utils/Utils.i"
+	@echo "... src/utils/Utils.s"
 	@echo "... src/views/PacketCaptureView.o"
 	@echo "... src/views/PacketCaptureView.i"
 	@echo "... src/views/PacketCaptureView.s"

@@ -2,6 +2,8 @@
 #define LISTENER_H
 
 #include "models/Model.h"
+#include "models/PacketCaptureModel.h"
+
 
 #include <PcapFileDevice.h>
 #include <PcapLiveDevice.h>
@@ -13,18 +15,18 @@
 class Listener{ 
 
 public:
-    Listener(Model &model);
+    Listener(std::shared_ptr<PacketCaptureModel> model);
 
     void openListener();
     void closeListener();
     void startCapturePackets();
     void stopCapturePackets();
 
-    ~Listener();
+    ~Listener() {};
 
 private:
 
-    Model &model;
+    std::shared_ptr<PacketCaptureModel> model;
     
     pcpp::PcapLiveDevice *dev{nullptr};
 

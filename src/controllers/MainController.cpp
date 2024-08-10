@@ -1,10 +1,8 @@
 #include "controllers/MainController.h"
-#include "views/MainView.h"
-#include "views/AnotherView.h"
 #include "views/PacketCaptureView.h"
-#include "services/RenderService.h"
+#include "views/PacketCaptureView.h"
 
-MainController::MainController(std::shared_ptr<Model> model, std::shared_ptr<View> view) {
+MainController::MainController(std::shared_ptr<PacketCaptureModel> model, std::shared_ptr<PacketCaptureView> view) {
     this->model = model;
     this->view = view;
 }
@@ -18,5 +16,5 @@ void MainController::update(){
 }
 
 void MainController::display(){
-
+    this->view->draw(this->model->getCapturedPacketVector());
 }

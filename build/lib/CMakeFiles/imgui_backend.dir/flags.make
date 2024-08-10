@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/tomasz/projects/sniffer/include -I/home/tomasz/projects/sniffer/lib/imgui -I/home/linuxbrew/.linuxbrew/Cellar/pcapplusplus/23.09/include -I/home/tomasz/projects/sniffer/lib/backends
 
-CXX_FLAGS = -g -std=gnu++11
+CXX_FLAGS = -g -std=gnu++17
 

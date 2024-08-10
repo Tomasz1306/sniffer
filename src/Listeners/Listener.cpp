@@ -1,56 +1,68 @@
 #include "listeners/Listener.h"
+#include "utils/Utils.h"
 
-#include <PcapFileDevice.h>
+#include <PcapLiveDevice.h>
 #include <PcapLiveDeviceList.h>
+#include <iostream>
 
-Listener::Listener(){
+Listener::Listener(std::shared_ptr<PacketCaptureModel> model){
     this->devices = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDevicesList();
-
-
+    this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("127.0.0.1");
+    this->model = model;
 }
 
 void Listener::openListener(){
     if (this->dev == nullptr) { 
         //WRITE TO LOG 
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         return;
     }
-    if (this->dev->isOpened) {
+    if (this->dev->isOpened()) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (this->dev->open()) {
         //WRITE TO LOG
     } else {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG 
     }
 }
 
 void Listener::closeListener(){
     if (this->dev == nullptr) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (!this->dev->isOpened()) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;           
     }
-    if (this->dev->close()) {
-        //WRITE TO LOG
-    } else {
-        //WRITE TO LOG
-    }
+    this->dev->close();
 }
 
 void Listener::startCapturePackets(){
     if (this->dev == nullptr){
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (!this->dev->isOpened()) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
-    if (this->dev->startCapture()) {
-        
+    this->dev->startCapture(Utils::onPacketArrivesBlockingMode, &model);
+}
+
+void Listener::stopCapturePackets(){
+    if (!this->dev->captureActive()) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        //WRITE TO LOG 
+        return;
     }
+    this->dev->stopCapture();
 }

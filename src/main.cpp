@@ -1,6 +1,11 @@
 #include "controllers/MainController.h"
 #include "views/PacketCaptureView.h"
 #include "models/PacketCaptureModel.h"
+#include "listeners/Listener.h"
+#include "utils/Utils.h"
+#include "controllers/FilterController.h"
+#include "models/FilterModel.h"
+#include "views/FilterView.h"
 
 #include "imgui.h"
 #include "GLFW/glfw3.h"
@@ -21,6 +26,8 @@ void glfw_error_callback(int error, const char* description) {
 }
 
 int main() {
+
+    auto utils = Utils::getInstance();
     // Ustawienie callbacka błędów GLFW
     glfwSetErrorCallback(glfw_error_callback);
 
@@ -35,7 +42,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(1500, 1000, "SNIFFER", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1920, 1080, "SNIFFER", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -43,24 +50,7 @@ int main() {
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(0); // Włącz V-sync
-    //192.168.0.31
-    pcpp::PcapLiveDevice *dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("127.0.0.1");
-    if (dev == NULL)
-    {
-        std::cerr << "ERROR DEVICE " << std::endl;
-    }
 
-    if (!dev->open()) {
-        std::cerr << "ERROR DEVICE " << std::endl;
-    }
-    pcpp::RawPacketVector vec;
-    if (dev->startCapture(vec)) {
-
-    }
-
-    
-
-    
     // Ustawienia kontekstu ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -74,11 +64,16 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
-    // Tworzenie widokow 
+
     auto packetCaptureView = std::make_shared<PacketCaptureView>();
     auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
-    // Tworzenie głównego kontrolera aplikacji
-    // MainController controller_PacketWindow();
+    auto filterView = std::make_shared<FilterView>();
+    auto filterModel = std::make_shared<FilterModel>();
+    auto packetListener = std::make_shared<Listener>(packetCaptureModel);
+    packetListener->openListener();
+    packetListener->startCapturePackets();
+    auto filterController = std::make_shared<FilterController>(filterModel, filterView);
+    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView);
 
     // Główna pętla aplikacji
     while (!glfwWindowShouldClose(window)) {
@@ -88,29 +83,8 @@ int main() {
         ImGui::NewFrame();
 
         // Renderowanie widoków
- // Przetwarzaj przechwycone pakiety
-    for (pcpp::RawPacketVector::VectorIterator iter = vec.begin(); iter != vec.end(); iter++)
-    {
-        // Tworzymy obiekt Packet z RawPacket
-        pcpp::Packet parsedPacket(*iter);
-
-        // Wyświetl informacje o pakiecie
-        std::cout << "Packet captured at: " << (*iter)->getPacketTimeStamp().tv_sec << "." << (*iter)->getPacketTimeStamp().tv_sec << std::endl;
-        std::cout << "Packet length: " << (*iter)->getRawDataLen() << " bytes" << std::endl;
-
-        // Sprawdzamy, czy pakiet zawiera warstwę IP
-        if (parsedPacket.isPacketOfType(pcpp::IPv4))
-        {
-            pcpp::IPv4Layer* ipLayer = parsedPacket.getLayerOfType<pcpp::IPv4Layer>();
-            if (ipLayer != nullptr)
-            {
-                std::cout << "Source IP: " << ipLayer->getSrcIPAddress().toString() << std::endl;
-                std::cout << "Destination IP: " << ipLayer->getDstIPAddress().toString() << std::endl;
-            }
-        }
-
-        std::cout << std::endl;
-    }
+        mainController->display();
+        filterController->display();
         // Renderowanie ImGui
         ImGui::Render();
         int display_w, display_h;
@@ -124,8 +98,8 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    dev->stopCapture();
-    dev->close();
+    packetListener->stopCapturePackets();
+    packetListener->closeListener();
     // Clean up
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

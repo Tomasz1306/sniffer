@@ -16,5 +16,5 @@ void FilterController::update(){
 }
 
 void FilterController::display(){
-    this->view->draw();
+    this->view->draw(this->model);
 }

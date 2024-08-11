@@ -5,15 +5,20 @@
 #ifndef FILTERVIEW_H
 #define FILTERVIEW_H
 #include "views/View.h"
+#include "models/FilterModel.h"
 
 #include <vector>
 #include <string>
+#include <memory>
 
 class FilterView :public View {
 public:
     FilterView() {}
     virtual ~FilterView() {}
-    void draw();
+    void draw(std::shared_ptr<FilterModel> model);
+
+    void addressIpSection(std::shared_ptr<FilterModel> model);
+
 private:
     std::vector<std::string> items;
     char buf[64]{""};

@@ -22,17 +22,15 @@
 void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
 {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
-    ImGui::SetWindowSize("Okno", ImVec2(1300.0f, 800.0f));
+    ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 500.0f));
     if (!packetWindowInitialized) {
-
-        ImGui::SetNextWindowPos(ImVec2(0.0f, 195.0f));
+        ImGui::SetNextWindowPos(ImVec2(0.0f, 520.0f));
         packetWindowInitialized = true;
     }
 
     ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
 
-    ImGui::SetWindowFontScale(1.4);
     if (ImGui::BeginTable("Packets", 6, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
         ImGui::TableSetupScrollFreeze(0,1);
         ImGui::TableSetupColumn("TIME", ImGuiTableColumnFlags_WidthFixed, 200.0f);

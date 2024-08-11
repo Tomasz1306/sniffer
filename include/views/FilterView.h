@@ -18,10 +18,12 @@ public:
     void draw(std::shared_ptr<FilterModel> model);
 
     void addressIpSection(std::shared_ptr<FilterModel> model);
+    void addressMacSection(std::shared_ptr<FilterModel> model);
 
 private:
     std::vector<std::string> items;
-    char buf[64]{""};
+    char buf_ip[64]{""};
+    char buf_mac[64]{""};
 };
 
 

@@ -2,9 +2,10 @@
 #include "views/PacketCaptureView.h"
 #include "views/PacketCaptureView.h"
 
-MainController::MainController(std::shared_ptr<PacketCaptureModel> model, std::shared_ptr<PacketCaptureView> view) {
-    this->model = model;
-    this->view = view;
+MainController::MainController(std::shared_ptr<PacketCaptureModel> _model, std::shared_ptr<PacketCaptureView> _view, std::shared_ptr<Listener> _listener) {
+    this->model = _model;
+    this->view = _view;
+    this->listener = _listener;
 }
 
 void MainController::run() {

@@ -7,6 +7,7 @@
 
 #include <PcapFileDevice.h>
 #include <PcapLiveDevice.h>
+#include <PcapFilter.h>
 
 #include <vector>
 #include <thread>
@@ -21,6 +22,7 @@ public:
     void closeListener();
     void startCapturePackets();
     void stopCapturePackets();
+    void setFilters(pcpp::AndFilter);
 
     ~Listener() {};
 

@@ -66,3 +66,17 @@ void Listener::stopCapturePackets(){
     }
     this->dev->stopCapture();
 }
+
+void Listener::setFilters(pcpp::AndFilter filter) {
+    if (this->dev == nullptr) {
+        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        return;
+    }
+    if (this->dev->captureActive()) {
+        this->stopCapturePackets();
+    }
+    this->dev->setFilter(filter);
+
+    this->startCapturePackets();
+
+}

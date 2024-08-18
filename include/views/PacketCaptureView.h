@@ -19,7 +19,9 @@ public:
     virtual ~PacketCaptureView() {}
     void draw(const std::vector<pcpp::Packet> &packets);
 
-};
+private:
+    void displayPacketToolTip();
 
+};
 
 #endif // PACKETSNIFFWINDOW

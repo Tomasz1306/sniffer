@@ -18,25 +18,31 @@ class FilterModel : public Model {
 public:
     FilterModel();
 
+    void setUpdate(bool);
     void addIpFilter(pcpp::IPAddress, pcpp::IPFilter);
     void addMacFilter(pcpp::MacAddress, pcpp::MacAddressFilter);
     void addPortFilter(int, pcpp::PortFilter);
-    void addEtherTypeFilter(pcpp::ProtocolType, pcpp::EtherTypeFilter);
+    void addEtherTypeFilter(std::string, std::shared_ptr<bool>);
 
     std::vector<std::pair<pcpp::IPAddress, pcpp::IPFilter>>& getIpFilterVector() { return this->ipFilter; }
     std::vector<std::pair<pcpp::MacAddress, pcpp::MacAddressFilter>>& getMacFilterVector() { return this->macFilter; }
     std::vector<std::pair<int, pcpp::PortFilter>>& getPortFilterVector() { return this->portFilter; }
-    std::vector<std::pair<pcpp::ProtocolType, pcpp::EtherTypeFilter>>& getEtherTypeFilterVector() { return this->etherTypeFilter; }
+    std::vector<std::pair<std::string, std::shared_ptr<bool>>>& getEtherTypeFilterVector() { return this->etherTypeFilter; }
+    std::vector<std::pair<std::string, std::shared_ptr<bool>>>& getTcpFlagsVector() { return this->tcpFlagsFilter; }
+    bool getUpdate() { return this->update; };
 
 private:
+
+    std::atomic_bool update{false};
+    std::string filters;
 
     std::vector<std::pair<pcpp::IPAddress, pcpp::IPFilter>> ipFilter;
     std::vector<std::pair<pcpp::MacAddress, pcpp::MacAddressFilter>> macFilter;
     std::vector<std::pair<int, pcpp::PortFilter>> portFilter;
-    std::vector<std::pair<pcpp::ProtocolType, pcpp::EtherTypeFilter>> etherTypeFilter;
+    std::vector<std::pair<std::string, std::shared_ptr<bool>>> etherTypeFilter;
     std::vector<pcpp::ArpFilter> arpFilter;
     std::vector<pcpp::ProtoFilter> transportFilter;
-    //pcpp::TcpFlagsFilter tcpFlagsFilter;
+    std::vector<std::pair<std::string, std::shared_ptr<bool>>> tcpFlagsFilter;
 
 };
 

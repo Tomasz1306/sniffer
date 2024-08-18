@@ -73,8 +73,8 @@ int main() {
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     packetListener->openListener();
     packetListener->startCapturePackets();
-    auto filterController = std::make_shared<FilterController>(filterModel, filterView);
-    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView);
+    auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
+    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener);
 
     // Główna pętla aplikacji
     while (!glfwWindowShouldClose(window)) {

@@ -19,6 +19,8 @@ public:
 
     void addressIpSection(std::shared_ptr<FilterModel> model);
     void addressMacSection(std::shared_ptr<FilterModel> model);
+    void tcpFlagsSection(std::shared_ptr<FilterModel> model);
+    void protocolsSection(std::shared_ptr<FilterModel> model);
 
 private:
     std::vector<std::string> items;

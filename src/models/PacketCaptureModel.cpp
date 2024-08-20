@@ -8,7 +8,7 @@ PacketCaptureModel::PacketCaptureModel(){
     this->thread_1 = std::make_shared<std::thread>(&PacketCaptureModel::writeFromDequeToVector, this);
 }
 
-std::vector<pcpp::Packet>& PacketCaptureModel::getCapturedPacketVector(){
+std::vector<CapturedPackets>& PacketCaptureModel::getCapturedPacketVector(){
     return this->capturedPackets_vector;
 }
 
@@ -20,7 +20,8 @@ void PacketCaptureModel::writeFromDequeToVector(){
     while(1) {
         if (!this->capturedPackets_deque.empty()) {
             std::lock_guard<std::mutex> lock(guard_1);
-            this->capturedPackets_vector.push_back(this->capturedPackets_deque.front());
+            this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.front());
+            ++this->counter;
             this->capturedPackets_deque.pop_front();
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(5));

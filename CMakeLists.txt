@@ -25,13 +25,7 @@ file(GLOB_RECURSE HEADERS "include/*.h")
 add_subdirectory(lib)
 
 # Stwórz plik wykonywalny
-add_executable(sniffer ${SOURCES} ${HEADERS}
-        include/controllers/FilterController.h
-        include/models/FilterModel.h
-        include/views/FilterView.h
-        src/controllers/FilterController.cpp
-        src/models/FilterModel.cpp
-        src/views/FilterView.cpp)
+add_executable(sniffer ${SOURCES} ${HEADERS})
 
 
 # Połącz biblioteki z plikiem wykonywalnym

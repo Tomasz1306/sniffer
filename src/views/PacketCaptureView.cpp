@@ -19,7 +19,7 @@
 #include <UdpLayer.h>
 #include <HttpLayer.h>
 
-void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
+void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
 {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
     ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 500.0f));
@@ -31,7 +31,7 @@ void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
     ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
 
-    if (ImGui::BeginTable("Packets", 9, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
+    if (ImGui::BeginTable("Packets", 10, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
         ImGui::TableSetupScrollFreeze(0,1);
         ImGui::TableSetupColumn("TIME", ImGuiTableColumnFlags_WidthFixed, 200.0f);
         ImGui::TableSetupColumn("LENGTH", ImGuiTableColumnFlags_WidthFixed);
@@ -42,50 +42,27 @@ void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
         ImGui::TableSetupColumn("PROTO", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("SRC PORT", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("DST PORT", ImGuiTableColumnFlags_WidthFixed);
-        ImGui::TableHeadersRow();  // Dodaje nagłówki kolumn
+        ImGui::TableSetupColumn("SELECTED", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableHeadersRow();
+
 
         std::lock_guard<std::mutex> lock(guard_1);
         for (auto& packet : packets) {
+            auto &pcapPacket = packet.packet;
             ImGui::TableNextRow();
 
+            this->displayTime(pcapPacket);
+            this->displayPacketSize(pcapPacket);
+            this->displayEthernetLayer(pcapPacket);
+            this->displayNetworkProtocol(pcapPacket);
+            this->displayTransportProtocol(pcapPacket);
+            this->displayTransportLayer(pcapPacket);
 
-            const pcpp::HttpRequestLayer* httpRequestLayer = nullptr;
-            const pcpp::HttpResponseLayer* httpResponseLayer = nullptr;
-
-            this->displayTime(packet);
-
-            this->displayPacketSize(packet);
-
-            this->displayEthernetLayer(packet);
-
-            this->displayNetworkProtocol(packet);
-
-            this->displayTransportProtocol(packet);
-
-            // if (packet.isPacketOfType(pcpp::HTTPRequest)) {
-            //     httpRequestLayer = packet.getLayerOfType<pcpp::HttpRequestLayer>();
-            // }
-            // if (packet.isPacketOfType(pcpp::HTTPResponse)) {
-            //     httpResponseLayer = packet.getLayerOfType<pcpp::HttpResponseLayer>();
-            // }
-
-
-
-            // if (httpRequestLayer != nullptr) {
-            //     ImGui::TableNextColumn();
-            //     ImGui::Text("HTTP");
-            // } else if (httpResponseLayer != nullptr) {
-            //     ImGui::TableNextColumn();
-            //     ImGui::Text("HTTP");
-            // } else if (tcpLayer != nullptr) {
-            //     ImGui::TableNextColumn();
-            //     ImGui::Text("TCP");
-            // } else if (udpLayer != nullptr) {
-            //     ImGui::TableNextColumn();
-            //     ImGui::Text("UDP");
-            // } else {
-            //     ImGui::TableNextColumn();
-            // }
+            ImGui::TableNextColumn();
+            if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
+            {
+                packet.selected = !packet.selected;
+            }
         }
         ImGui::EndTable();
     }
@@ -164,15 +141,30 @@ void PacketCaptureView::displayTransportProtocol(const pcpp::Packet &packet) {
 }
 
 void PacketCaptureView::displayTransportLayer(const pcpp::Packet &packet) {
-    const pcpp::TcpLayer* tcpLayer = nullptr;
-    const pcpp::UdpLayer* udpLayer = nullptr;
+    std::shared_ptr<pcpp::TcpLayer> tcpLayer;
+    std::shared_ptr<pcpp::UdpLayer> udpLayer;
 
     if (packet.isPacketOfType(pcpp::TCP)) {
-        tcpLayer = packet.getLayerOfType<pcpp::TcpLayer>();
-    }
-
-    if (packet.isPacketOfType(pcpp::UDP)) {
-        udpLayer = packet.getLayerOfType<pcpp::UdpLayer>();
+        tcpLayer = std::make_shared<pcpp::TcpLayer>(*packet.getLayerOfType<pcpp::TcpLayer>());
+        int srcPort = tcpLayer->getSrcPort();
+        int dstPort = tcpLayer->getDstPort();
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", srcPort);
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", dstPort);
+    } else if (packet.isPacketOfType(pcpp::UDP)) {
+        udpLayer = std::make_shared<pcpp::UdpLayer>(*packet.getLayerOfType<pcpp::UdpLayer>());
+        int srcPort = udpLayer->getSrcPort();
+        int dstPort = udpLayer->getDstPort();
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", srcPort);
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", dstPort);
+    } else {
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", 0);
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", 0);
     }
 }
 

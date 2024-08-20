@@ -3,6 +3,7 @@
 
 #include "imgui.h"
 #include "View.h"
+#include "models/PacketModel.h"
 
 #include <Device.h>
 #include <Packet.h>
@@ -17,9 +18,13 @@ public:
 
     PacketCaptureView () {}
     virtual ~PacketCaptureView() {}
-    void draw(const std::vector<pcpp::Packet> &packets);
+    void draw(std::vector<CapturedPackets> &packets);
 
 private:
+
+    int selectedRow{-1};
+    ImGuiSelectableFlags selectableRowFlags = ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowDoubleClick;
+
     void displayPacketToolTip();
     std::string parseTimeToStr(std::time_t);
 

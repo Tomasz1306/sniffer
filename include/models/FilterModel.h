@@ -8,11 +8,13 @@
 #include "PcapFilter.h"
 
 #include "models/Model.h"
+#include "global/Global.h"
 
 #include <vector>
 #include <string>
 #include <utility>
 #include <atomic>
+#include <mutex>
 
 class FilterModel : public Model {
 public:
@@ -29,7 +31,7 @@ public:
     std::vector<std::pair<int, pcpp::PortFilter>>& getPortFilterVector() { return this->portFilter; }
     std::vector<std::pair<std::string, std::shared_ptr<bool>>>& getEtherTypeFilterVector() { return this->etherTypeFilter; }
     std::vector<std::pair<std::string, std::shared_ptr<bool>>>& getTcpFlagsVector() { return this->tcpFlagsFilter; }
-    bool getUpdate() { return this->update; };
+    bool getUpdate() {return this->update.load(std::memory_order_relaxed); };
 
 private:
 

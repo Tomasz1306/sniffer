@@ -17,7 +17,7 @@ void FilterController::run() {
 
 void FilterController::update(){
     while(1) {
-        if (this->model->getUpdate()) {
+        if (this->model != nullptr && this->model->getUpdate()) {
             pcpp::AndFilter andFilter;
             pcpp::OrFilter orFilterIpAddress;
             pcpp::OrFilter orFilterMacAddress;

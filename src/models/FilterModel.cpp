@@ -2,6 +2,7 @@
 // Created by tomasz on 8/10/24.
 //
 #include "models/FilterModel.h"
+#include "global/Global.h"
 
 FilterModel::FilterModel() {
     this->tcpFlagsFilter.emplace_back("FIN", std::make_shared<bool>(true));
@@ -23,7 +24,7 @@ FilterModel::FilterModel() {
 }
 
 void FilterModel::setUpdate(bool _update) {
-    this->update = _update;
+    this->update.store(_update, std::memory_order_relaxed);
 }
 
 

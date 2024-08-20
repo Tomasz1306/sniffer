@@ -31,110 +31,163 @@ void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
     ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
 
-    if (ImGui::BeginTable("Packets", 6, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
+    if (ImGui::BeginTable("Packets", 9, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
         ImGui::TableSetupScrollFreeze(0,1);
         ImGui::TableSetupColumn("TIME", ImGuiTableColumnFlags_WidthFixed, 200.0f);
-        ImGui::TableSetupColumn("PROTOCOL", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("LENGTH", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("MAC SRC", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("MAC DST", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("IP SRC", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("IP DST", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("PROTO", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("SRC PORT", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("DST PORT", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableHeadersRow();  // Dodaje nagłówki kolumn
 
         std::lock_guard<std::mutex> lock(guard_1);
         for (auto& packet : packets) {
             ImGui::TableNextRow();
-            std::time_t seconds = packet.getRawPacket()->getPacketTimeStamp().tv_sec;
 
-            const std::tm* ptm = std::localtime(&seconds);
-            char timeString[32];
-            std::strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", ptm);
-            auto timestamp = Utils::formatTimestamp(&seconds);
-            const pcpp::IPv4Layer* ipv4Layer = nullptr;
-            const pcpp::IPv6Layer* ipv6Layer = nullptr;
-            const pcpp::EthLayer* ethLayer = nullptr;
-            const pcpp::TcpLayer* tcpLayer = nullptr;
-            const pcpp::UdpLayer* udpLayer = nullptr;
+
             const pcpp::HttpRequestLayer* httpRequestLayer = nullptr;
             const pcpp::HttpResponseLayer* httpResponseLayer = nullptr;
 
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", timeString);
+            this->displayTime(packet);
 
-            // Get the Ethernet layer
-            if (packet.isPacketOfType(pcpp::Ethernet)) {
-                ethLayer = packet.getLayerOfType<pcpp::EthLayer>();
-            }
+            this->displayPacketSize(packet);
 
-            // Get the IPv4 layer
-            if (packet.isPacketOfType(pcpp::IPv4)) {
-                ipv4Layer = packet.getLayerOfType<pcpp::IPv4Layer>();
-            }
+            this->displayEthernetLayer(packet);
 
-            // Get the IPv6 layer
-            if (packet.isPacketOfType(pcpp::IPv6)) {
-                ipv6Layer = packet.getLayerOfType<pcpp::IPv6Layer>();
-            }
+            this->displayNetworkProtocol(packet);
 
-            if (packet.isPacketOfType(pcpp::HTTPRequest)) {
-                httpRequestLayer = packet.getLayerOfType<pcpp::HttpRequestLayer>();
-            }
-            if (packet.isPacketOfType(pcpp::HTTPResponse)) {
-                httpResponseLayer = packet.getLayerOfType<pcpp::HttpResponseLayer>();
-            }
+            this->displayTransportProtocol(packet);
 
-            if (packet.isPacketOfType(pcpp::TCP)) {
-                tcpLayer = packet.getLayerOfType<pcpp::TcpLayer>();
-            }
+            // if (packet.isPacketOfType(pcpp::HTTPRequest)) {
+            //     httpRequestLayer = packet.getLayerOfType<pcpp::HttpRequestLayer>();
+            // }
+            // if (packet.isPacketOfType(pcpp::HTTPResponse)) {
+            //     httpResponseLayer = packet.getLayerOfType<pcpp::HttpResponseLayer>();
+            // }
 
-            if (packet.isPacketOfType(pcpp::UDP)) {
-                udpLayer = packet.getLayerOfType<pcpp::UdpLayer>();
-            }
 
-            if (httpRequestLayer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("HTTP");
-            } else if (httpResponseLayer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("HTTP");
-            } else if (tcpLayer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("TCP");
-            } else if (udpLayer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("UDP");
-            } else {
-                ImGui::TableNextColumn();
-            }
 
-            // Now, we can display the information in ImGui
-            if (ethLayer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ethLayer->getSourceMac().toString().c_str());
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ethLayer->getDestMac().toString().c_str());
-            }else {
-                ImGui::TableNextColumn();
-                ImGui::TableNextColumn();
-            }
-
-            if (ipv4Layer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ipv4Layer->getSrcIPAddress().toString().c_str());
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ipv4Layer->getDstIPAddress().toString().c_str());
-            } else if (ipv6Layer != nullptr) {
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ipv6Layer->getSrcIPAddress().toString().c_str());
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", ipv6Layer->getDstIPAddress().toString().c_str());
-            } else {
-                ImGui::TableNextColumn();
-                ImGui::TableNextColumn();
-            }
+            // if (httpRequestLayer != nullptr) {
+            //     ImGui::TableNextColumn();
+            //     ImGui::Text("HTTP");
+            // } else if (httpResponseLayer != nullptr) {
+            //     ImGui::TableNextColumn();
+            //     ImGui::Text("HTTP");
+            // } else if (tcpLayer != nullptr) {
+            //     ImGui::TableNextColumn();
+            //     ImGui::Text("TCP");
+            // } else if (udpLayer != nullptr) {
+            //     ImGui::TableNextColumn();
+            //     ImGui::Text("UDP");
+            // } else {
+            //     ImGui::TableNextColumn();
+            // }
         }
         ImGui::EndTable();
     }
     ImGui::End();
 }
+
+void PacketCaptureView::displayTime(const pcpp::Packet &packet) {
+    auto time = this->parseTimeToStr(packet.getRawPacket()->getPacketTimeStamp().tv_sec);
+    ImGui::TableNextColumn();
+    ImGui::Text("%s", time.c);
+}
+
+void PacketCaptureView::displayPacketSize(const pcpp::Packet &packet) {
+    auto rawPacket = packet.getRawPacketReadOnly();
+    auto frameLength = rawPacket->getFrameLength();
+    ImGui::TableNextColumn();
+    ImGui::Text("%d", frameLength);
+}
+
+void PacketCaptureView::displayEthernetLayer(const pcpp::Packet &packet) {
+
+    std::shared_ptr<pcpp::EthLayer> ethLayer;
+
+    if (packet.isPacketOfType(pcpp::Ethernet)) {
+        ethLayer = std::make_shared<pcpp::EthLayer>(*packet.getLayerOfType<pcpp::EthLayer>());
+    }
+
+    if (ethLayer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ethLayer->getSourceMac().toString().c_str());
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ethLayer->getDestMac().toString().c_str());
+    }else {
+        ImGui::TableNextColumn();
+        ImGui::TableNextColumn();
+    }
+}
+
+void PacketCaptureView::displayNetworkProtocol(const pcpp::Packet &packet) {
+    std::shared_ptr<pcpp::IPv4Layer> ipv4Layer;
+    std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
+
+    if (packet.isPacketOfType(pcpp::IPv4)) {
+        ipv4Layer = std::make_shared<pcpp::IPv4Layer>(*packet.getLayerOfType<pcpp::IPv4Layer>());
+    }
+
+    if (packet.isPacketOfType(pcpp::IPv6)) {
+        ipv6Layer = std::make_shared<pcpp::IPv6Layer>(*packet.getLayerOfType<pcpp::IPv6Layer>());
+    }
+
+    if (ipv4Layer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ipv4Layer->getSrcIPAddress().toString().c_str());
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ipv4Layer->getDstIPAddress().toString().c_str());
+    } else if (ipv6Layer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ipv6Layer->getSrcIPAddress().toString().c_str());
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", ipv6Layer->getDstIPAddress().toString().c_str());
+    } else {
+        ImGui::TableNextColumn();
+        ImGui::TableNextColumn();
+    }
+}
+
+void PacketCaptureView::displayTransportProtocol(const pcpp::Packet &packet) {
+    ImGui::TableNextColumn();
+    if (packet.isPacketOfType(pcpp::TCP)) {
+        ImGui::Text("%s", "TCP");
+    } else if (packet.isPacketOfType(pcpp::UDP)) {
+        ImGui::Text("%s", "UDP");
+    } else {
+        ImGui::Text("%s", "UNK");
+    }
+}
+
+void PacketCaptureView::displayTransportLayer(const pcpp::Packet &packet) {
+    const pcpp::TcpLayer* tcpLayer = nullptr;
+    const pcpp::UdpLayer* udpLayer = nullptr;
+
+    if (packet.isPacketOfType(pcpp::TCP)) {
+        tcpLayer = packet.getLayerOfType<pcpp::TcpLayer>();
+    }
+
+    if (packet.isPacketOfType(pcpp::UDP)) {
+        udpLayer = packet.getLayerOfType<pcpp::UdpLayer>();
+    }
+}
+
+void PacketCaptureView::displayFlags(const pcpp::Packet &packet) {
+
+}
+
+std::string PacketCaptureView::parseTimeToStr(std::time_t seconds) {
+
+    const std::shared_ptr<tm> ptm = std::make_shared<tm>(*std::localtime(&seconds));
+    char timeString[32] = "\0";
+    std::strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", ptm.get());
+    return Utils::formatTimestamp(&seconds);
+}
+
+
+
 

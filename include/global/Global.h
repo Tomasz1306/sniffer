@@ -3,6 +3,7 @@
 #include <mutex>
 
 extern std::mutex guard_1;
+extern std::mutex guard_2;
 
 extern bool packetWindowInitialized;
 

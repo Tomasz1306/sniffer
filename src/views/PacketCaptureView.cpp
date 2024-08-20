@@ -95,7 +95,7 @@ void PacketCaptureView::draw(const std::vector<pcpp::Packet> &packets)
 void PacketCaptureView::displayTime(const pcpp::Packet &packet) {
     auto time = this->parseTimeToStr(packet.getRawPacket()->getPacketTimeStamp().tv_sec);
     ImGui::TableNextColumn();
-    ImGui::Text("%s", time.c);
+    ImGui::Text("%s", time.c_str());
 }
 
 void PacketCaptureView::displayPacketSize(const pcpp::Packet &packet) {

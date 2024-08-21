@@ -28,6 +28,8 @@ private:
     void displayPacketToolTip();
     std::string parseTimeToStr(std::time_t);
 
+    void displayTableOfPackets(std::vector<CapturedPackets>&);
+    void displayIndex(CapturedPackets&);
     void displayTime(const pcpp::Packet&);
     void displayPacketSize(const pcpp::Packet&);
     void displayEthernetLayer(const pcpp::Packet&);

@@ -19,8 +19,7 @@
 #include <UdpLayer.h>
 #include <HttpLayer.h>
 
-void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
-{
+void PacketCaptureView::draw(std::vector<CapturedPackets> &packets) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
     ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 500.0f));
     if (!packetWindowInitialized) {
@@ -28,12 +27,40 @@ void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
         packetWindowInitialized = true;
     }
 
-    ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
+    ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Open")) {  }
+            if (ImGui::MenuItem("Save")) { }
+            if (ImGui::MenuItem("Quit")) { }
+            ImGui::EndMenu();
+        }
 
 
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Undo")) {  }
+            if (ImGui::MenuItem("Redo")) {  }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+
+    this->displayTableOfPackets(packets);
+
+
+    ImGui::End();
+}
+
+void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &packets) {
     if (ImGui::BeginTable("Packets", 10, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
         ImGui::TableSetupScrollFreeze(0,1);
-        ImGui::TableSetupColumn("TIME", ImGuiTableColumnFlags_WidthFixed, 200.0f);
+        ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("TIME", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("LENGTH", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("MAC SRC", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("MAC DST", ImGuiTableColumnFlags_WidthFixed);
@@ -42,7 +69,6 @@ void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
         ImGui::TableSetupColumn("PROTO", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("SRC PORT", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableSetupColumn("DST PORT", ImGuiTableColumnFlags_WidthFixed);
-        ImGui::TableSetupColumn("SELECTED", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableHeadersRow();
 
 
@@ -51,6 +77,7 @@ void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
             auto &pcapPacket = packet.packet;
             ImGui::TableNextRow();
 
+            this->displayIndex(packet);
             this->displayTime(pcapPacket);
             this->displayPacketSize(pcapPacket);
             this->displayEthernetLayer(pcapPacket);
@@ -58,16 +85,23 @@ void PacketCaptureView::draw(std::vector<CapturedPackets> &packets)
             this->displayTransportProtocol(pcapPacket);
             this->displayTransportLayer(pcapPacket);
 
-            ImGui::TableNextColumn();
-            if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
-            {
-                packet.selected = !packet.selected;
-            }
         }
         ImGui::EndTable();
     }
-    ImGui::End();
 }
+
+
+void PacketCaptureView::displayIndex(CapturedPackets &packet) {
+    ImGui::TableNextColumn();
+
+    if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
+    {
+        packet.selected = !packet.selected;
+    }
+    ImGui::SameLine();
+    ImGui::Text("%d", packet.id);
+}
+
 
 void PacketCaptureView::displayTime(const pcpp::Packet &packet) {
     auto time = this->parseTimeToStr(packet.getRawPacket()->getPacketTimeStamp().tv_sec);

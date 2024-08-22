@@ -19,7 +19,7 @@
 #include <UdpLayer.h>
 #include <HttpLayer.h>
 
-void PacketCaptureView::draw(std::vector<CapturedPackets> &packets) {
+void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
     ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 500.0f));
     if (!packetWindowInitialized) {
@@ -29,31 +29,49 @@ void PacketCaptureView::draw(std::vector<CapturedPackets> &packets) {
 
     ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
 
+    this->displayMenuBar();
+    this->displayOption();
+    this->displayTableOfPackets(packets);
+
+
+    ImGui::End();
+}
+
+void PacketCaptureView::displayMenuBar() {
     if (ImGui::BeginMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Open")) {  }
-            if (ImGui::MenuItem("Save")) { }
-            if (ImGui::MenuItem("Quit")) { }
-            ImGui::EndMenu();
-        }
+            if (ImGui::MenuItem("Open")) {
 
+            }
+            if (ImGui::MenuItem("Save")) {
 
-        if (ImGui::BeginMenu("Edit"))
-        {
-            if (ImGui::MenuItem("Undo")) {  }
-            if (ImGui::MenuItem("Redo")) {  }
+            }
             ImGui::EndMenu();
         }
 
         ImGui::EndMenuBar();
     }
+}
 
-    this->displayTableOfPackets(packets);
+void PacketCaptureView::displayOption() {
 
+    ImGui::BeginGroup();
+    if (ImGui::Button(this->captureButtonText.c_str(), ImVec2(200, 20))) {
+        if (this->captureButtonState == captureState::STOP) {
+            this->captureButtonState = captureState::START;
+            this->captureButtonText = "STOP";
+        } else {
+            this->captureButtonState = captureState::STOP;
+            this->captureButtonText = "START";
+        }
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("CLEAR", ImVec2(200, 20))) {
 
-    ImGui::End();
+    }
+    ImGui::EndGroup();
 }
 
 void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &packets) {

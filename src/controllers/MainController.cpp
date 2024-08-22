@@ -17,5 +17,17 @@ void MainController::update(){
 }
 
 void MainController::display(){
-    this->view->draw(this->model->getCapturedPacketVector());
+    this->view->draw(this->getSharedPtr(), this->model->getCapturedPacketVector());
+}
+
+void MainController::startCapture() {
+    this->listener->startCapturePackets();
+}
+
+void MainController::stopCapture() {
+    this->listener->stopCapturePackets();
+}
+
+void MainController::clearTableOfPackets() {
+
 }

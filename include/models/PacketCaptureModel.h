@@ -23,6 +23,8 @@ public:
 
     void writeFromDequeToVector();
 
+    void clearCapturedPacketVector();
+
 private:
 
     int counter{0};

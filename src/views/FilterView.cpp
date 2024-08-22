@@ -35,6 +35,7 @@ void FilterView::draw(std::shared_ptr<FilterModel> model) {
     ImGui::Columns(1);
     ImGui::SetCursorPosX((1200 - 400) * 0.5f);
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 50);
+    //TODO naprawic pole najezdzanai na przycisk, prawa strona przycisku nie wychwytuje myszki
     if (ImGui::Button("Zatwierdz", ImVec2(400, 50))) {
         model->setUpdate(true);
     }

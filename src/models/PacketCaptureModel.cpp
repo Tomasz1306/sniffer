@@ -28,9 +28,13 @@ void PacketCaptureModel::writeFromDequeToVector(){
     }
 }
 
-PacketCaptureModel::~PacketCaptureModel(){
+void PacketCaptureModel::clearCapturedPacketVector() {
+    std::lock_guard<std::mutex> lock(guard_1);
+    this->capturedPackets_vector.clear();
+}
+
+PacketCaptureModel::~PacketCaptureModel() {
     if (this->thread_1->joinable()) {
         this->thread_1->join();
     }
 }
-

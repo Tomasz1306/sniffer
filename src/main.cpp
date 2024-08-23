@@ -21,6 +21,7 @@
 #include <iostream>
 #include <vector>
 
+//TODO zaimplementowac window menager
 //TODO uporzadkowac includy i usunca nieporzebne
 //TODO Napisac "forward declaration" dla kazdego zbioru MVC
 
@@ -44,6 +45,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     GLFWwindow* window = glfwCreateWindow(1920, 1080, "SNIFFER", NULL, NULL);
     if (!window) {
@@ -75,7 +77,6 @@ int main() {
     auto filterModel = std::make_shared<FilterModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     packetListener->openListener();
-    packetListener->startCapturePackets();
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener);
 
@@ -92,9 +93,9 @@ int main() {
         // Renderowanie ImGui
         ImGui::Render();
         int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+        // glfwGetFramebufferSize(window, &display_w, &display_h);
+        // glViewport(0, 0, display_w, display_h);
+        glClearColor(0, 0, 0, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

@@ -30,7 +30,7 @@ void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::ve
     ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
 
     this->displayMenuBar();
-    this->displayOption();
+    this->displayOption(controller);
     this->displayTableOfPackets(packets);
 
 
@@ -55,21 +55,30 @@ void PacketCaptureView::displayMenuBar() {
     }
 }
 
-void PacketCaptureView::displayOption() {
+void PacketCaptureView::displayOption(std::shared_ptr<MainController> controller) {
 
     ImGui::BeginGroup();
     if (ImGui::Button(this->captureButtonText.c_str(), ImVec2(200, 20))) {
         if (this->captureButtonState == captureState::STOP) {
             this->captureButtonState = captureState::START;
             this->captureButtonText = "STOP";
+            std::thread startCaptureThread([controller] () {
+                controller->startCapture();
+            });
+
+            startCaptureThread.detach();
         } else {
             this->captureButtonState = captureState::STOP;
             this->captureButtonText = "START";
+            std::thread stopCaptureThread([controller]() {
+               controller->stopCapture();
+            });
+            stopCaptureThread.detach();
         }
     }
     ImGui::SameLine();
     if (ImGui::Button("CLEAR", ImVec2(200, 20))) {
-
+        controller->clearTableOfPackets();
     }
     ImGui::EndGroup();
 }

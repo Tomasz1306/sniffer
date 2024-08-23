@@ -39,7 +39,7 @@ private:
 
     void displayMenuBar();
     //TODO zmienic nazwe na bardziej odpowiadajaca dla displayOption
-    void displayOption();
+    void displayOption(std::shared_ptr<MainController> controller);
     void displayTableOfPackets(std::vector<CapturedPackets>&);
     void displayIndex(CapturedPackets&);
     void displayTime(const pcpp::Packet&);

@@ -74,8 +74,10 @@ void Listener::setFilters(pcpp::AndFilter filter) {
     }
     if (this->dev->captureActive()) {
         this->stopCapturePackets();
+        this->dev->setFilter(filter);
+        this->startCapturePackets();
     }
-    this->dev->setFilter(filter);
-
-    this->startCapturePackets();
+    if (!this->dev->captureActive()) {
+        this->dev->setFilter(filter);
+    }
 }

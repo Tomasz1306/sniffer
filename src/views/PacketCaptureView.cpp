@@ -21,9 +21,9 @@
 
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
-    ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 500.0f));
+    ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 630.0f));
     if (!packetWindowInitialized) {
-        ImGui::SetNextWindowPos(ImVec2(0.0f, 520.0f));
+        ImGui::SetNextWindowPos(ImVec2(0.0f, 450.0f));
         packetWindowInitialized = true;
     }
 

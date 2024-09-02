@@ -6,6 +6,10 @@
 #include "controllers/FilterController.h"
 #include "models/FilterModel.h"
 #include "views/FilterView.h"
+#include "controllers/DeviceController.h"
+#include "models/DeviceModel.h"
+#include <views/DeviceView.h>
+
 
 #include "imgui.h"
 #include "GLFW/glfw3.h"
@@ -75,10 +79,13 @@ int main() {
     auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
     auto filterView = std::make_shared<FilterView>();
     auto filterModel = std::make_shared<FilterModel>();
+    auto deviceView = std::make_shared<DeviceView>();
+    auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     packetListener->openListener();
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener);
+    auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
 
     // Główna pętla aplikacji
     while (!glfwWindowShouldClose(window)) {
@@ -90,6 +97,7 @@ int main() {
         // Renderowanie widoków
         mainController->display();
         filterController->display();
+        deviceController->display();
         // Renderowanie ImGui
         ImGui::Render();
         int display_w, display_h;

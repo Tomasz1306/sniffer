@@ -23,6 +23,8 @@ public:
     void startCapturePackets();
     void stopCapturePackets();
     void setFilters(pcpp::AndFilter);
+    pcpp::PcapLiveDevice *getDevice() {return this->dev;}
+    std::vector<pcpp::PcapLiveDevice *> getDevices() {return this->devices;}
 
     ~Listener() {};
 

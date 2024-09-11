@@ -25,6 +25,8 @@ public:
     virtual ~PacketCaptureView() {}
     void draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets);
 
+    int getCurrentSelectedPacketId() const;
+
 private:
 
     int selectedRow{-1};
@@ -40,8 +42,8 @@ private:
     void displayMenuBar();
     //TODO zmienic nazwe na bardziej odpowiadajaca dla displayOption
     void displayOption(std::shared_ptr<MainController> controller);
-    void displayTableOfPackets(std::vector<CapturedPackets>&);
-    void displayIndex(CapturedPackets&);
+    void displayTableOfPackets(std::vector<CapturedPackets>&, std::shared_ptr<MainController> controller);
+    void displayIndex(CapturedPackets&, std::shared_ptr<MainController> controller);
     void displayTime(const pcpp::Packet&);
     void displayPacketSize(const pcpp::Packet&);
     void displayEthernetLayer(const pcpp::Packet&);

@@ -9,6 +9,7 @@
 #include "controllers/DeviceController.h"
 #include "models/DeviceModel.h"
 #include <views/DeviceView.h>
+#include <views/PacketView.h>
 
 
 #include "imgui.h"
@@ -67,14 +68,16 @@ int main() {
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 16.0f);
 
+
     // Ustawienia stylu ImGui
     ImGui::StyleColorsDark();
+    ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f);
 
     // Inicjalizacja ImGui dla GLFW i OpenGL
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
-
+    auto packetView = std::make_shared<PacketView>();
     auto packetCaptureView = std::make_shared<PacketCaptureView>();
     auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
     auto filterView = std::make_shared<FilterView>();
@@ -84,7 +87,7 @@ int main() {
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     packetListener->openListener();
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
-    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener);
+    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
 
     // Główna pętla aplikacji

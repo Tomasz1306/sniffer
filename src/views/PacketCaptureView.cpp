@@ -7,9 +7,7 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
-#include <chrono>
 
-#include <Device.h>
 #include <Packet.h>
 #include <RawPacket.h>
 #include <IPv4Layer.h>
@@ -17,21 +15,20 @@
 #include <EthLayer.h>
 #include <TcpLayer.h>
 #include <UdpLayer.h>
-#include <HttpLayer.h>
 
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
-    ImGui::SetWindowSize("Okno", ImVec2(1200.0f, 630.0f));
+    ImGui::SetWindowSize("PACKETS", ImVec2(1200.0f, 630.0f));
     if (!packetWindowInitialized) {
         ImGui::SetNextWindowPos(ImVec2(0.0f, 450.0f));
         packetWindowInitialized = true;
     }
 
-    ImGui::Begin("Okno", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
+    ImGui::Begin("PACKETS", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
 
     this->displayMenuBar();
     this->displayOption(controller);
-    this->displayTableOfPackets(packets);
+    this->displayTableOfPackets(packets, controller);
 
 
     ImGui::End();
@@ -83,7 +80,7 @@ void PacketCaptureView::displayOption(std::shared_ptr<MainController> controller
     ImGui::EndGroup();
 }
 
-void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &packets) {
+void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &packets, std::shared_ptr<MainController> controller) {
     if (ImGui::BeginTable("Packets", 10, ImGuiTableFlags_ScrollY | ImGuiTableFlags_Borders | ImGuiTableFlags_Reorderable)) {
         ImGui::TableSetupScrollFreeze(0,1);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed);
@@ -104,7 +101,7 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
             auto &pcapPacket = packet.packet;
             ImGui::TableNextRow();
 
-            this->displayIndex(packet);
+            this->displayIndex(packet, controller);
             this->displayTime(pcapPacket);
             this->displayPacketSize(pcapPacket);
             this->displayEthernetLayer(pcapPacket);
@@ -118,12 +115,15 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
 }
 
 
-void PacketCaptureView::displayIndex(CapturedPackets &packet) {
+void PacketCaptureView::displayIndex(CapturedPackets &packet, std::shared_ptr<MainController> controller) {
     ImGui::TableNextColumn();
 
     if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
     {
         packet.selected = !packet.selected;
+    }
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
+        controller->setIsDisplayedPakcet(true);
     }
     ImGui::SameLine();
     ImGui::Text("%d", packet.id);
@@ -241,6 +241,9 @@ std::string PacketCaptureView::parseTimeToStr(std::time_t seconds) {
     return Utils::formatTimestamp(&seconds);
 }
 
+int PacketCaptureView::getCurrentSelectedPacketId() const {
+    return this->selectedRow;
+}
 
 
 

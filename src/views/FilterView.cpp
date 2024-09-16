@@ -15,7 +15,7 @@ void FilterView::draw(std::shared_ptr<FilterModel> model) {
     ImGui::SetWindowSize("FILTERS", ImVec2(1200.0f, 250.0f));
     ImGui::SetNextWindowPos(ImVec2(0.0f, 200.0f));
     ImGui::Begin("FILTERS", nullptr,
-        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar );
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus );
     ImGui::Columns(4, "mycolumns", false); // 2 kolumny
     ImGui::SetColumnWidth(0,310);
     ImGui::SetColumnWidth(1, 310);

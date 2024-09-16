@@ -26,6 +26,7 @@ public:
     void draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets);
 
     int getCurrentSelectedPacketId() const;
+    void setCurrentSelectedPacketId(int id);
 
 private:
 

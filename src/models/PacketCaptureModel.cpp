@@ -1,9 +1,6 @@
 #include "models/PacketCaptureModel.h"
 #include "global/Global.h"
 
-#include <iostream>
-
-
 PacketCaptureModel::PacketCaptureModel(){
     this->thread_1 = std::make_shared<std::thread>(&PacketCaptureModel::writeFromDequeToVector, this);
 }
@@ -19,7 +16,7 @@ void PacketCaptureModel::addToCapturedPacketDeque(pcpp::Packet packet){
 void PacketCaptureModel::writeFromDequeToVector(){
     while(1) {
         if (!this->capturedPackets_deque.empty()) {
-            std::lock_guard<std::mutex> lock(guard_1);
+            std::lock_guard lock(guard_1);
             this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.front());
             ++this->counter;
             this->capturedPackets_deque.pop_front();
@@ -29,7 +26,7 @@ void PacketCaptureModel::writeFromDequeToVector(){
 }
 
 void PacketCaptureModel::clearCapturedPacketVector() {
-    std::lock_guard<std::mutex> lock(guard_1);
+    std::lock_guard lock(guard_1);
     this->capturedPackets_vector.clear();
 }
 

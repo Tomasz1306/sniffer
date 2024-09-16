@@ -16,7 +16,7 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
         packetWindowInitialized = true;
     }
 
-    ImGui::Begin("DEVICES", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
+    ImGui::Begin("DEVICES", nullptr, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
 
 
     ImGui::End();

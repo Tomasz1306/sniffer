@@ -4,12 +4,15 @@
 #include <memory>
 
 #include "views/PacketCaptureView.h"
+#include "views/PacketView.h"
 #include "models/PacketCaptureModel.h"
 #include "listeners/Listener.h"
 #include "views/PacketView.h"
 
+
 //Forward declaration
 class PacketCaptureView;
+class PacketView;
 
 class MainController : public std::enable_shared_from_this<MainController> {
 public:
@@ -25,6 +28,7 @@ public:
     void stopCapture();
     void clearTableOfPackets();
     void setIsDisplayedPakcet(bool _isDisplayedPakcet);
+    void setCurrentPacketId(int id);
 
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 private:

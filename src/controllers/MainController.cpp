@@ -23,7 +23,7 @@ void MainController::update(){
 void MainController::display(){
     this->view->draw(this->getSharedPtr(), this->model->getCapturedPacketVector());
     if (this->isPacketDisplayed) {
-        this->packetView->draw(this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId()]);
+        this->packetView->draw(this->getSharedPtr(), this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId()]);
     }
 }
 
@@ -41,5 +41,10 @@ void MainController::clearTableOfPackets() {
 
 void MainController::setIsDisplayedPakcet(bool _isDisplayedPakcet) {
     this->isPacketDisplayed = _isDisplayedPakcet;
+
+}
+
+void MainController::setCurrentPacketId(int id) {
+    this->view->setCurrentSelectedPacketId(id);
 }
 

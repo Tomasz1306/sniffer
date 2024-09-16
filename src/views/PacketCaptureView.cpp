@@ -24,7 +24,7 @@ void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::ve
         packetWindowInitialized = true;
     }
 
-    ImGui::Begin("PACKETS", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
+    ImGui::Begin("PACKETS", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
     this->displayMenuBar();
     this->displayOption(controller);
@@ -118,11 +118,15 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
 void PacketCaptureView::displayIndex(CapturedPackets &packet, std::shared_ptr<MainController> controller) {
     ImGui::TableNextColumn();
 
+    if (packet.selected && this->selectedRow != packet.id) {
+        packet.selected = !packet.selected;
+    }
     if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
     {
         packet.selected = !packet.selected;
     }
     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
+        this->selectedRow = packet.id;
         controller->setIsDisplayedPakcet(true);
     }
     ImGui::SameLine();
@@ -245,5 +249,8 @@ int PacketCaptureView::getCurrentSelectedPacketId() const {
     return this->selectedRow;
 }
 
+void PacketCaptureView::setCurrentSelectedPacketId(int id) {
+    this->selectedRow = id;
+}
 
 

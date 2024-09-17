@@ -28,7 +28,10 @@ public:
     void stopCapture();
     void clearTableOfPackets();
     void setIsDisplayedPakcet(bool _isDisplayedPakcet);
-    void setCurrentPacketId(int id);
+    bool isDisplayedPakcet();
+    void setCurrentPacketId(int _id);
+    void displayNextPacket();
+    void displayPrevPacket();
 
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 private:

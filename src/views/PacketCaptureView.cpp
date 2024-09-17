@@ -18,12 +18,13 @@
 
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
+    this->isDownKeyPressed = false;
+    this->isUpKeyPressed = false;
     ImGui::SetWindowSize("PACKETS", ImVec2(1200.0f, 630.0f));
     if (!packetWindowInitialized) {
         ImGui::SetNextWindowPos(ImVec2(0.0f, 450.0f));
         packetWindowInitialized = true;
     }
-
     ImGui::Begin("PACKETS", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
     this->displayMenuBar();
@@ -98,6 +99,7 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
 
         std::lock_guard<std::mutex> lock(guard_1);
         for (auto& packet : packets) {
+            this->keyboardHandling(controller, packets, packet);
             auto &pcapPacket = packet.packet;
             ImGui::TableNextRow();
 
@@ -118,8 +120,11 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
 void PacketCaptureView::displayIndex(CapturedPackets &packet, std::shared_ptr<MainController> controller) {
     ImGui::TableNextColumn();
 
-    if (packet.selected && this->selectedRow != packet.id) {
-        packet.selected = !packet.selected;
+    if (this->selectedRow == packet.id && packet.isOpen) {
+        packet.selected = true;
+    }
+    if (this->selectedRow != -1 && this->selectedRow != packet.id && packet.selected) {
+        packet.selected = false;
     }
     if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
     {
@@ -127,6 +132,7 @@ void PacketCaptureView::displayIndex(CapturedPackets &packet, std::shared_ptr<Ma
     }
     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
         this->selectedRow = packet.id;
+        packet.isOpen = true;
         controller->setIsDisplayedPakcet(true);
     }
     ImGui::SameLine();
@@ -252,5 +258,34 @@ int PacketCaptureView::getCurrentSelectedPacketId() const {
 void PacketCaptureView::setCurrentSelectedPacketId(int id) {
     this->selectedRow = id;
 }
+
+void PacketCaptureView::keyboardHandling(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets, CapturedPackets &packet) {
+    int size = packets.size();
+    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Enter))) {
+        if (!controller->isDisplayedPakcet() && packet.selected) {
+            this->selectedRow = packet.id;
+            controller->setIsDisplayedPakcet(true);
+        }
+    }
+    if (packet.selected && !controller->isDisplayedPakcet()) {
+        if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow)) && !isDownKeyPressed) {
+            if (packet.id + 1 < size) {
+                packet.selected = false;
+                packets[packet.id + 1].selected = true;
+                isDownKeyPressed = true;
+
+            }
+            std::cout << "halo" << std::endl;
+        }
+        if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)) && !isUpKeyPressed) {
+            if (packet.id - 1 >= 0) {
+                packet.selected = false;
+                packets[packet.id - 1].selected = true;
+                isUpKeyPressed = true;
+            }
+        }
+    }
+}
+
 
 

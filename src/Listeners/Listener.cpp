@@ -7,7 +7,7 @@
 
 Listener::Listener(std::shared_ptr<PacketCaptureModel> model){
     this->devices = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDevicesList();
-    this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("127.0.0.1");
+    this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("192.168.0.178");
     this->model = model;
 }
 

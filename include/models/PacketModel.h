@@ -12,6 +12,7 @@
 struct CapturedPackets {
     int id;
     bool selected;
+    bool isOpen;
     std::string captureTime;
     pcpp::Packet packet;
 

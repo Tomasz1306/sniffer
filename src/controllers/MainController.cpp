@@ -44,7 +44,31 @@ void MainController::setIsDisplayedPakcet(bool _isDisplayedPakcet) {
 
 }
 
-void MainController::setCurrentPacketId(int id) {
-    this->view->setCurrentSelectedPacketId(id);
+void MainController::setCurrentPacketId(int _id) {
+    this->view->setCurrentSelectedPacketId(_id);
 }
+
+void MainController::displayNextPacket() {
+    if ((this->view->getCurrentSelectedPacketId() + 1) >= this->model->getCapturedPacketVector().size()) {
+        return;
+    }
+    this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId()].isOpen = false;
+    this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId() + 1].isOpen = true;
+    this->view->setCurrentSelectedPacketId(this->view->getCurrentSelectedPacketId() + 1);
+}
+
+void MainController::displayPrevPacket() {
+    if ((this->view->getCurrentSelectedPacketId() - 1) < 0) {
+        return;
+    }
+    this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId()].isOpen = false;
+    this->model->getCapturedPacketVector()[this->view->getCurrentSelectedPacketId() - 1].isOpen = true;
+    this->view->setCurrentSelectedPacketId(this->view->getCurrentSelectedPacketId() - 1);
+}
+
+bool MainController::isDisplayedPakcet() {
+    return this->isPacketDisplayed;
+}
+
+
 

@@ -8,6 +8,7 @@
 #include "models/PacketModel.h"
 #include "controllers/MainController.h"
 #include <memory>
+#include <string>
 class MainController;
 
 class PacketView : public View {
@@ -23,6 +24,8 @@ private:
     void displayNetworkLayer(CapturedPackets &_packet);
     void displayTransportLayer(CapturedPackets &_packet);
     void displayApplicationLayer(CapturedPackets &_packet);
+    void keyboardHandling(std::shared_ptr<MainController> controller, CapturedPackets &_packet);
+    std::string byteToHex(unsigned char byte);
 };
 
 #endif //PACKETVIEW_H

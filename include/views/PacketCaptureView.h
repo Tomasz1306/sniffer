@@ -9,6 +9,8 @@
 #include <vector>
 #include <ctime>
 
+#include "imgui_internal.h"
+
 
 class MainController;
 
@@ -35,11 +37,12 @@ private:
     captureState captureButtonState{captureState::STOP};
 
 
-    ImGuiSelectableFlags selectableRowFlags = ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowDoubleClick;
+    ImGuiSelectableFlags selectableRowFlags = ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_SelectOnClick;
 
     void displayPacketToolTip();
     std::string parseTimeToStr(std::time_t);
-
+    bool isDownKeyPressed = false;
+    bool isUpKeyPressed  = false;
     void displayMenuBar();
     //TODO zmienic nazwe na bardziej odpowiadajaca dla displayOption
     void displayOption(std::shared_ptr<MainController> controller);
@@ -52,6 +55,7 @@ private:
     void displayTransportProtocol(const pcpp::Packet&);
     void displayTransportLayer(const pcpp::Packet&);
     void displayFlags(const pcpp::Packet&);
+    void keyboardHandling(std::shared_ptr<MainController> controller,std::vector<CapturedPackets> &packets, CapturedPackets &packet);
 
 };
 

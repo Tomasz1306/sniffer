@@ -20,7 +20,9 @@ public:
 
     void setController(std::shared_ptr<DeviceController> _controller);
     void setDevice(pcpp::PcapLiveDevice* _device);
-    void setDevices(std::vector<pcpp::PcapLiveDevice *> _devices);
+    void setDevices(std::vector<pcpp::PcapLiveDevice *> &_devices);
+    std::vector<pcpp::PcapLiveDevice *> &getDevices();
+    pcpp::PcapLiveDevice *getDevice();
 
 private:
 

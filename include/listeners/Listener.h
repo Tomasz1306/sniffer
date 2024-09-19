@@ -24,7 +24,11 @@ public:
     void stopCapturePackets();
     void setFilters(pcpp::AndFilter);
     pcpp::PcapLiveDevice *getDevice() {return this->dev;}
-    std::vector<pcpp::PcapLiveDevice *> getDevices() {return this->devices;}
+    std::vector<pcpp::PcapLiveDevice *> &getDevices() {return this->devices;}
+    void setDeviceByName(std::string name);
+
+    bool isDeviceOpen();
+    bool isDeviceCapturing();
 
     ~Listener() {};
 

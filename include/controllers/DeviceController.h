@@ -20,6 +20,9 @@ public:
 
         void display();
         std::shared_ptr<DeviceController> getController() { return shared_from_this(); };
+        std::string getCurrentDeviceName();
+        void setNewDeviceByName(std::string);
+        void openCurrentDevice();
 
 private:
 

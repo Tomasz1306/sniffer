@@ -7,51 +7,53 @@
 
 Listener::Listener(std::shared_ptr<PacketCaptureModel> model){
     this->devices = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDevicesList();
-    this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("192.168.0.178");
+    // this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp("192.168.0.178");
+    this->dev = nullptr;
     this->model = model;
 }
 
 void Listener::openListener(){
     if (this->dev == nullptr) { 
         //WRITE TO LOG 
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT SELECTED" << __PRETTY_FUNCTION__<< std::endl;
         return;
     }
     if (this->dev->isOpened()) {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS ACTUALLY OPEN" << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (this->dev->open()) {
-        //WRITE TO LOG
+        std::cout << "DEVICE IS OPENED AT INTERFACE: " << this->dev->getName() << std::endl;
     } else {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR CANT OPEN DEVICE" << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG 
     }
 }
 
 void Listener::closeListener(){
     if (this->dev == nullptr) {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT SELECTED " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (!this->dev->isOpened()) {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT OPEN " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;           
     }
     this->dev->close();
+    this->dev = nullptr;
 }
 
 void Listener::startCapturePackets(){
     if (this->dev == nullptr){
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT SELECTED " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
     if (!this->dev->isOpened()) {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT OPEN " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG
         return;
     }
@@ -60,7 +62,7 @@ void Listener::startCapturePackets(){
 
 void Listener::stopCapturePackets(){
     if (!this->dev->captureActive()) {
-        std::cout << "ERROR " << __PRETTY_FUNCTION__<< std::endl;
+        std::cout << "ERROR DEVICE IS NOT CAPTURING " << __PRETTY_FUNCTION__<< std::endl;
         //WRITE TO LOG 
         return;
     }
@@ -80,4 +82,25 @@ void Listener::setFilters(pcpp::AndFilter filter) {
     if (!this->dev->captureActive()) {
         this->dev->setFilter(filter);
     }
+}
+
+void Listener::setDeviceByName(std::string name) {
+    if (this->dev != nullptr) {
+        if (this->dev->isOpened()) {
+            std::cout << "DEVICE IS OPEN " << std::endl;
+            this->dev->close();
+            this->dev = nullptr;
+        }
+
+        if (this->dev->captureActive()) {
+            std::cout << "DEVICE IS CAPTURING " << std::endl;
+            return;
+        }
+    }
+    this->dev = pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDeviceByName(name);
+
+    if (this->dev != nullptr) {
+        std::cout << "DEVICE IS SELECTED: " << name << std::endl;
+    }
+
 }

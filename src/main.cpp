@@ -85,7 +85,7 @@ int main() {
     auto deviceView = std::make_shared<DeviceView>();
     auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
-    packetListener->openListener();
+    //packetListener->openListener();
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);

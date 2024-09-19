@@ -32,8 +32,6 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
         controller->setCurrentPacketId(-1);
     }
 
-
-
     std::vector<std::string> info;
     _packet.packet.toStringList(info);
     for (auto &layer : info) {

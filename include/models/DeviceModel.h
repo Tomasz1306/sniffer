@@ -23,9 +23,15 @@ public:
     void setDevices(std::vector<pcpp::PcapLiveDevice *> &_devices);
     std::vector<pcpp::PcapLiveDevice *> &getDevices();
     pcpp::PcapLiveDevice *getDevice();
+    std::vector<uint64_t> getDeviceStats();
+    std::string getDeviceIPv4Address();
+    std::string getDeviceIPv6Address();
+    std::string getDefaultGateway();
+    std::string getDeviceMacAddress();
+    std::vector<std::string> getDnsServers();
 
 private:
-
+    pcpp::IPcapDevice::PcapStats stats;
     std::shared_ptr<DeviceController> controller;
     pcpp::PcapLiveDevice *dev{nullptr};
     std::vector<pcpp::PcapLiveDevice *> devices;

@@ -19,6 +19,7 @@ void DeviceController::display() {
 
 void DeviceController::setNewDeviceByName(std::string _devName) {
     this->listener->setDeviceByName(_devName);
+    this->deviceModel->setDevice(this->listener->getDevice());
 }
 
 std::string DeviceController::getCurrentDeviceName() {
@@ -34,5 +35,19 @@ std::string DeviceController::getCurrentDeviceName() {
 void DeviceController::openCurrentDevice() {
     this->listener->openListener();
 }
+
+void DeviceController::closeCurrentDevice() {
+    this->listener->closeListener();
+}
+
+bool DeviceController::isDeviceOpen() {
+    return this->m_isDeviceOpen;
+}
+
+void DeviceController::setIsDeviceOpen(bool _isDeviceOpen) {
+    this->m_isDeviceOpen = _isDeviceOpen;
+}
+
+
 
 

@@ -56,28 +56,42 @@ void PacketCaptureView::displayMenuBar() {
 void PacketCaptureView::displayOption(std::shared_ptr<MainController> controller) {
 
     ImGui::BeginGroup();
-    if (ImGui::Button(this->captureButtonText.c_str(), ImVec2(200, 20))) {
-        if (this->captureButtonState == captureState::STOP) {
-            this->captureButtonState = captureState::START;
-            this->captureButtonText = "STOP";
-            std::thread startCaptureThread([controller] () {
-                controller->startCapture();
-            });
+    if (controller->isDeviceOpen()) {
+        if (ImGui::Button(this->captureButtonText.c_str(), ImVec2(200, 20))) {
+            if (this->captureButtonState == captureState::STOP) {
+                this->captureButtonState = captureState::START;
+                this->captureButtonText = "STOP";
+                std::thread startCaptureThread([controller] () {
+                    controller->startCapture();
+                });
 
-            startCaptureThread.detach();
-        } else {
-            this->captureButtonState = captureState::STOP;
-            this->captureButtonText = "START";
-            std::thread stopCaptureThread([controller]() {
-               controller->stopCapture();
-            });
-            stopCaptureThread.detach();
+                startCaptureThread.detach();
+            } else {
+                this->captureButtonState = captureState::STOP;
+                this->captureButtonText = "START";
+                std::thread stopCaptureThread([controller]() {
+                   controller->stopCapture();
+                });
+                stopCaptureThread.detach();
+            }
         }
+    } else {
+        ImGui::BeginDisabled();
+        ImGui::Button(this->captureButtonText.c_str(), ImVec2(200, 20));
+        ImGui::EndDisabled();
     }
+
     ImGui::SameLine();
-    if (ImGui::Button("CLEAR", ImVec2(200, 20))) {
-        controller->clearTableOfPackets();
+    if (controller->getPacketCapturedVectorSize() > 0) {
+        if (ImGui::Button("CLEAR", ImVec2(200, 20))) {
+            controller->clearTableOfPackets();
+        }
+    } else {
+        ImGui::BeginDisabled();
+        ImGui::Button("CLEAR", ImVec2(200, 20));
+        ImGui::EndDisabled();
     }
+
     ImGui::EndGroup();
 }
 

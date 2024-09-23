@@ -23,9 +23,13 @@ public:
         std::string getCurrentDeviceName();
         void setNewDeviceByName(std::string);
         void openCurrentDevice();
+        void closeCurrentDevice();
+        bool isDeviceOpen();
+        void setIsDeviceOpen(bool _isDeviceOpen);
 
 private:
 
+        bool m_isDeviceOpen{false};
         std::shared_ptr<DeviceModel> deviceModel;
         std::shared_ptr<DeviceView> deviceView;
         std::shared_ptr<Listener> listener;

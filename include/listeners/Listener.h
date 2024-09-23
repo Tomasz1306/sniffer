@@ -27,8 +27,8 @@ public:
     std::vector<pcpp::PcapLiveDevice *> &getDevices() {return this->devices;}
     void setDeviceByName(std::string name);
 
-    bool isDeviceOpen();
     bool isDeviceCapturing();
+    bool isDeviceOpen();
 
     ~Listener() {};
 

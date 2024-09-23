@@ -39,6 +39,10 @@ void MainController::clearTableOfPackets() {
 
 }
 
+bool MainController::isDeviceOpen() {
+    return this->listener->isDeviceOpen();
+}
+
 void MainController::setIsDisplayedPakcet(bool _isDisplayedPakcet) {
     this->isPacketDisplayed = _isDisplayedPakcet;
 
@@ -68,6 +72,10 @@ void MainController::displayPrevPacket() {
 
 bool MainController::isDisplayedPakcet() {
     return this->isPacketDisplayed;
+}
+
+int MainController::getPacketCapturedVectorSize() {
+    return this->model->getCapturedPacketVector().size();
 }
 
 

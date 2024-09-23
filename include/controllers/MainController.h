@@ -32,6 +32,8 @@ public:
     void setCurrentPacketId(int _id);
     void displayNextPacket();
     void displayPrevPacket();
+    bool isDeviceOpen();
+    int getPacketCapturedVectorSize();
 
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 private:

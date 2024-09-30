@@ -10,6 +10,9 @@
 #include "models/DeviceModel.h"
 #include <views/DeviceView.h>
 #include <views/PacketView.h>
+#include "controllers/WindowManagerController.h"
+#include "models/WindowManagerModel.h"
+#include "views/WindowManagerView.h"
 
 
 #include "imgui.h"
@@ -77,6 +80,8 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    auto windowManagerView = std::make_shared<WindowManagerView>();
+    auto windowManagerModel = std::make_shared<WindowManagerModel>();
     auto packetView = std::make_shared<PacketView>();
     auto packetCaptureView = std::make_shared<PacketCaptureView>();
     auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
@@ -86,6 +91,12 @@ int main() {
     auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     //packetListener->openListener();
+    auto windowManagerController = std::make_shared<WindowManagerController>(windowManagerModel, windowManagerView);
+    windowManagerController->addView(windowManagerView);
+    windowManagerController->addView(packetView);
+    windowManagerController->addView(packetCaptureView);
+    windowManagerController->addView(filterView);
+    windowManagerController->addView(deviceView);
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
@@ -101,6 +112,7 @@ int main() {
         mainController->display();
         filterController->display();
         deviceController->display();
+        windowManagerController->display();
         // Renderowanie ImGui
         ImGui::Render();
         int display_w, display_h;

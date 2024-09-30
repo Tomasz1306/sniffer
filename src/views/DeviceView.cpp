@@ -7,18 +7,24 @@
 #include <iostream>
 
 DeviceView::DeviceView() {
-
+    this->windowTitle = "DEVICES";
+    this->windowHeight = 600.0f;
+    this->windowWidth = 200.0f;
+    this->windowX = 0.0f;
+    this->windowY = 0.0f;
+    this->isWindowOpened = true;
+    this->windowFlags = ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar;
 }
 
 void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared_ptr<DeviceModel> _model) {
     //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
-    ImGui::SetWindowSize("DEVICES", ImVec2(1200.0f, 200.0f));
-    if (!packetWindowInitialized) {
-        ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-        packetWindowInitialized = true;
+    ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
+    if (!this->isWindowInitialized) {
+        ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
+        this->isWindowInitialized = true;
     }
 
-    ImGui::Begin("DEVICES", nullptr, ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar);
+    ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
     const char* devices[this->deviceNames.size()];
     for (int i = 0; i < this->deviceNames.size(); i++) {

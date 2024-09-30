@@ -13,7 +13,7 @@ class MainController;
 
 class PacketView : public View {
 public:
-
+    PacketView();
     void draw(std::shared_ptr<MainController> controller, CapturedPackets &_packet);
 
 private:

@@ -23,7 +23,7 @@ class PacketCaptureView : public View {
 
 public:
 
-    PacketCaptureView () {}
+    PacketCaptureView();
     virtual ~PacketCaptureView() {}
     void draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets);
 
@@ -43,6 +43,7 @@ private:
     std::string parseTimeToStr(std::time_t);
     bool isDownKeyPressed = false;
     bool isUpKeyPressed  = false;
+    bool autoScroll = true;
     void displayMenuBar();
     //TODO zmienic nazwe na bardziej odpowiadajaca dla displayOption
     void displayOption(std::shared_ptr<MainController> controller);

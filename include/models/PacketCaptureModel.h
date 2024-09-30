@@ -20,9 +20,7 @@ public:
 
     std::vector<CapturedPackets> &getCapturedPacketVector();
     void addToCapturedPacketDeque(pcpp::Packet packet);
-
     void writeFromDequeToVector();
-
     void clearCapturedPacketVector();
 
 private:

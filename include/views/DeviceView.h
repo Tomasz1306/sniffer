@@ -7,6 +7,7 @@
 
 #include <controllers/DeviceController.h>
 #include "models/DeviceModel.h"
+#include "views/View.h"
 
 
 #include "imgui.h"
@@ -19,7 +20,7 @@
 class DeviceController;
 class DeviceModel;
 
-class DeviceView {
+class DeviceView : public View {
 public:
 
     DeviceView();

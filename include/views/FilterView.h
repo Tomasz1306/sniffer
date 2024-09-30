@@ -11,9 +11,9 @@
 #include <string>
 #include <memory>
 
-class FilterView :public View {
+class FilterView : public View {
 public:
-    FilterView() {}
+    FilterView();
     virtual ~FilterView() {}
     void draw(std::shared_ptr<FilterModel> model);
 

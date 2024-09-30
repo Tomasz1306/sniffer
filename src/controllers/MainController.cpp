@@ -36,7 +36,7 @@ void MainController::stopCapture() {
 }
 
 void MainController::clearTableOfPackets() {
-
+    this->model->clearCapturedPacketVector();
 }
 
 bool MainController::isDeviceOpen() {

@@ -11,21 +11,30 @@
 #include <iomanip>
 #include <PayloadLayer.h>
 
+PacketView::PacketView() {
+    this->windowTitle = "PACKET";
+    this->windowHeight = 1000.0f;
+    this->windowWidth = 800.0f;
+    this->windowX = 200.0f;
+    this->windowY = 200.0f;
+    this->isWindowOpened = false;
+    this->windowFlags = 0;
+}
+
 std::string PacketView::byteToHex(unsigned char byte) {
     std::stringstream ss;
     ss << std::hex << std::setw(2) << std::setfill('0') << (int)byte;
     return ss.str();
 }
-//TODO store windows name to a field of class
-//TODO store window flags to a fields of class
+
 void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPackets &_packet) {
-    ImGui::SetWindowSize("PACKET", ImVec2(1000.0f, 800.0f));
-    if (!isInitialized) {
-        ImGui::SetNextWindowPos(ImVec2(200.0f, 200.0f));
-        isInitialized = true;
+    ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
+    if (!this->isWindowInitialized) {
+        ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
+        this->isWindowInitialized = true;
     }
     this->keyboardHandling(controller, _packet);
-    ImGui::Begin("PACKET");
+    ImGui::Begin(this->windowTitle.c_str(), NULL, this->windowFlags);
     ImGui::Text("Packet");
     if (ImGui::Button("Close")) {
         controller->setIsDisplayedPakcet(false);

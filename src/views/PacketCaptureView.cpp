@@ -16,21 +16,29 @@
 #include <TcpLayer.h>
 #include <UdpLayer.h>
 
+PacketCaptureView::PacketCaptureView() {
+    this->windowTitle = "PACKETS";
+    this->windowHeight = 1200.0f;
+    this->windowWidth = 630.0f;
+    this->windowX = 0.0f;
+    this->windowY = 450.0f;
+    this->isWindowOpened = true;
+    this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus;
+}
+
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
-    //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
     this->isDownKeyPressed = false;
     this->isUpKeyPressed = false;
-    ImGui::SetWindowSize("PACKETS", ImVec2(1200.0f, 630.0f));
-    if (!packetWindowInitialized) {
-        ImGui::SetNextWindowPos(ImVec2(0.0f, 450.0f));
-        packetWindowInitialized = true;
+    ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
+    if (!this->isWindowInitialized) {
+        ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
+        this->isWindowInitialized = true;
     }
-    ImGui::Begin("PACKETS", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus);
+    ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
     this->displayMenuBar();
     this->displayOption(controller);
     this->displayTableOfPackets(packets, controller);
-
 
     ImGui::End();
 }
@@ -48,7 +56,6 @@ void PacketCaptureView::displayMenuBar() {
             }
             ImGui::EndMenu();
         }
-
         ImGui::EndMenuBar();
     }
 }
@@ -91,7 +98,6 @@ void PacketCaptureView::displayOption(std::shared_ptr<MainController> controller
         ImGui::Button("CLEAR", ImVec2(200, 20));
         ImGui::EndDisabled();
     }
-
     ImGui::EndGroup();
 }
 
@@ -110,6 +116,8 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
         ImGui::TableSetupColumn("DST PORT", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableHeadersRow();
 
+        float scrollY = ImGui::GetScrollY();
+        float scrollMaxY = ImGui::GetScrollMaxY();
 
         std::lock_guard<std::mutex> lock(guard_1);
         for (auto& packet : packets) {
@@ -124,7 +132,14 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
             this->displayNetworkProtocol(pcapPacket);
             this->displayTransportProtocol(pcapPacket);
             this->displayTransportLayer(pcapPacket);
-
+        }
+        if (this->autoScroll && scrollY >= scrollMaxY) {
+            ImGui::SetScrollHereY(1.0f);
+        }
+        if (scrollY < scrollMaxY) {
+            this->autoScroll = false;
+        } else {
+            this->autoScroll = true;
         }
         ImGui::EndTable();
     }
@@ -174,13 +189,12 @@ void PacketCaptureView::displayEthernetLayer(const pcpp::Packet &packet) {
     if (packet.isPacketOfType(pcpp::Ethernet)) {
         ethLayer = std::make_shared<pcpp::EthLayer>(*packet.getLayerOfType<pcpp::EthLayer>());
     }
-
     if (ethLayer != nullptr) {
         ImGui::TableNextColumn();
         ImGui::Text("%s", ethLayer->getSourceMac().toString().c_str());
         ImGui::TableNextColumn();
         ImGui::Text("%s", ethLayer->getDestMac().toString().c_str());
-    }else {
+    } else {
         ImGui::TableNextColumn();
         ImGui::TableNextColumn();
     }
@@ -193,11 +207,9 @@ void PacketCaptureView::displayNetworkProtocol(const pcpp::Packet &packet) {
     if (packet.isPacketOfType(pcpp::IPv4)) {
         ipv4Layer = std::make_shared<pcpp::IPv4Layer>(*packet.getLayerOfType<pcpp::IPv4Layer>());
     }
-
     if (packet.isPacketOfType(pcpp::IPv6)) {
         ipv6Layer = std::make_shared<pcpp::IPv6Layer>(*packet.getLayerOfType<pcpp::IPv6Layer>());
     }
-
     if (ipv4Layer != nullptr) {
         ImGui::TableNextColumn();
         ImGui::Text("%s", ipv4Layer->getSrcIPAddress().toString().c_str());
@@ -205,9 +217,9 @@ void PacketCaptureView::displayNetworkProtocol(const pcpp::Packet &packet) {
         ImGui::Text("%s", ipv4Layer->getDstIPAddress().toString().c_str());
     } else if (ipv6Layer != nullptr) {
         ImGui::TableNextColumn();
-        ImGui::Text("%s", ipv6Layer->getSrcIPAddress().toString().c_str());
+        ImGui::Text("%.11s...", ipv6Layer->getSrcIPAddress().toString().c_str());
         ImGui::TableNextColumn();
-        ImGui::Text("%s", ipv6Layer->getDstIPAddress().toString().c_str());
+        ImGui::Text("%.11s...", ipv6Layer->getDstIPAddress().toString().c_str());
     } else {
         ImGui::TableNextColumn();
         ImGui::TableNextColumn();
@@ -258,7 +270,6 @@ void PacketCaptureView::displayFlags(const pcpp::Packet &packet) {
 }
 
 std::string PacketCaptureView::parseTimeToStr(std::time_t seconds) {
-
     const std::shared_ptr<tm> ptm = std::make_shared<tm>(*std::localtime(&seconds));
     char timeString[32] = "\0";
     std::strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", ptm.get());

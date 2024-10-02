@@ -16,6 +16,9 @@
 #include "controllers/StatisticController.h"
 #include "models/StatisticModel.h"
 #include "views/StatisticView.h"
+#include "controllers/LogController.h"
+#include "models/LogModel.h"
+#include "views/LogView.h"
 
 
 #include "imgui.h"
@@ -31,6 +34,7 @@
 
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 //TODO zaimplementowac window menager
 //TODO uporzadkowac includy i usunca nieporzebne
@@ -41,7 +45,10 @@ void glfw_error_callback(int error, const char* description) {
 }
 
 int main() {
-
+    time_t tt;
+    struct tm* ti;
+    time(&tt);
+    ti = localtime(&tt);
     auto utils = Utils::getInstance();
     // Ustawienie callbacka błędów GLFW
     glfwSetErrorCallback(glfw_error_callback);
@@ -84,6 +91,8 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    auto logView = std::make_shared<LogView>();
+    auto logModel = std::make_shared<LogModel>(asctime(ti));
     auto statisticView = std::make_shared<StatisticView>();
     auto statisticModel = std::make_shared<StatisticModel>();
     auto windowManagerView = std::make_shared<WindowManagerView>();
@@ -97,6 +106,9 @@ int main() {
     auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     //packetListener->openListener();
+    LogController::getInstance();
+    LogController::getInstance()->setModel(logModel);
+    LogController::getInstance()->setView(logView);
     auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView);
     auto windowManagerController = std::make_shared<WindowManagerController>(windowManagerModel, windowManagerView);
     windowManagerController->addView(windowManagerView);
@@ -114,11 +126,6 @@ int main() {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::Begin("MyDockspace", nullptr, ImGuiWindowFlags_NoDocking);
-        ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
-        ImGui::DockSpace(dockspace_id, ImVec2(0, 0), ImGuiDockNodeFlags_None);
-        ImGui::End();
-
 
         if (!dockInitialized) {
             ImGuiID dockspace_id = ImGui::GetID("MyDockspace");

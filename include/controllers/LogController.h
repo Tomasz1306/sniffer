@@ -5,10 +5,34 @@
 #ifndef LOGCONTROLLER_H
 #define LOGCONTROLLER_H
 
-class LogController {
+#include "models/LogModel.h"
+#include "views/LogView.h"
+
+#include <memory>
+#include <vector>
+
+class LogModel;
+class LogView;
+
+
+
+class LogController : public std::enable_shared_from_this<LogController> {
 public:
+    LogController();
+
+    static std::shared_ptr<LogController> getInstance();
+
+    void display();
+    void setModel(std::shared_ptr<LogModel> model);
+    void setView(std::shared_ptr<LogView> view);
+
+    void addLog(std::string date, std::string description);
+    std::vector<std::pair<std::string , std::string>>& getLogs();
 
 private:
+
+    std::shared_ptr<LogModel> model;
+    std::shared_ptr<LogView> view;
 
 };
 

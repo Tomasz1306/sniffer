@@ -15,10 +15,10 @@ PacketView::PacketView() {
     this->windowTitle = "PACKET";
     this->windowHeight = 1000.0f;
     this->windowWidth = 800.0f;
-    this->windowX = 200.0f;
-    this->windowY = 200.0f;
+    // this->windowX = 200.0f;
+    // this->windowY = 200.0f;
     this->isWindowOpened = false;
-    this->windowFlags = 0;
+    // this->windowFlags = 0;
 }
 
 std::string PacketView::byteToHex(unsigned char byte) {
@@ -44,7 +44,10 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
     std::vector<std::string> info;
     _packet.packet.toStringList(info);
     for (auto &layer : info) {
-        ImGui::BulletText("%s", layer.c_str());
+        // ImGui::BulletText("%s", layer.c_str());
+        if (ImGui::Selectable(layer.c_str())) {
+            ImGui::SetClipboardText(layer.c_str());
+        }
     }
 
     ImGui::Text("Packet ID: %d", _packet.id);

@@ -33,11 +33,11 @@ public:
 private:
 
     int selectedRow{-1};
+    int singleSelectRow{-1};
     std::string captureButtonText{"START"};
     captureState captureButtonState{captureState::STOP};
 
-
-    ImGuiSelectableFlags selectableRowFlags = ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_SelectOnClick;
+    ImGuiSelectableFlags selectableRowFlags = ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_SelectOnClick | ImGuiMultiSelectFlags_SingleSelect;
 
     void displayPacketToolTip();
     std::string parseTimeToStr(std::time_t);
@@ -57,7 +57,6 @@ private:
     void displayTransportLayer(const pcpp::Packet&);
     void displayFlags(const pcpp::Packet&);
     void keyboardHandling(std::shared_ptr<MainController> controller,std::vector<CapturedPackets> &packets, CapturedPackets &packet);
-
 };
 
 #endif // PACKETSNIFFWINDOW

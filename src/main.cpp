@@ -13,6 +13,9 @@
 #include "controllers/WindowManagerController.h"
 #include "models/WindowManagerModel.h"
 #include "views/WindowManagerView.h"
+#include "controllers/StatisticController.h"
+#include "models/StatisticModel.h"
+#include "views/StatisticView.h"
 
 
 #include "imgui.h"
@@ -55,7 +58,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(1920, 1080, "SNIFFER", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1800, 1000, "SNIFFER", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -65,10 +68,11 @@ int main() {
     glfwSwapInterval(0); // Włącz V-sync
 
     // Ustawienia kontekstu ImGui
-    IMGUI_CHECKVERSION();
+    // IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 16.0f);
 
 
@@ -80,6 +84,8 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    auto statisticView = std::make_shared<StatisticView>();
+    auto statisticModel = std::make_shared<StatisticModel>();
     auto windowManagerView = std::make_shared<WindowManagerView>();
     auto windowManagerModel = std::make_shared<WindowManagerModel>();
     auto packetView = std::make_shared<PacketView>();
@@ -91,6 +97,7 @@ int main() {
     auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
     //packetListener->openListener();
+    auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView);
     auto windowManagerController = std::make_shared<WindowManagerController>(windowManagerModel, windowManagerView);
     windowManagerController->addView(windowManagerView);
     windowManagerController->addView(packetView);
@@ -100,20 +107,52 @@ int main() {
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
+    bool dockInitialized = false;
 
-    // Główna pętla aplikacji
     while (!glfwWindowShouldClose(window)) {
-        // Początek nowej klatki ImGui
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGui::Begin("MyDockspace", nullptr, ImGuiWindowFlags_NoDocking);
+        ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+        ImGui::DockSpace(dockspace_id, ImVec2(0, 0), ImGuiDockNodeFlags_None);
+        ImGui::End();
 
-        // Renderowanie widoków
+
+        if (!dockInitialized) {
+            ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+            ImGui::DockBuilderRemoveNode(dockspace_id);
+            ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_None);
+            ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+
+            ImGuiID dock_main_id = dockspace_id;
+            ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.6f, nullptr, &dock_main_id);
+
+            ImGuiID dock_left_top = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.15f, nullptr, &dock_id_left);
+            ImGuiID dock_left_mid = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.25f, nullptr, &dock_id_left);
+            ImGuiID dock_left_bot = dock_id_left;
+
+            ImGuiID dock_left_top_left = ImGui::DockBuilderSplitNode(dock_left_top, ImGuiDir_Left, 0.5f, nullptr, &dock_left_top);
+            ImGuiID dock_left_top_right = dock_left_top;
+
+
+            ImGui::DockBuilderDockWindow("DEVICES", dock_left_top_left);
+            ImGui::DockBuilderDockWindow("WINDOW MANAGER", dock_left_top_right);
+            ImGui::DockBuilderDockWindow("FILTERS", dock_left_mid);
+            ImGui::DockBuilderDockWindow("PACKETS", dock_left_bot);
+            ImGui::DockBuilderDockWindow("STATISTICS", dock_main_id);
+
+            ImGui::DockBuilderFinish(dockspace_id);
+            dockInitialized = true;
+        }
+
         mainController->display();
         filterController->display();
         deviceController->display();
         windowManagerController->display();
-        // Renderowanie ImGui
+        statisticController->display();
+
         ImGui::Render();
         int display_w, display_h;
         // glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -122,13 +161,12 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
     packetListener->stopCapturePackets();
     packetListener->closeListener();
-    // Clean up
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

@@ -57,6 +57,7 @@ void Listener::startCapturePackets(){
         //WRITE TO LOG
         return;
     }
+    std::cout << "START CAPTURING PACKETS" << std::endl;
     this->dev->startCapture(Utils::onPacketArrivesBlockingMode, &model);
 }
 
@@ -76,6 +77,7 @@ void Listener::stopCapturePackets(){
         //WRITE TO LOG 
         return;
     }
+    std::cout << "STOP CAPTURING PACKETS" << std::endl;
     this->dev->stopCapture();
 }
 

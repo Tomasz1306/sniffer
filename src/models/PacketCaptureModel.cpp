@@ -21,13 +21,14 @@ void PacketCaptureModel::writeFromDequeToVector(){
             ++this->counter;
             this->capturedPackets_deque.pop_front();
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
 
 void PacketCaptureModel::clearCapturedPacketVector() {
     std::lock_guard lock(guard_1);
     this->capturedPackets_vector.clear();
+    this->counter = 0;
 }
 
 PacketCaptureModel::~PacketCaptureModel() {

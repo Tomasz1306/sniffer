@@ -13,27 +13,29 @@
 //TODO wykonac refactor metody draw
 FilterView::FilterView() {
     this->windowTitle = "FILTERS";
-    this->windowHeight = 1200.0f;
-    this->windowWidth = 250.0f;
-    this->windowX = 0.0f;
-    this->windowY = 200.0f;
+    // this->windowHeight = 1200.0f;
+    // this->windowWidth = 250.0f;
+    // this->windowX = 0.0f;
+    // this->windowY = 200.0f;
     this->isWindowOpened = true;
-    this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus;
+    // this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus;
 }
 
 void FilterView::draw(std::shared_ptr<FilterModel> model) {
-    ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
-    if (!this->isWindowInitialized) {
-        ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
-        this->isWindowInitialized = true;
-    }
+    //ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
+    // if (!this->isWindowInitialized) {
+    //     ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
+    //     this->isWindowInitialized = true;
+    // }
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
+
+    this->displayOption(model);
 
     ImGui::Columns(4, "mycolumns", false); // 2 kolumny
     ImGui::SetColumnWidth(0,310);
     ImGui::SetColumnWidth(1, 310);
-    ImGui::SetColumnWidth(2, 150);
-    ImGui::SetColumnWidth(3, 150);
+    ImGui::SetColumnWidth(2, 180);
+    ImGui::SetColumnWidth(3, 180);
     ImGui::SetNextItemWidth(300);
     this->addressIpSection(model);
     ImGui::NextColumn();
@@ -46,12 +48,7 @@ void FilterView::draw(std::shared_ptr<FilterModel> model) {
     ImGui::SetNextItemWidth(300);
     this->protocolsSection(model);
     ImGui::Columns(1);
-    ImGui::SetCursorPosX((1200 - 400) * 0.5f);
-    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 50);
-    //TODO naprawic pole najezdzanai na przycisk, prawa strona przycisku nie wychwytuje myszki
-    if (ImGui::Button("Zatwierdz", ImVec2(400, 50))) {
-        model->setUpdate(true);
-    }
+
     ImGui::End();
 }
 
@@ -165,4 +162,15 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
     ImGui::EndChild();
 }
 
+void FilterView::displayOption(std::shared_ptr<FilterModel> model) {
+    ImGui::BeginGroup();
+    if (ImGui::Button("Confirm", ImVec2(200, 20))) {
+        model->setUpdate(true);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Reset", ImVec2(200, 20))) {
 
+    }
+
+    ImGui::EndGroup();
+}

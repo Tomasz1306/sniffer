@@ -19,9 +19,10 @@ void PacketCaptureModel::writeFromDequeToVector(){
             std::lock_guard lock(guard_1);
             this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.front());
             ++this->counter;
+            this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
             this->capturedPackets_deque.pop_front();
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
 
@@ -35,4 +36,8 @@ PacketCaptureModel::~PacketCaptureModel() {
     if (this->thread_1->joinable()) {
         this->thread_1->join();
     }
+}
+
+void PacketCaptureModel::setController(std::shared_ptr<MainController> controller) {
+    this->controller = controller;
 }

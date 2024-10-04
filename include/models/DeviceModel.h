@@ -6,7 +6,6 @@
 #define DEVICEMODEL_H
 
 #include "controllers/DeviceController.h"
-#include <PcapLiveDeviceList.h>
 #include <PcapLiveDevice.h>
 #include <vector>
 #include <memory>
@@ -35,9 +34,6 @@ private:
     std::shared_ptr<DeviceController> controller;
     pcpp::PcapLiveDevice *dev{nullptr};
     std::vector<pcpp::PcapLiveDevice *> devices;
-
 };
-
-
 
 #endif //DEVICEMODEL_H

@@ -3,6 +3,7 @@
 
 #include "models/Model.h"
 #include "models/PacketModel.h"
+#include "controllers/MainController.h"
 
 #include <thread>
 #include <memory>
@@ -10,6 +11,8 @@
 
 #include <PacketUtils.h>
 #include <PcapLiveDevice.h>
+
+class MainController;
 
 class PacketCaptureModel : public Model {
 
@@ -22,6 +25,7 @@ public:
     void addToCapturedPacketDeque(pcpp::Packet packet);
     void writeFromDequeToVector();
     void clearCapturedPacketVector();
+    void setController(std::shared_ptr<MainController> controller);
 
 private:
 
@@ -30,11 +34,7 @@ private:
     std::shared_ptr<std::thread> thread_1;
     std::vector<CapturedPackets> capturedPackets_vector;
     std::deque<pcpp::Packet> capturedPackets_deque;
-
-
-private:
-
-
+    std::shared_ptr<MainController> controller;
 
 };
 

@@ -9,6 +9,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(lib/PcapPlusPlus)
 add_library(PcapPlusPlus::Pcap++ ALIAS Pcap++)
+add_subdirectory(lib/mysql-connector-cpp)
+
+#find_package(MySQL REQUIRED)
+
 # Znajdź wymagane pakiety
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
@@ -32,4 +36,4 @@ add_executable(sniffer ${SOURCES} ${HEADERS})
 
 
 # Połącz biblioteki z plikiem wykonywalnym
-target_link_libraries(sniffer PUBLIC PcapPlusPlus::Pcap++ imgui glfw OpenGL::GL )
+target_link_libraries(sniffer PUBLIC PcapPlusPlus::Pcap++ imgui glfw OpenGL::GL mysqlcppconn)

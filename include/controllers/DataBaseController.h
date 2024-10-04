@@ -6,11 +6,48 @@
 #define DATABASECONTROLLER_H
 #include <mysql_connection.h>
 #include <mysql_driver.h>
-#include <mysql_error.h>
-class DataBaseController {
-public:
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include "cppconn/prepared_statement.h"
 
+#include "models/DataBaseModel.h"
+#include "views/DataBaseView.h"
+
+#include <memory>
+
+class DataBaseModel;
+class DataBaseView;
+
+class DataBaseController : public std::enable_shared_from_this<DataBaseController>{
+public:
+    DataBaseController(std::shared_ptr<DataBaseModel> model, std::shared_ptr<DataBaseView> view);
+
+    ~DataBaseController();
+
+    void display();
+    std::shared_ptr<DataBaseController> getController();
+
+    void connectToDataBase(std::string host, std::string port, std::string username, std::string password);
+    void disconnectFromDataBase();
+    void loadDatabases();
+    void newDatabase(std::string database);
+
+    bool isConnectedToDataBase();
+
+    std::string getHost();
+    std::string getPort();
+    std::string getUsername();
+    std::string getPassword();
+    std::vector<std::string>& getDatabases();
 private:
+
+    std::shared_ptr<DataBaseModel> model;
+    std::shared_ptr<DataBaseView> view;
+    sql::mysql::MySQL_Driver *driver;
+    sql::Connection *connection;
+    sql::Statement *stmt;
+    sql::PreparedStatement *prep_stmt;
+    sql::ResultSet *res;
 
 };
 

@@ -17,11 +17,15 @@ std::shared_ptr<LogController> LogController::getInstance() {
 }
 
 void LogController::display() {
-    this->view->draw(logControllerInstance);
+    this->view->draw();
 }
 
-void LogController::addLog(std::string date, std::string description) {
-    this->model->addLog(date, description);
+void LogController::addLog(std::string date, std::string description, LogType type) {
+    this->model->addLog(date, description, type);
+}
+
+std::vector<LogData>& LogController::getLogs() {
+    return this->model->getLogs();
 }
 
 void LogController::setModel(std::shared_ptr<LogModel> model) {

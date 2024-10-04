@@ -5,19 +5,18 @@
 MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     std::shared_ptr<PacketCaptureView> _view,
     std::shared_ptr<Listener> _listener,
-    std::shared_ptr<PacketView> _packetView) {
+    std::shared_ptr<PacketView> _packetView,
+    std::shared_ptr<StatisticController> _statisticController) {
     this->model = _model;
     this->view = _view;
     this->listener = _listener;
     this->packetView = _packetView;
+    this->statisticController = _statisticController;
 }
 
-void MainController::run() {
-
-}
-
-void MainController::update(){
-
+void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
+    auto model = static_cast<std::shared_ptr<PacketCaptureModel>*>(cookie);
+    (*model)->addToCapturedPacketDeque(pcpp::Packet(packet));
 }
 
 void MainController::display(){
@@ -78,5 +77,10 @@ int MainController::getPacketCapturedVectorSize() {
     return this->model->getCapturedPacketVector().size();
 }
 
+void MainController::addPacketToStatistics(pcpp::Packet &packet) {
+    this->statisticController->addPacketToStatistics(packet);
+}
 
-
+bool MainController::isDeviceSelected() {
+    return this->listener->isDeviceSelected();
+}

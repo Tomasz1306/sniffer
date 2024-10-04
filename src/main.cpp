@@ -19,7 +19,12 @@
 #include "controllers/LogController.h"
 #include "models/LogModel.h"
 #include "views/LogView.h"
-
+#include "controllers/DataBaseController.h"
+#include "models/DataBaseModel.h"
+#include "views/DataBaseView.h"
+#include "controllers/AnalyzerController.h"
+#include "models/AnalyzerModel.h"
+#include "views/AnalyzerView.h"
 
 #include "imgui.h"
 #include "GLFW/glfw3.h"
@@ -36,19 +41,15 @@
 #include <vector>
 #include <ctime>
 
-//TODO zaimplementowac window menager
 //TODO uporzadkowac includy i usunca nieporzebne
 //TODO Napisac "forward declaration" dla kazdego zbioru MVC
+//TODO na 04.10.2024 obsluga bazy danych, zapisywanie i usuwanie pakietow do plikow.
 
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
 
 int main() {
-    time_t tt;
-    struct tm* ti;
-    time(&tt);
-    ti = localtime(&tt);
     auto utils = Utils::getInstance();
     // Ustawienie callbacka błędów GLFW
     glfwSetErrorCallback(glfw_error_callback);
@@ -82,7 +83,6 @@ int main() {
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 16.0f);
 
-
     // Ustawienia stylu ImGui
     ImGui::StyleColorsDark();
     ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f);
@@ -91,10 +91,14 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    auto analyzerView = std::make_shared<AnalyzerView>();
+    auto analyzerModel = std::make_shared<AnalyzerModel>();
+    auto dataBaseView = std::make_shared<DataBaseView>();
+    auto dataBaseModel = std::make_shared<DataBaseModel>();
     auto logView = std::make_shared<LogView>();
-    auto logModel = std::make_shared<LogModel>(asctime(ti));
+    auto logModel = std::make_shared<LogModel>(Utils::getTime());
     auto statisticView = std::make_shared<StatisticView>();
-    auto statisticModel = std::make_shared<StatisticModel>();
+    auto statisticModel = std::make_shared<StatisticModel>(Utils::getTime());
     auto windowManagerView = std::make_shared<WindowManagerView>();
     auto windowManagerModel = std::make_shared<WindowManagerModel>();
     auto packetView = std::make_shared<PacketView>();
@@ -109,7 +113,9 @@ int main() {
     LogController::getInstance();
     LogController::getInstance()->setModel(logModel);
     LogController::getInstance()->setView(logView);
-    auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView);
+    auto analyzerController = std::make_shared<AnalyzerController>(analyzerModel, analyzerView);
+    auto dataBaseController = std::make_shared<DataBaseController>(dataBaseModel, dataBaseView);
+    auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView, packetListener);
     auto windowManagerController = std::make_shared<WindowManagerController>(windowManagerModel, windowManagerView);
     windowManagerController->addView(windowManagerView);
     windowManagerController->addView(packetView);
@@ -117,7 +123,8 @@ int main() {
     windowManagerController->addView(filterView);
     windowManagerController->addView(deviceView);
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
-    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView);
+    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView, statisticController);
+    packetCaptureModel->setController(mainController);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
     bool dockInitialized = false;
 
@@ -135,6 +142,9 @@ int main() {
 
             ImGuiID dock_main_id = dockspace_id;
             ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.6f, nullptr, &dock_main_id);
+            ImGuiID dock_id_right = dock_main_id;
+
+            ImGuiID dock_id_right_top = ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.4f, nullptr, &dock_id_right);
 
             ImGuiID dock_left_top = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.15f, nullptr, &dock_id_left);
             ImGuiID dock_left_mid = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.25f, nullptr, &dock_id_left);
@@ -143,12 +153,14 @@ int main() {
             ImGuiID dock_left_top_left = ImGui::DockBuilderSplitNode(dock_left_top, ImGuiDir_Left, 0.5f, nullptr, &dock_left_top);
             ImGuiID dock_left_top_right = dock_left_top;
 
-
             ImGui::DockBuilderDockWindow("DEVICES", dock_left_top_left);
             ImGui::DockBuilderDockWindow("WINDOW MANAGER", dock_left_top_right);
             ImGui::DockBuilderDockWindow("FILTERS", dock_left_mid);
             ImGui::DockBuilderDockWindow("PACKETS", dock_left_bot);
-            ImGui::DockBuilderDockWindow("STATISTICS", dock_main_id);
+            ImGui::DockBuilderDockWindow("STATISTICS", dock_id_right_top);
+            ImGui::DockBuilderDockWindow("LOGS", dock_id_right_top);
+            ImGui::DockBuilderDockWindow("DB", dock_id_right_top);
+            ImGui::DockBuilderDockWindow("ANALYZER", dock_id_right);
 
             ImGui::DockBuilderFinish(dockspace_id);
             dockInitialized = true;
@@ -159,6 +171,9 @@ int main() {
         deviceController->display();
         windowManagerController->display();
         statisticController->display();
+        LogController::getInstance()->display();
+        dataBaseController->display();
+        analyzerController->display();
 
         ImGui::Render();
         int display_w, display_h;

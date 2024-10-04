@@ -3,7 +3,7 @@
 
 #include "models/Model.h"
 #include "models/PacketCaptureModel.h"
-
+#include "controllers/MainController.h"
 
 #include <PcapFileDevice.h>
 #include <PcapLiveDevice.h>
@@ -13,8 +13,10 @@
 #include <thread>
 #include <memory>
 
-class Listener{ 
+class MainController;
+class PacketCaptureModel;
 
+class Listener {
 public:
     Listener(std::shared_ptr<PacketCaptureModel> model);
 
@@ -29,6 +31,7 @@ public:
 
     bool isDeviceCapturing();
     bool isDeviceOpen();
+    bool isDeviceSelected();
 
     ~Listener() {};
 

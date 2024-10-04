@@ -3,11 +3,53 @@
 //
 
 #include "views/LogView.h"
+#include "imgui.h"
 
 LogView::LogView() {
-
+    this->windowTitle = "LOGS";
+    this->isWindowOpened = true;
 }
 
-void LogView::draw(std::shared_ptr<LogController> controller) {
+void LogView::draw() {
+    ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
+    if (ImGui::BeginTable("LogTable__", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+        // Ustawienia nagłówków kolumn
+        ImGui::TableSetupColumn("Date");
+        ImGui::TableSetupColumn("Description");
+        ImGui::TableSetupColumn("Info");
+        ImGui::TableHeadersRow();
+        for (auto &log : LogController::getInstance()->getLogs()) {
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("%s", log.date.c_str());
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%s", log.description.c_str());
+            if (ImGui::IsItemHovered()) {
+                ImGui::BeginTooltip();
+                ImGui::Text("%s", log.description.c_str());
+                ImGui::EndTooltip();
+            }
+
+        ImGui::TableSetColumnIndex(2);
+        switch(log.type) {
+            case LogType::ERROR:
+                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+                ImGui::Text("Error");
+                break;
+            case LogType::WARNING:
+                ImGui::Text("Warning");
+                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+                break;
+            case LogType::SUCCESFULL:
+                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+                ImGui::Text("Succesfull");
+                break;
+        }
+        ImGui::PopStyleColor();
+        }
+        ImGui::EndTable();
+    }
+    ImGui::End();
 }

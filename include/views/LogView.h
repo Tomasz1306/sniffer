@@ -15,7 +15,7 @@ class LogController;
 class LogView : public View {
 public:
     LogView();
-    void draw(std::shared_ptr<LogController> controller);
+    void draw();
 private:
 
 };

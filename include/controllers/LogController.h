@@ -26,8 +26,8 @@ public:
     void setModel(std::shared_ptr<LogModel> model);
     void setView(std::shared_ptr<LogView> view);
 
-    void addLog(std::string date, std::string description);
-    std::vector<std::pair<std::string , std::string>>& getLogs();
+    void addLog(std::string date, std::string description, LogType type);
+    std::vector<LogData>& getLogs();
 
 private:
 

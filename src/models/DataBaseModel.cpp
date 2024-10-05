@@ -28,8 +28,12 @@ std::string DataBaseModel::getPassword() {
     return this->m_password;
 }
 
-std::vector<std::string>& DataBaseModel::getDatabases() {
+std::vector<std::pair<std::string, bool>>& DataBaseModel::getDatabases() {
     return this->databases;
+}
+
+int DataBaseModel::getSelectedDatabaseIndex() {
+    return this->selectedDatabaseIndex;
 }
 
 
@@ -69,8 +73,12 @@ void DataBaseModel::setIsConnected(bool isConnected) {
     this->m_isConnected = isConnected;
 }
 
-void DataBaseModel::addDatabase(std::string database) {
-    this->databases.push_back(database);
+void DataBaseModel::addDatabase(std::string database, bool isSelected) {
+    this->databases.emplace_back(database, isSelected);
+}
+
+void DataBaseModel::selectDatabaseIndex(int selectedIndex) {
+    this->selectedDatabaseIndex = selectedIndex;
 }
 
 

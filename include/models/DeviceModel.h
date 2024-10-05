@@ -16,7 +16,6 @@ class DeviceModel {
 public:
 
     DeviceModel();
-
     void setController(std::shared_ptr<DeviceController> _controller);
     void setDevice(pcpp::PcapLiveDevice* _device);
     void setDevices(std::vector<pcpp::PcapLiveDevice *> &_devices);
@@ -28,6 +27,8 @@ public:
     std::string getDefaultGateway();
     std::string getDeviceMacAddress();
     std::vector<std::string> getDnsServers();
+    int getMtu();
+
 
 private:
     pcpp::IPcapDevice::PcapStats stats;

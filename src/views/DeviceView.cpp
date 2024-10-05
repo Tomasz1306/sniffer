@@ -78,6 +78,7 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
         ImGui::Text("IPv6 address: %s", _model->getDeviceIPv6Address().c_str());
         ImGui::Text("MAC address: %s", _model->getDeviceMacAddress().c_str());
         ImGui::Text("Default gateway: %s", _model->getDefaultGateway().c_str());
+        ImGui::Text("MTU: %d", _model->getMtu());
         for (auto &server : _model->getDnsServers()) {
             ImGui::Text("DNS server: %s", server.c_str());
         }

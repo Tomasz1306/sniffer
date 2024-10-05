@@ -32,22 +32,22 @@ void LogView::draw() {
                 ImGui::EndTooltip();
             }
 
-        ImGui::TableSetColumnIndex(2);
-        switch(log.type) {
-            case LogType::ERROR:
-                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
-                ImGui::Text("Error");
-                break;
-            case LogType::WARNING:
-                ImGui::Text("Warning");
-                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
-                break;
-            case LogType::SUCCESFULL:
-                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-                ImGui::Text("Succesfull");
-                break;
-        }
-        ImGui::PopStyleColor();
+            ImGui::TableSetColumnIndex(2);
+            switch(log.type) {
+                case LogType::ERROR:
+                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+                    ImGui::Text("Error");
+                    break;
+                case LogType::WARNING:
+                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+                    ImGui::Text("Warning");
+                    break;
+                case LogType::SUCCESFULL:
+                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+                    ImGui::Text("Succesfull");
+                    break;
+            }
+            ImGui::PopStyleColor();
         }
         ImGui::EndTable();
     }

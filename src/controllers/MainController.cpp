@@ -84,3 +84,7 @@ void MainController::addPacketToStatistics(pcpp::Packet &packet) {
 bool MainController::isDeviceSelected() {
     return this->listener->isDeviceSelected();
 }
+
+bool *MainController::getIsPacketDisplayed() {
+    return &this->isPacketDisplayed;
+}

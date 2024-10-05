@@ -31,14 +31,17 @@ public:
     void disconnectFromDataBase();
     void loadDatabases();
     void newDatabase(std::string database);
+    void selectDatabaseIndex(int databaseIndex);
 
     bool isConnectedToDataBase();
 
+    int getSelectedDatabaseIndex();
     std::string getHost();
     std::string getPort();
     std::string getUsername();
     std::string getPassword();
-    std::vector<std::string>& getDatabases();
+    std::vector<std::pair<std::string, bool>>& getDatabases();
+
 private:
 
     std::shared_ptr<DataBaseModel> model;

@@ -42,6 +42,7 @@ public:
     int getPacketCapturedVectorSize();
     void addPacketToStatistics(pcpp::Packet &packet);
     bool isDeviceSelected();
+    bool *getIsPacketDisplayed();
 
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 private:

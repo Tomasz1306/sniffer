@@ -34,7 +34,7 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
         this->isWindowInitialized = true;
     }
     this->keyboardHandling(controller, _packet);
-    ImGui::Begin(this->windowTitle.c_str(), NULL, this->windowFlags);
+    ImGui::Begin(this->windowTitle.c_str(), controller->getIsPacketDisplayed(), this->windowFlags);
     ImGui::Text("Packet");
     if (ImGui::Button("Close")) {
         controller->setIsDisplayedPakcet(false);

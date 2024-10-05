@@ -19,15 +19,17 @@ public:
     void setPassword(std::string password);
     void setIsConnected(bool isConnected);
     void setDate(std::string date);
-    void addDatabase(std::string);
+    void addDatabase(std::string, bool isSelected);
+    void selectDatabaseIndex(int);
 
-    std::vector<std::string>& getDatabases();
+    std::vector<std::pair<std::string, bool>>& getDatabases();
     std::string getHost();
     std::string getPort();
     std::string getDate();
     std::string getUsername();
     std::string getPassword();
     bool isConnected();
+    int getSelectedDatabaseIndex();
 
     void setConnection(std::string host, std::string port, std::string username, std::string password, std::string date);
 
@@ -39,8 +41,9 @@ private:
     std::string m_username;
     std::string m_password;
     bool m_isConnected;
+    int selectedDatabaseIndex{-1};
 
-    std::vector<std::string> databases;
+    std::vector<std::pair<std::string, bool>> databases;
 };
 
 #endif //DATABASEMODEL_H

@@ -54,3 +54,20 @@ std::string Utils::getTime() {
         return "";
     }
 }
+
+ImFont *Utils::getLargerFont() {
+    return this->largerFont;
+}
+
+ImFont *Utils::getSmallerFont() {
+    return this->smallerFont;
+}
+
+void Utils::setLargerFont(ImFont *font) {
+    this->largerFont = font;
+}
+
+void Utils::setSmallerFont(ImFont *font) {
+    this->smallerFont = font;
+}
+

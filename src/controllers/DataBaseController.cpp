@@ -14,18 +14,10 @@ DataBaseController::DataBaseController(std::shared_ptr<DataBaseModel> model, std
 }
 
 DataBaseController::~DataBaseController() {
-    if (this->driver != nullptr) {
-        delete this->driver;
-    }
-    if (this->connection != nullptr) {
-        delete this->connection;
-    }
-    if (this->stmt != nullptr) {
-        delete this->stmt;
-    }
-    if (this->res != nullptr) {
-        delete this->res;
-    }
+    delete this->driver;
+    delete this->connection;
+    delete this->stmt;
+    delete this->res;
 }
 
 
@@ -58,7 +50,9 @@ void DataBaseController::loadDatabases() {
         this->res = this->stmt->executeQuery("SHOW DATABASES");
         this->model->getDatabases().clear();
         while (this->res->next()) {
-            this->model->addDatabase(res->getString(1));
+            if (this->res->getString(1).find("sniffer_") != std::string::npos) {
+                this->model->addDatabase(res->getString(1), false);
+            }
         }
         LogController::getInstance()->addLog(Utils::getTime(), "LOADED DATABASES", LogType::SUCCESFULL);
     } catch (sql::SQLException& e) {
@@ -68,13 +62,17 @@ void DataBaseController::loadDatabases() {
 
 void DataBaseController::newDatabase(std::string database) {
     try {
-        this->prep_stmt = this->connection->prepareStatement("CREATE DATABASE IF NOT EXISTS ?");
-        this->prep_stmt->setString(1, database);
-        this->prep_stmt->execute();
+        std::string query = std::string("CREATE DATABASE IF NOT EXISTS ") + std::string("sniffer_") + database;
+        this->stmt = this->connection->createStatement();
+        this->stmt->execute(query);
         LogController::getInstance()->addLog(Utils::getTime(), "CREATED NEW DATABASE", LogType::SUCCESFULL);
     } catch (sql::SQLException& e) {
         LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::WARNING);
     }
+}
+
+void DataBaseController::selectDatabaseIndex(int databaseIndex) {
+    this->model->selectDatabaseIndex(databaseIndex);
 }
 
 std::string DataBaseController::getHost() {
@@ -93,10 +91,15 @@ std::string DataBaseController::getPassword() {
     return this->model->getPassword();
 }
 
-std::vector<std::string>& DataBaseController::getDatabases() {
+std::vector<std::pair<std::string, bool>>& DataBaseController::getDatabases() {
     return this->model->getDatabases();
 }
 
 bool DataBaseController::isConnectedToDataBase() {
     return this->model->isConnected();
 }
+
+int DataBaseController::getSelectedDatabaseIndex() {
+    return this->model->getSelectedDatabaseIndex();
+}
+

@@ -158,7 +158,7 @@ void PacketCaptureView::displayIndex(CapturedPackets &packet, std::shared_ptr<Ma
     if (this->selectedRow != -1 && this->selectedRow != packet.id && packet.selected) {
         packet.selected = false;
     }
-    if (ImGui::Selectable("##selectableRow", packet.selected, this->selectableRowFlags))
+    if (ImGui::Selectable(std::string("##selectableRow" + std::to_string(packet.id)).c_str(), packet.selected, this->selectableRowFlags))
     {
         packet.selected = !packet.selected;
         if (packet.selected) {

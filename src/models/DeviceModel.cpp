@@ -84,6 +84,12 @@ std::vector<std::string> DeviceModel::getDnsServers() {
     return dnsServersString;
 }
 
+int DeviceModel::getMtu() {
+    if (this->dev == nullptr) {
+        return 0;
+    }
+    return this->dev->getMtu();
+}
 
 
 

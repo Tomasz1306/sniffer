@@ -13,27 +13,21 @@
 #include <IPv4Layer.h>
 #include <IPv6Layer.h>
 #include <EthLayer.h>
+#include <IcmpLayer.h>
+#include <IcmpV6Layer.h>
+#include <IgmpLayer.h>
 #include <TcpLayer.h>
 #include <UdpLayer.h>
 
 PacketCaptureView::PacketCaptureView() {
     this->windowTitle = "PACKETS";
-    // this->windowHeight = 1200.0f;
-    // this->windowWidth = 550.0f;
-    // this->windowX = 0.0f;
-    // this->windowY = 450.0f;
     this->isWindowOpened = true;
-    // this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus;
 }
 
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     this->isDownKeyPressed = false;
     this->isUpKeyPressed = false;
-    // ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
-    // if (!this->isWindowInitialized) {
-    //     ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
-    //     this->isWindowInitialized = true;
-    // }
+
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
     this->displayMenuBar();
@@ -230,12 +224,25 @@ void PacketCaptureView::displayEthernetLayer(const pcpp::Packet &packet) {
 void PacketCaptureView::displayNetworkProtocol(const pcpp::Packet &packet) {
     std::shared_ptr<pcpp::IPv4Layer> ipv4Layer;
     std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
+    std::shared_ptr<pcpp::ArpLayer> arpLayer;
+    std::shared_ptr<pcpp::IcmpLayer> icmpLayer;
+    std::shared_ptr<pcpp::IcmpV6Layer> icmpV6Layer;
+    std::shared_ptr<pcpp::IgmpLayer> igmpLayer;
 
     if (packet.isPacketOfType(pcpp::IPv4)) {
         ipv4Layer = std::make_shared<pcpp::IPv4Layer>(*packet.getLayerOfType<pcpp::IPv4Layer>());
     }
     if (packet.isPacketOfType(pcpp::IPv6)) {
         ipv6Layer = std::make_shared<pcpp::IPv6Layer>(*packet.getLayerOfType<pcpp::IPv6Layer>());
+    }
+    if (packet.isPacketOfType(pcpp::ARP)) {
+        arpLayer = std::make_shared<pcpp::ArpLayer>(*packet.getLayerOfType<pcpp::ArpLayer>());
+    }
+    if (packet.isPacketOfType(pcpp::ICMP)) {
+        icmpLayer = std::make_shared<pcpp::IcmpLayer>(*packet.getLayerOfType<pcpp::IcmpLayer>());
+    }
+    if (packet.isPacketOfType(pcpp::ICMPv6)) {
+        icmpV6Layer = std::make_shared<pcpp::IcmpV6Layer>(*packet.getLayerOfType<pcpp::IcmpV6Layer>());
     }
     if (ipv4Layer != nullptr) {
         ImGui::TableNextColumn();
@@ -247,6 +254,20 @@ void PacketCaptureView::displayNetworkProtocol(const pcpp::Packet &packet) {
         ImGui::Text("%.11s...", ipv6Layer->getSrcIPAddress().toString().c_str());
         ImGui::TableNextColumn();
         ImGui::Text("%.11s...", ipv6Layer->getDstIPAddress().toString().c_str());
+    } else if (arpLayer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", arpLayer->getSenderIpAddr().toString().c_str());
+        ImGui::TableNextColumn();
+        ImGui::Text("%s", arpLayer->getTargetIpAddr().toString().c_str());
+    } else if (icmpLayer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::TableNextColumn();
+    } else if (icmpV6Layer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::TableNextColumn();
+    } else if (igmpLayer != nullptr) {
+        ImGui::TableNextColumn();
+        ImGui::TableNextColumn();
     } else {
         ImGui::TableNextColumn();
         ImGui::TableNextColumn();
@@ -259,6 +280,34 @@ void PacketCaptureView::displayTransportProtocol(const pcpp::Packet &packet) {
         ImGui::Text("%s", "TCP");
     } else if (packet.isPacketOfType(pcpp::UDP)) {
         ImGui::Text("%s", "UDP");
+    } else if (packet.isPacketOfType(pcpp::ARP)) {
+        ImGui::Text("%s", "ARP");
+    } else if (packet.isPacketOfType(pcpp::ICMP)) {
+        ImGui::Text("%s", "ICMP");
+    } else if (packet.isPacketOfType(pcpp::ICMPv6)) {
+        ImGui::Text("%s", "ICMPv6");
+    } else if (packet.isPacketOfType(pcpp::HTTP)) {
+        ImGui::Text("%s", "HTTP");
+    } else if (packet.isPacketOfType(pcpp::FTP)) {
+        ImGui::Text("%s", "FTP");
+    } else if (packet.isPacketOfType(pcpp::SSH)) {
+        ImGui::Text("%s", "SSH");
+    } else if (packet.isPacketOfType(pcpp::Telnet)) {
+        ImGui::Text("%s", "Telnet");
+    } else if (packet.isPacketOfType(pcpp::DNS)) {
+        ImGui::Text("%s", "DNS");
+    } else if (packet.isPacketOfType(pcpp::DHCP)) {
+        ImGui::Text("%s", "DHCP");
+    } else if (packet.isPacketOfType(pcpp::DHCPv6)) {
+        ImGui::Text("%s", "DHCPv6");
+    } else if (packet.isPacketOfType(pcpp::IGMP)) {
+        ImGui::Text("%s", "IGMP");
+    } else if (packet.isPacketOfType(pcpp::IGMPv1)) {
+        ImGui::Text("%s", "IGMPv1");
+    } else if (packet.isPacketOfType(pcpp::IGMPv2)) {
+        ImGui::Text("%s", "IGMPv2");
+    } else if (packet.isPacketOfType(pcpp::IGMPv3)) {
+        ImGui::Text("%s", "IGMPv3");
     } else {
         ImGui::Text("%s", "UNK");
     }

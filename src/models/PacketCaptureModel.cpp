@@ -1,5 +1,8 @@
 #include "models/PacketCaptureModel.h"
+
+#include "controllers/LogController.h"
 #include "global/Global.h"
+#include "utils/Utils.h"
 
 PacketCaptureModel::PacketCaptureModel(){
     this->thread_1 = std::make_shared<std::thread>(&PacketCaptureModel::writeFromDequeToVector, this);
@@ -10,7 +13,7 @@ std::vector<CapturedPackets>& PacketCaptureModel::getCapturedPacketVector(){
 }
 
 void PacketCaptureModel::addToCapturedPacketDeque(pcpp::Packet packet){
-    this->capturedPackets_deque.insert(this->capturedPackets_deque.begin() ,packet);
+    this->capturedPackets_deque.push_back(packet);
 }
 
 void PacketCaptureModel::writeFromDequeToVector(){

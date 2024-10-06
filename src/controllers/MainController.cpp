@@ -1,6 +1,13 @@
 #include "controllers/MainController.h"
+
+#include <iostream>
+#include <mutex>
+
+#include "controllers/LogController.h"
 #include "views/PacketCaptureView.h"
 #include "views/PacketCaptureView.h"
+#include "global/Global.h"
+#include "utils/Utils.h"
 
 MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     std::shared_ptr<PacketCaptureView> _view,
@@ -16,7 +23,15 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
 
 void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
     auto model = static_cast<std::shared_ptr<PacketCaptureModel>*>(cookie);
-    (*model)->addToCapturedPacketDeque(pcpp::Packet(packet));
+    if (packet->getRawDataLen() <= 65535) {
+        try {
+            std::lock_guard<std::mutex> lock(guard_3);
+            pcpp::Packet parsedPacket(packet);
+            (*model)->addToCapturedPacketDeque(parsedPacket);
+        } catch (const std::exception& e) {
+            LogController::getInstance()->addLog(Utils::getTime(), "Error while adding packet to vector", LogType::WARNING);
+        }
+    }
 }
 
 void MainController::display(){

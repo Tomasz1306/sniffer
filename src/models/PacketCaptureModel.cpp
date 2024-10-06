@@ -10,19 +10,19 @@ std::vector<CapturedPackets>& PacketCaptureModel::getCapturedPacketVector(){
 }
 
 void PacketCaptureModel::addToCapturedPacketDeque(pcpp::Packet packet){
-    this->capturedPackets_deque.push_back(packet);
+    this->capturedPackets_deque.insert(this->capturedPackets_deque.begin() ,packet);
 }
 
 void PacketCaptureModel::writeFromDequeToVector(){
     while(1) {
         if (!this->capturedPackets_deque.empty()) {
-            std::lock_guard lock(guard_1);
-            this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.front());
+            std::scoped_lock lock(guard_1, guard_3);
+            auto &packet = this->capturedPackets_deque.back();
+            this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.back());
             ++this->counter;
             this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
-            this->capturedPackets_deque.pop_front();
+            this->capturedPackets_deque.pop_back();
         }
-        //std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
 

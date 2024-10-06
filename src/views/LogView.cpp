@@ -12,18 +12,16 @@ LogView::LogView() {
 
 void LogView::draw() {
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
-
     if (ImGui::BeginTable("LogTable__", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
         // Ustawienia nagłówków kolumn
-        ImGui::TableSetupColumn("Date");
-        ImGui::TableSetupColumn("Description");
-        ImGui::TableSetupColumn("Info");
+        ImGui::TableSetupColumn("Date", ImGuiTableColumnFlags_WidthFixed, 100);
+        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthFixed, 500);
+        ImGui::TableSetupColumn("Status", ImGuiTableColumnFlags_WidthFixed, 100);
         ImGui::TableHeadersRow();
         for (auto &log : LogController::getInstance()->getLogs()) {
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
             ImGui::Text("%s", log.date.c_str());
-
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%s", log.description.c_str());
             if (ImGui::IsItemHovered()) {
@@ -31,7 +29,6 @@ void LogView::draw() {
                 ImGui::Text("%s", log.description.c_str());
                 ImGui::EndTooltip();
             }
-
             ImGui::TableSetColumnIndex(2);
             switch(log.type) {
                 case LogType::ERROR:

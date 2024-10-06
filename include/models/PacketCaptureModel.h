@@ -8,6 +8,8 @@
 #include <thread>
 #include <memory>
 #include <deque>
+#include <mutex>
+#include <condition_variable>
 
 #include <PacketUtils.h>
 #include <PcapLiveDevice.h>
@@ -33,9 +35,10 @@ private:
 
     std::shared_ptr<std::thread> thread_1;
     std::vector<CapturedPackets> capturedPackets_vector;
-    std::deque<pcpp::Packet> capturedPackets_deque;
+    std::vector<pcpp::Packet> capturedPackets_deque;
     std::shared_ptr<MainController> controller;
-
+    std::mutex dequeGuard;
+    std::condition_variable dequeCV;
 };
 
 

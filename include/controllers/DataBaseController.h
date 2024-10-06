@@ -14,6 +14,7 @@
 #include "views/DataBaseView.h"
 
 #include <memory>
+#include <fstream>
 
 class DataBaseModel;
 class DataBaseView;
@@ -32,6 +33,8 @@ public:
     void loadDatabases();
     void newDatabase(std::string database);
     void selectDatabaseIndex(int databaseIndex);
+    void createTables();
+    void useDatabase();
 
     bool isConnectedToDataBase();
 
@@ -41,6 +44,7 @@ public:
     std::string getUsername();
     std::string getPassword();
     std::vector<std::pair<std::string, bool>>& getDatabases();
+    static std::string readSQLScript(const std::string& file);
 
 private:
 

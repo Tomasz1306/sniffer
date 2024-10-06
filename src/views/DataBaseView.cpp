@@ -42,6 +42,8 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
                     if (controller->getSelectedDatabaseIndex() == -1) {
                         database.second = !database.second;
                         controller->selectDatabaseIndex(i);
+                        controller->useDatabase();
+                        controller->createTables();
                     }else if (controller->getSelectedDatabaseIndex() != -1 && database.second) {
                         database.second = !database.second;
                         controller->selectDatabaseIndex(-1);

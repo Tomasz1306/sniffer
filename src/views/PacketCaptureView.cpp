@@ -18,16 +18,28 @@
 
 PacketCaptureView::PacketCaptureView() {
     this->windowTitle = "PACKETS";
+    // this->windowHeight = 1200.0f;
+    // this->windowWidth = 550.0f;
+    // this->windowX = 0.0f;
+    // this->windowY = 450.0f;
     this->isWindowOpened = true;
+    // this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus;
 }
 
 void PacketCaptureView::draw(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets) {
     this->isDownKeyPressed = false;
     this->isUpKeyPressed = false;
+    // ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
+    // if (!this->isWindowInitialized) {
+    //     ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
+    //     this->isWindowInitialized = true;
+    // }
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
+
     this->displayMenuBar();
     this->displayOption(controller);
     this->displayTableOfPackets(packets, controller);
+
     ImGui::End();
 }
 
@@ -112,17 +124,17 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
 
         std::lock_guard<std::mutex> lock(guard_1);
         // for (auto& packet : packets) {
-        //     this->keyboardHandling(controller, packets, packet);
-        //     auto &pcapPacket = packet.packet;
-        //     ImGui::TableNextRow();
+        // this->keyboardHandling(controller, packets, packet);
+        // auto &pcapPacket = packet.packet;
+        // ImGui::TableNextRow();
         //
-        //     this->displayIndex(packet, controller);
-        //     this->displayTime(pcapPacket);
-        //     this->displayPacketSize(pcapPacket);
-        //     this->displayEthernetLayer(pcapPacket);
-        //     this->displayNetworkProtocol(pcapPacket);
-        //     this->displayTransportProtocol(pcapPacket);
-        //     this->displayTransportLayer(pcapPacket);
+        // this->displayIndex(packet, controller);
+        // this->displayTime(pcapPacket);
+        // this->displayPacketSize(pcapPacket);
+        // this->displayEthernetLayer(pcapPacket);
+        // this->displayNetworkProtocol(pcapPacket);
+        // this->displayTransportProtocol(pcapPacket);
+        // this->displayTransportLayer(pcapPacket);
         // }
         while (clipper.Step()) {
             for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {

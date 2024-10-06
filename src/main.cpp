@@ -43,8 +43,7 @@
 
 //TODO uporzadkowac includy i usunca nieporzebne
 //TODO Napisac "forward declaration" dla kazdego zbioru MVC
-//TODO na 04.10.2024 obsluga bazy danych, zapisywanie i usuwanie pakietow do plikow.
-
+//TODO zabezpieczyc wybieranie innego interfacu jezeli inny jest otwarty
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }

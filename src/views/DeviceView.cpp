@@ -6,6 +6,9 @@
 
 #include <iostream>
 
+#include "controllers/LogController.h"
+#include "utils/Utils.h"
+
 DeviceView::DeviceView() {
     this->windowTitle = "DEVICES";
     // this->windowHeight = 600.0f;
@@ -17,26 +20,24 @@ DeviceView::DeviceView() {
 }
 
 void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared_ptr<DeviceModel> _model) {
-    //TODO przeniesc packeWindowInitialized z globals do tej instacji jako pole
-
-    // ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
-    // if (!this->isWindowInitialized) {
-    //     ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
-    //     this->isWindowInitialized = true;
-    // }
-
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
     const char* devices[this->deviceNames.size()];
     for (int i = 0; i < this->deviceNames.size(); i++) {
         devices[i] = this->deviceNames[i].c_str();
     }
+    int previousDeviceIndex = this->selectedDevice;
     if (ImGui::Combo("Devices", &this->selectedDevice, devices, IM_ARRAYSIZE(devices))) {
         if (_controller->getCurrentDeviceName() != "") {
             if (this->deviceNames[this->selectedDevice] != _controller->getCurrentDeviceName()) {
                 for (int i = 0; i < this->deviceNames.size(); i++) {
                     if (this->deviceNames[i] == this->deviceNames[this->selectedDevice]) {
-                        _controller->setNewDeviceByName(this->deviceNames[i]);
+                        if (_controller->isDeviceOpen()) {
+                            this->selectedDevice = previousDeviceIndex;
+                            LogController::getInstance()->addLog(Utils::getTime(), "Other device is opened", LogType::ERROR);
+                        } else {
+                            _controller->setNewDeviceByName(this->deviceNames[i]);
+                        }
                     }
                 }
             }
@@ -83,7 +84,6 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
             ImGui::Text("DNS server: %s", server.c_str());
         }
     }
-
     ImGui::End();
 }
 

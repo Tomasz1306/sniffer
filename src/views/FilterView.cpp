@@ -164,13 +164,12 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
 
 void FilterView::displayOption(std::shared_ptr<FilterModel> model) {
     ImGui::BeginGroup();
-    if (ImGui::Button("Confirm", ImVec2(200, 20))) {
+    if (ImGui::Button("Confirm", ImVec2(525, 20))) {
         model->setUpdate(true);
     }
     ImGui::SameLine();
-    if (ImGui::Button("Reset", ImVec2(200, 20))) {
+    if (ImGui::Button("Reset", ImVec2(525, 20))) {
 
     }
-
     ImGui::EndGroup();
 }

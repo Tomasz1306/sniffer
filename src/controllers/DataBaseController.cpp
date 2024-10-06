@@ -75,6 +75,48 @@ void DataBaseController::selectDatabaseIndex(int databaseIndex) {
     this->model->selectDatabaseIndex(databaseIndex);
 }
 
+void DataBaseController::createTables() {
+    try {
+        this->stmt = this->connection->createStatement();
+        stmt->execute(readSQLScript("create_table_arp.sql"));
+        stmt->execute(readSQLScript("create_table_dhcpv4.sql"));
+        stmt->execute(readSQLScript("create_table_dhcpv6.sql"));
+        stmt->execute(readSQLScript("create_table_dns.sql"));
+        stmt->execute(readSQLScript("create_table_ethernet.sql"));
+        stmt->execute(readSQLScript("create_table_ftp.sql"));
+        stmt->execute(readSQLScript("create_table_http.sql"));
+        stmt->execute(readSQLScript("create_table_icmpv4.sql"));
+        stmt->execute(readSQLScript("create_table_icmpv6.sql"));
+        stmt->execute(readSQLScript("create_table_ipv4.sql"));
+        stmt->execute(readSQLScript("create_table_ipv6.sql"));
+        stmt->execute(readSQLScript("create_table_smtp.sql"));
+        stmt->execute(readSQLScript("create_table_ssh.sql"));
+        stmt->execute(readSQLScript("create_table_tcp.sql"));
+        stmt->execute(readSQLScript("create_table_telnet.sql"));
+        stmt->execute(readSQLScript("create_table_udp.sql"));
+        stmt->execute(readSQLScript("create_table_Packets.sql"));
+        stmt->execute(readSQLScript("create_table_interfaces.sql"));
+        stmt->execute(readSQLScript("create_table_Session.sql"));
+
+
+        LogController::getInstance()->addLog(Utils::getTime(), "CREATED ALL TABLES", LogType::SUCCESFULL);
+    } catch (sql::SQLException& e) {
+        LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::ERROR);
+    }
+}
+
+void DataBaseController::useDatabase() {
+    try {
+        this->stmt = this->connection->createStatement();
+        stmt->execute("USE " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first);
+        LogController::getInstance()->addLog(Utils::getTime(), "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first, LogType::SUCCESFULL);
+    } catch (sql::SQLException& e) {
+        LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::WARNING);
+    }
+}
+
+
+
 std::string DataBaseController::getHost() {
     return this->model->getHost();
 }
@@ -102,4 +144,17 @@ bool DataBaseController::isConnectedToDataBase() {
 int DataBaseController::getSelectedDatabaseIndex() {
     return this->model->getSelectedDatabaseIndex();
 }
+
+std::string DataBaseController::readSQLScript(const std::string &file) {
+    std::ifstream fileStream("../sql/" + file);
+    if (!fileStream.is_open()) {
+        LogController::getInstance()->addLog(Utils::getTime(), "Could not open sql script: " + file, LogType::WARNING);
+        return "";
+    }
+
+    std::stringstream script;
+    script << fileStream.rdbuf();
+    return script.str();
+}
+
 

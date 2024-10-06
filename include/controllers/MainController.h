@@ -8,11 +8,13 @@
 #include "models/PacketCaptureModel.h"
 #include "listeners/Listener.h"
 #include "controllers/StatisticController.h"
+#include "controllers/DataBaseController.h"
 #include "PcapLiveDevice.h"
 #include "views/PacketView.h"
 
 
 //Forward declaration
+class DataBaseController;
 class StatisticController;
 class PacketCaptureModel;
 class PacketCaptureView;
@@ -43,6 +45,8 @@ public:
     void addPacketToStatistics(pcpp::Packet &packet);
     bool isDeviceSelected();
     bool *getIsPacketDisplayed();
+
+    std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 private:

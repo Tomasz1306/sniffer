@@ -10,12 +10,15 @@
 #include <cppconn/resultset.h>
 #include "cppconn/prepared_statement.h"
 
+#include "controllers/MainController.h"
 #include "models/DataBaseModel.h"
 #include "views/DataBaseView.h"
 
 #include <memory>
 #include <fstream>
+#include <thread>
 
+class MainController;
 class DataBaseModel;
 class DataBaseView;
 
@@ -35,6 +38,9 @@ public:
     void selectDatabaseIndex(int databaseIndex);
     void createTables();
     void useDatabase();
+    void insertNewPacket(CapturedPackets &packet);
+    void setMainController(std::shared_ptr<MainController> controller);
+    void dataBaseThread();
 
     bool isConnectedToDataBase();
 
@@ -50,11 +56,16 @@ private:
 
     std::shared_ptr<DataBaseModel> model;
     std::shared_ptr<DataBaseView> view;
+    std::shared_ptr<std::thread> dbThread;
+
+
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *connection;
     sql::Statement *stmt;
     sql::PreparedStatement *prep_stmt;
     sql::ResultSet *res;
+
+    std::shared_ptr<MainController> mainController;
 
 };
 

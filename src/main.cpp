@@ -123,7 +123,12 @@ int main() {
     windowManagerController->addView(filterView);
     windowManagerController->addView(deviceView);
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
-    auto mainController = std::make_shared<MainController>(packetCaptureModel, packetCaptureView, packetListener, packetView, statisticController);
+    auto mainController = std::make_shared<MainController>(packetCaptureModel,
+                                                            packetCaptureView,
+                                                            packetListener,
+                                                            packetView,
+                                                            statisticController);
+    dataBaseController->setMainController(mainController);
     packetCaptureModel->setController(mainController);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
     bool dockInitialized = false;
@@ -141,16 +146,21 @@ int main() {
             ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
 
             ImGuiID dock_main_id = dockspace_id;
-            ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.6f, nullptr, &dock_main_id);
+            ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id,
+                ImGuiDir_Left, 0.6f, nullptr, &dock_main_id);
             ImGuiID dock_id_right = dock_main_id;
 
-            ImGuiID dock_id_right_top = ImGui::DockBuilderSplitNode(dock_id_right, ImGuiDir_Up, 0.4f, nullptr, &dock_id_right);
+            ImGuiID dock_id_right_top = ImGui::DockBuilderSplitNode(dock_id_right,
+                ImGuiDir_Up, 0.4f, nullptr, &dock_id_right);
 
-            ImGuiID dock_left_top = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.15f, nullptr, &dock_id_left);
-            ImGuiID dock_left_mid = ImGui::DockBuilderSplitNode(dock_id_left, ImGuiDir_Up, 0.25f, nullptr, &dock_id_left);
+            ImGuiID dock_left_top = ImGui::DockBuilderSplitNode(dock_id_left,
+                ImGuiDir_Up, 0.15f, nullptr, &dock_id_left);
+            ImGuiID dock_left_mid = ImGui::DockBuilderSplitNode(dock_id_left,
+                ImGuiDir_Up, 0.25f, nullptr, &dock_id_left);
             ImGuiID dock_left_bot = dock_id_left;
 
-            ImGuiID dock_left_top_left = ImGui::DockBuilderSplitNode(dock_left_top, ImGuiDir_Left, 0.5f, nullptr, &dock_left_top);
+            ImGuiID dock_left_top_left = ImGui::DockBuilderSplitNode(dock_left_top,
+                ImGuiDir_Left, 0.5f, nullptr, &dock_left_top);
             ImGuiID dock_left_top_right = dock_left_top;
 
             ImGui::DockBuilderDockWindow("DEVICES", dock_left_top_left);

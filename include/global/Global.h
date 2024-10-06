@@ -5,6 +5,7 @@
 extern std::mutex guard_1;
 extern std::mutex guard_2;
 extern std::mutex guard_3;
+extern std::mutex guard_4;
 
 extern bool packetWindowInitialized;
 

@@ -51,6 +51,7 @@ void MainController::stopCapture() {
 
 void MainController::clearTableOfPackets() {
     this->model->clearCapturedPacketVector();
+    this->model->clearCapturedPacketVectorDatabase();
 }
 
 bool MainController::isDeviceOpen() {
@@ -103,3 +104,8 @@ bool MainController::isDeviceSelected() {
 bool *MainController::getIsPacketDisplayed() {
     return &this->isPacketDisplayed;
 }
+
+std::vector<CapturedPackets> &MainController::getCapturedPacketVectorDatabase() {
+    return this->model->getCapturedPacketVectorDatabase();
+}
+

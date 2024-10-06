@@ -1,0 +1,106 @@
+/snap/clion/296/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/296/bin/ninja/linux/x64/ninja -G Ninja -S /home/tomasz/Desktop/projects/sniffer -B /home/tomasz/Desktop/projects/sniffer/cmake-build-debug
+-- Ccache not found!
+-- Building from commit:44972d0a on branch:master
+CMake Deprecation Warning at lib/mysql-connector-cpp/CMakeLists.txt:32 (CMAKE_POLICY):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- BIG_ENDIAN: 0
+Building Connector/C++ as part of Sniffer project
+Building version 9.0.0
+Building on system: Linux-6.8.0-45-generic (x86_64)
+Using cmake generator: Ninja
+Using toolset: 
+Building 64bit code
+Building shared connector library
+-- Looking for SSL library.
+-- Using OpenSSL version: 3.0.13
+-- found required X509 extensions
+CMake Deprecation Warning at lib/mysql-connector-cpp/cdk/CMakeLists.txt:33 (cmake_policy):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+Configuring CDK as part of Sniffer project
+-- Setting up RapidJSON.
+Skipping second declaration of config option: THROW_AS_ASSERT (found in: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/CMakeLists.txt)
+-- Setting up Protobuf.
+== configuring external build of protobuf
+-- sources at: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/extra/protobuf
+-- generator: Ninja
+-- option CMAKE_BUILD_TYPE: Debug
+-- option CMAKE_SYSTEM_NAME: Linux
+-- option CMAKE_SYSTEM_VERSION: 6.8.0-45-generic
+-- option CMAKE_SYSTEM_PROCESSOR: x86_64
+-- option CMAKE_C_COMPILER: /usr/bin/cc
+-- option CMAKE_CXX_COMPILER: /usr/bin/c++
+-- ----
+Not searching for unused variables given on the command line.
+-- BIG_ENDIAN: 0
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf
+== done configuring external build of protobuf
+-- Setting up compression libraries.
+== configuring external build of zlib
+-- sources at: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/extra/zlib
+-- generator: Ninja
+-- option CMAKE_BUILD_TYPE: Debug
+-- option CMAKE_SYSTEM_NAME: Linux
+-- option CMAKE_SYSTEM_VERSION: 6.8.0-45-generic
+-- option CMAKE_SYSTEM_PROCESSOR: x86_64
+-- option CMAKE_C_COMPILER: /usr/bin/cc
+-- option CMAKE_CXX_COMPILER: /usr/bin/c++
+-- ----
+Not searching for unused variables given on the command line.
+-- BIG_ENDIAN: 0
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zlib
+== done configuring external build of zlib
+== configuring external build of lz4
+-- sources at: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/extra/lz4
+-- generator: Ninja
+-- option CMAKE_BUILD_TYPE: Debug
+-- option CMAKE_SYSTEM_NAME: Linux
+-- option CMAKE_SYSTEM_VERSION: 6.8.0-45-generic
+-- option CMAKE_SYSTEM_PROCESSOR: x86_64
+-- option CMAKE_C_COMPILER: /usr/bin/cc
+-- option CMAKE_CXX_COMPILER: /usr/bin/c++
+-- ----
+Not searching for unused variables given on the command line.
+-- BIG_ENDIAN: 0
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/lz4
+== done configuring external build of lz4
+== configuring external build of zstd
+-- sources at: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/extra/zstd
+-- generator: Ninja
+-- option CMAKE_BUILD_TYPE: Debug
+-- option CMAKE_SYSTEM_NAME: Linux
+-- option CMAKE_SYSTEM_VERSION: 6.8.0-45-generic
+-- option CMAKE_SYSTEM_PROCESSOR: x86_64
+-- option CMAKE_C_COMPILER: /usr/bin/cc
+-- option CMAKE_CXX_COMPILER: /usr/bin/c++
+-- ----
+Not searching for unused variables given on the command line.
+-- BIG_ENDIAN: 0
+-- ZSTD_LEGACY_SUPPORT not defined!
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zstd
+== done configuring external build of zstd
+Wrote configuration header: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/include/mysql/cdk/config.h
+-- Using cipher list defined in: /home/tomasz/Desktop/projects/sniffer/lib/mysql-connector-cpp/cdk/foundation/tls_ciphers.h
+Preparing to merge SHARED library: connector (xapi;devapi)
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tomasz/Desktop/projects/sniffer/cmake-build-debug

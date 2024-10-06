@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "lib/mysql-connector-cpp/cdk/parser",
+		"source" : "lib/mysql-connector-cpp/cdk/parser"
+	}
+}

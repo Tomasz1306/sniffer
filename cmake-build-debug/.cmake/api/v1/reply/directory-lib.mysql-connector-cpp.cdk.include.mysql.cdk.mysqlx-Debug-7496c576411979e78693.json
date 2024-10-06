@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/mysqlx",
+		"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/mysqlx"
+	}
+}

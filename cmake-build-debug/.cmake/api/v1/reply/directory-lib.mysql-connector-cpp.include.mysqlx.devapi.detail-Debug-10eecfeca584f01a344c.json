@@ -1,0 +1,48 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 36,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "XDevAPIDev",
+			"destination" : "include/mysqlx/devapi/detail",
+			"paths" : 
+			[
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/error.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/row.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/result.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/settings.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/session.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/detail/crud.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/mysql-connector-cpp/include/mysqlx/devapi/detail",
+		"source" : "lib/mysql-connector-cpp/include/mysqlx/devapi/detail"
+	}
+}

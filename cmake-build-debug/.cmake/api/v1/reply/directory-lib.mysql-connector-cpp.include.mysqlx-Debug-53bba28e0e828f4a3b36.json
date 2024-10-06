@@ -1,0 +1,46 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"lib/mysql-connector-cpp/include/mysqlx/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 39,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "XDevAPIDev",
+			"destination" : "include/mysqlx",
+			"paths" : 
+			[
+				"lib/mysql-connector-cpp/include/mysqlx/common_constants.h",
+				"lib/mysql-connector-cpp/include/mysqlx/common.h",
+				"lib/mysql-connector-cpp/include/mysqlx/xapi.h",
+				"lib/mysql-connector-cpp/include/mysqlx/xdevapi.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/mysql-connector-cpp/include/mysqlx",
+		"source" : "lib/mysql-connector-cpp/include/mysqlx"
+	}
+}

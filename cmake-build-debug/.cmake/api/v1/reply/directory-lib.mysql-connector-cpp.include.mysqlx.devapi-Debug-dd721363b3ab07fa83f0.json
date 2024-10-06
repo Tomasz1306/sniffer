@@ -1,0 +1,55 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"lib/mysql-connector-cpp/include/mysqlx/devapi/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "XDevAPIDev",
+			"destination" : "include/mysqlx/devapi",
+			"paths" : 
+			[
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/common.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/error.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/row.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/result.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/executable.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/document.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/settings.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/crud.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/collection_crud.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/table_crud.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/collations.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/mysql_charsets.h",
+				"lib/mysql-connector-cpp/include/mysqlx/devapi/mysql_collations.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/mysql-connector-cpp/include/mysqlx/devapi",
+		"source" : "lib/mysql-connector-cpp/include/mysqlx/devapi"
+	}
+}

@@ -1,0 +1,646 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindOpenGL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets-none.cmake"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakePackageConfigHelpers.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/WriteBasicConfigVersionFile.cmake"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/cmake/modules/PcapPlusPlusUtils.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/GNUInstallDirs.cmake"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/cmake/modules/TargetArch.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/arch.c"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/cmake/modules/FindPCAP.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckFunctionExists.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/lib/PcapPlusPlus/detect_pcap_version.c"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindGit.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/cmake/PcapPlusPlusUninstall.cmake.in"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/EndianPortable/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/Getopt-for-Visual-Studio/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/hash-library/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/json/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/LightPcapNg/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/3rdParty/MemPlumber/MemPlumber/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindBacktrace.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakePushCheckState.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckSymbolExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/Packet++/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/Pcap++/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/PcapPlusPlus/Common++/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/setup.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cmake/setup.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/bootstrap.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/platform.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/TestBigEndian.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckTypeSize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/compiler/GCC.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/dependency.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/ProcessorCount.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_options.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_options.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cmake/libutils.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cmake/libutils/merge_archives.cmake.in"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cmake/version_info.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/version.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/install_layout.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindCoverage.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindSSL.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_header.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckSymbolExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindOpenSSL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPkgConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/testing.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/testing/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/setup.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/platform.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_header.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_options.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/dependency.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/ProcessorCount.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/config_options.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindSSL.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindRapidJSON.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindCoverage.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/config.h.in"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/headers.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/foundation/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/protocol/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/api/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/mysqlx/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/extra/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/parser/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/parser/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/foundation/CMakeLists.txt"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckTypeSize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/foundation/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/protocol/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/protocol/mysqlx/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindProtobuf.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/exports.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/DepFindCompression.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zlib/exports.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/lz4/exports.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zstd/exports.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/snap/clion/296/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/mysqlx/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/mysqlx/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/core/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/include/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/cdk/cmake/headers.cmake"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/include/mysqlx/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/include/mysqlx/common/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/include/mysqlx/devapi/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/include/mysqlx/devapi/detail/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/doc/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/common/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/common/version_info.h"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/common/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/xapi/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/xapi/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/devapi/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/mysql-connector-cpp/devapi/tests/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/CMakeLists.txt"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/home/tomasz/Desktop/projects/sniffer/cmake-build-debug",
+		"source" : "/home/tomasz/Desktop/projects/sniffer"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

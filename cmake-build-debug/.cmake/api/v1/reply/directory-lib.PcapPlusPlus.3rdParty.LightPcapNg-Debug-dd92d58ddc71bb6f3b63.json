@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "lib/PcapPlusPlus/3rdParty/LightPcapNg",
+		"source" : "lib/PcapPlusPlus/3rdParty/LightPcapNg"
+	}
+}

@@ -1,0 +1,1081 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						12,
+						44
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						23
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus",
+					"childIndexes" : 
+					[
+						2,
+						9,
+						10,
+						11
+					],
+					"jsonFile" : "directory-lib.PcapPlusPlus-Debug-6f071e77d58095165bdf.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus",
+					"targetIndexes" : 
+					[
+						24
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty-Debug-2b5a2306bc9489fe87f0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/3rdParty"
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/EndianPortable",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.EndianPortable-Debug-e85f4286097f8301c98f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/3rdParty/EndianPortable"
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/Getopt-for-Visual-Studio",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.Getopt-for-Visual-Studio-Debug-db2a386176b6ef950f8e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/3rdParty/Getopt-for-Visual-Studio"
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/hash-library",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.hash-library-Debug-35dbdcf9c6ed76b379bf.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "lib/PcapPlusPlus/3rdParty/hash-library",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/json",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.json-Debug-8273644c80063236ac13.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/3rdParty/json"
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/LightPcapNg",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.LightPcapNg-Debug-dd92d58ddc71bb6f3b63.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "lib/PcapPlusPlus/3rdParty/LightPcapNg",
+					"targetIndexes" : 
+					[
+						15
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/3rdParty/MemPlumber/MemPlumber",
+					"jsonFile" : "directory-lib.PcapPlusPlus.3rdParty.MemPlumber.MemPlumber-Debug-51d903b72f0b1cb60f33.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 4,
+					"source" : "lib/PcapPlusPlus/3rdParty/MemPlumber/MemPlumber",
+					"targetIndexes" : 
+					[
+						18
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/Packet++",
+					"jsonFile" : "directory-lib.PcapPlusPlus.Packet++-Debug-b11f26d94ff7d0bb47c0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/Packet++",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/Pcap++",
+					"jsonFile" : "directory-lib.PcapPlusPlus.Pcap++-Debug-2218f26b14711507ae32.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/Pcap++",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "lib/PcapPlusPlus/Common++",
+					"jsonFile" : "directory-lib.PcapPlusPlus.Common++-Debug-5c5c94a2ff91926962d5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "lib/PcapPlusPlus/Common++",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp",
+					"childIndexes" : 
+					[
+						13,
+						14,
+						32,
+						37,
+						38,
+						40,
+						42
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp-Debug-2b3a1f35f3f34a97c42a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp",
+					"targetIndexes" : 
+					[
+						9,
+						10,
+						21,
+						22
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/testing",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.testing-Debug-a8d6f3fae1f880641c06.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/testing"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk",
+					"childIndexes" : 
+					[
+						15,
+						22,
+						23,
+						25,
+						27,
+						29,
+						31
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk-Debug-4bae5dcc60bc9e4f93fa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include",
+					"childIndexes" : 
+					[
+						16
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include-Debug-6f837df3cb29aee6995d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql",
+					"childIndexes" : 
+					[
+						17
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql-Debug-5998fd18f471ce4a7845.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 15,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk",
+					"childIndexes" : 
+					[
+						18,
+						19,
+						20,
+						21
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql.cdk-Debug-1b097ef4db5a99f8765d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 16,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/foundation",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql.cdk.foundation-Debug-f04fd941a3cd9a132d45.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 17,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/foundation"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/protocol",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql.cdk.protocol-Debug-bd246ed2f45b498e819d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 17,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/protocol"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/api",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql.cdk.api-Debug-93295ca765e5f4636c08.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 17,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/api"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/mysqlx",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.include.mysql.cdk.mysqlx-Debug-7496c576411979e78693.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 17,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/include/mysql/cdk/mysqlx"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/extra",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.extra-Debug-34f81e92574b05f7ca9c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/extra"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/parser",
+					"childIndexes" : 
+					[
+						24
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.parser-Debug-f1cfe8a746910aa558ef.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/parser",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/parser/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.parser.tests-Debug-cc7a3747b798c6982d59.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 23,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/parser/tests"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/foundation",
+					"childIndexes" : 
+					[
+						26
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.foundation-Debug-359c3f741922588447d8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/foundation",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/foundation/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.foundation.tests-Debug-95ebe390e90489b1beb9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 25,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/foundation/tests"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/protocol",
+					"childIndexes" : 
+					[
+						28
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.protocol-Debug-d62e62706a066d2137b1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/protocol"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/protocol/mysqlx",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.protocol.mysqlx-Debug-832af29da7b014886215.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 27,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/protocol/mysqlx",
+					"targetIndexes" : 
+					[
+						7,
+						16,
+						17,
+						19,
+						20,
+						26,
+						27,
+						28,
+						29
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/mysqlx",
+					"childIndexes" : 
+					[
+						30
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.mysqlx-Debug-ed3a13a2611a8fb34af9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/mysqlx",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/mysqlx/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.mysqlx.tests-Debug-0aa97dc920f1e886e103.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 29,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/mysqlx/tests"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/cdk/core",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.cdk.core-Debug-81044553db6b54286c6d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 14,
+					"projectIndex" : 6,
+					"source" : "lib/mysql-connector-cpp/cdk/core",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/include",
+					"childIndexes" : 
+					[
+						33
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.include-Debug-006113239da3e87ead45.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/include"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/include/mysqlx",
+					"childIndexes" : 
+					[
+						34,
+						35
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.include.mysqlx-Debug-53bba28e0e828f4a3b36.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 32,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/include/mysqlx"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/include/mysqlx/common",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.include.mysqlx.common-Debug-89e9e2235b42af80d572.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 33,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/include/mysqlx/common"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/include/mysqlx/devapi",
+					"childIndexes" : 
+					[
+						36
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.include.mysqlx.devapi-Debug-dd721363b3ab07fa83f0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 33,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/include/mysqlx/devapi"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/include/mysqlx/devapi/detail",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.include.mysqlx.devapi.detail-Debug-10eecfeca584f01a344c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 35,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/include/mysqlx/devapi/detail"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/doc",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.doc-Debug-17a9cc4c1e50a9e6d9b7.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/doc"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/common",
+					"childIndexes" : 
+					[
+						39
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-lib.mysql-connector-cpp.common-Debug-9a5793f72a08ab6a3453.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/common",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/common/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.common.tests-Debug-daa65348b557e5f431a0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 38,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/common/tests"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/xapi",
+					"childIndexes" : 
+					[
+						41
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.xapi-Debug-72fdde5c77d79d595680.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/xapi",
+					"targetIndexes" : 
+					[
+						25
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/xapi/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.xapi.tests-Debug-1742fa68f13b9376922a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 40,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/xapi/tests"
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/devapi",
+					"childIndexes" : 
+					[
+						43
+					],
+					"jsonFile" : "directory-lib.mysql-connector-cpp.devapi-Debug-3afdde9aca328a011c25.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 12,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/devapi",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "lib/mysql-connector-cpp/devapi/tests",
+					"jsonFile" : "directory-lib.mysql-connector-cpp.devapi.tests-Debug-3d436d1cac8f74b5957a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 42,
+					"projectIndex" : 5,
+					"source" : "lib/mysql-connector-cpp/devapi/tests"
+				},
+				{
+					"build" : "lib",
+					"jsonFile" : "directory-lib-Debug-c12f15c6f888b43a891c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "lib",
+					"targetIndexes" : 
+					[
+						13,
+						14
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						5
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						44
+					],
+					"name" : "Sniffer",
+					"targetIndexes" : 
+					[
+						13,
+						14,
+						23
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						6,
+						9,
+						10,
+						11
+					],
+					"name" : "PcapPlusPlus",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						24
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "hash-library",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "light_pcapng",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						15
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "memplumber",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						18
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						6
+					],
+					"directoryIndexes" : 
+					[
+						12,
+						13,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43
+					],
+					"name" : "MySQL_CONCPP",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						8,
+						9,
+						10,
+						11,
+						21,
+						22,
+						25
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31
+					],
+					"name" : "MySQLCDK",
+					"parentIndex" : 5,
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						16,
+						17,
+						19,
+						20,
+						26,
+						27,
+						28,
+						29
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 11,
+					"id" : "Common++::@a1f4c82897547b5b0b46",
+					"jsonFile" : "target-Common++-Debug-e9d535ee60d5ebfb2913.json",
+					"name" : "Common++",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "Packet++::@603331544fc59ea16458",
+					"jsonFile" : "target-Packet++-Debug-906d55f70ce966ac778e.json",
+					"name" : "Packet++",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "Pcap++::@df9d7f289c43115ec55d",
+					"jsonFile" : "target-Pcap++-Debug-97575fb3be20fe76d128.json",
+					"name" : "Pcap++",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 31,
+					"id" : "cdk::@439e5a8b0af03684232f",
+					"jsonFile" : "target-cdk-Debug-e0f77c064d0db3839842.json",
+					"name" : "cdk",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 25,
+					"id" : "cdk_foundation::@ea7ca5a8c4e73f9cb798",
+					"jsonFile" : "target-cdk_foundation-Debug-941780b872dc715c0a8c.json",
+					"name" : "cdk_foundation",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 29,
+					"id" : "cdk_mysqlx::@5daee5ae18a0da1783e5",
+					"jsonFile" : "target-cdk_mysqlx-Debug-94ead6273447bcd92e9c.json",
+					"name" : "cdk_mysqlx",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 23,
+					"id" : "cdk_parser::@956131e164550142d64d",
+					"jsonFile" : "target-cdk_parser-Debug-4637f61e02f64ab2bfe7.json",
+					"name" : "cdk_parser",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "cdk_proto_mysqlx::@21f98707ca1b12630349",
+					"jsonFile" : "target-cdk_proto_mysqlx-Debug-239c266be0f889f09927.json",
+					"name" : "cdk_proto_mysqlx",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 38,
+					"id" : "common::@fbc7aac95fa27a1a2996",
+					"jsonFile" : "target-common-Debug-1164d991c5f27ee41961.json",
+					"name" : "common",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "connector::@037272bb142bb6ddd2c9",
+					"jsonFile" : "target-connector-Debug-03b71d50c2393b3e59e0.json",
+					"name" : "connector",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "connector-deps::@037272bb142bb6ddd2c9",
+					"jsonFile" : "target-connector-deps-Debug-6bef9175f470ee87a25e.json",
+					"name" : "connector-deps",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 42,
+					"id" : "devapi::@6b799589fcaf71176131",
+					"jsonFile" : "target-devapi-Debug-dd6d341b04b74db7d6aa.json",
+					"name" : "devapi",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "hash-library::@3c2046fe53842d084619",
+					"jsonFile" : "target-hash-library-Debug-ad344264036b22f70bcc.json",
+					"name" : "hash-library",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 44,
+					"id" : "imgui::@306ed2d68c6501e8728f",
+					"jsonFile" : "target-imgui-Debug-7f3da2958898430f52ad.json",
+					"name" : "imgui",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 44,
+					"id" : "imgui_backend::@306ed2d68c6501e8728f",
+					"jsonFile" : "target-imgui_backend-Debug-e8a84a307008ca450572.json",
+					"name" : "imgui_backend",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "light_pcapng::@7f20fce670325bc5cd71",
+					"jsonFile" : "target-light_pcapng-Debug-5b3283cd921f81725c97.json",
+					"name" : "light_pcapng",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "lz4-build::@21f98707ca1b12630349",
+					"jsonFile" : "target-lz4-build-Debug-531bc0e21dd3d026fcb5.json",
+					"name" : "lz4-build",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "lz4-rebuild::@21f98707ca1b12630349",
+					"jsonFile" : "target-lz4-rebuild-Debug-bf16deeb43c7c4f579a8.json",
+					"name" : "lz4-rebuild",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "memplumber::@d0d0909fce86f602c766",
+					"jsonFile" : "target-memplumber-Debug-dc95c0a29531b5f89808.json",
+					"name" : "memplumber",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "protobuf-build::@21f98707ca1b12630349",
+					"jsonFile" : "target-protobuf-build-Debug-f5ba4ad988b36c285737.json",
+					"name" : "protobuf-build",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "protobuf-rebuild::@21f98707ca1b12630349",
+					"jsonFile" : "target-protobuf-rebuild-Debug-3f079832148419665dbe.json",
+					"name" : "protobuf-rebuild",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "rebuild-ext::@037272bb142bb6ddd2c9",
+					"jsonFile" : "target-rebuild-ext-Debug-0771e6edd1443ba1be6f.json",
+					"name" : "rebuild-ext",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "save_linker_opts::@037272bb142bb6ddd2c9",
+					"jsonFile" : "target-save_linker_opts-Debug-3b776db8bb446f5e176e.json",
+					"name" : "save_linker_opts",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sniffer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sniffer-Debug-dd79da8841c029b7f480.json",
+					"name" : "sniffer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@c9454abb989d4d82a2e0",
+					"jsonFile" : "target-uninstall-Debug-cc063366ce0024ccc9e9.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 40,
+					"id" : "xapi::@54e328da97e32ea30f32",
+					"jsonFile" : "target-xapi-Debug-8669f74aa5244457bb2d.json",
+					"name" : "xapi",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "zlib-build::@21f98707ca1b12630349",
+					"jsonFile" : "target-zlib-build-Debug-0b60b15ea1b44ffd97bd.json",
+					"name" : "zlib-build",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "zlib-rebuild::@21f98707ca1b12630349",
+					"jsonFile" : "target-zlib-rebuild-Debug-661e39f7b2c18bbec95e.json",
+					"name" : "zlib-rebuild",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "zstd-build::@21f98707ca1b12630349",
+					"jsonFile" : "target-zstd-build-Debug-6071bac65c56c83a76f3.json",
+					"name" : "zstd-build",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "zstd-rebuild::@21f98707ca1b12630349",
+					"jsonFile" : "target-zstd-rebuild-Debug-188c092d5552feff0894.json",
+					"name" : "zstd-rebuild",
+					"projectIndex" : 6
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/tomasz/Desktop/projects/sniffer/cmake-build-debug",
+		"source" : "/home/tomasz/Desktop/projects/sniffer"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

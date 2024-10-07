@@ -164,13 +164,13 @@ int main() {
             ImGuiID dock_left_top_right = dock_left_top;
 
             ImGui::DockBuilderDockWindow("DEVICES", dock_left_top_left);
-            ImGui::DockBuilderDockWindow("WINDOW MANAGER", dock_left_top_right);
+            //ImGui::DockBuilderDockWindow("WINDOW MANAGER", dock_left_top_right);
             ImGui::DockBuilderDockWindow("FILTERS", dock_left_mid);
             ImGui::DockBuilderDockWindow("PACKETS", dock_left_bot);
             ImGui::DockBuilderDockWindow("STATISTICS", dock_id_right_top);
-            ImGui::DockBuilderDockWindow("LOGS", dock_id_right_top);
-            ImGui::DockBuilderDockWindow("DB", dock_id_right_top);
             ImGui::DockBuilderDockWindow("ANALYZER", dock_id_right);
+            ImGui::DockBuilderDockWindow("LOGS", dock_id_right);
+            ImGui::DockBuilderDockWindow("DB", dock_left_top_right);
 
             ImGui::DockBuilderFinish(dockspace_id);
             dockInitialized = true;

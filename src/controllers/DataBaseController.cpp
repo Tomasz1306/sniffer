@@ -198,7 +198,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
         LogController::getInstance()->addLog(Utils::getTime(), "Cannot insert new packet mainController is null", LogType::ERROR);
         return;
     }
-    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{2};
+    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{3};
     int icmpv6_id{-1}, igmp_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1};
     std::shared_ptr<pcpp::IPv4Layer> ipv4Layer;
     std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
@@ -211,8 +211,8 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
     std::shared_ptr<pcpp::EthLayer> ethLayer;
     std::string query = "";
     bool firstField = true;
-    std::string packetsQuery = "INSERT INTO packets(packet_id, ";
-    std::string values = "VALUES(?, ";
+    std::string packetsQuery = "INSERT INTO Packets(packet_id, packet_capture_date, ";
+    std::string values = "VALUES(?, STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'), ";
     try {
         if (packet.packet.isPacketOfType(pcpp::Ethernet)) {
             ethLayer = std::make_shared<pcpp::EthLayer>(*packet.packet.getLayerOfType<pcpp::EthLayer>());
@@ -242,7 +242,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
             query = R"(INSERT INTO ipv4(ipv4_version, ipv4_ihl, ipv4_tos, ipv4_total_length,
                     ipv4_identification, ipv4_flags, ipv4_fragment_offset, ipv4_ttl, ipv4_protocol,
                     ipv4_header_checksum, ipv4_src_ip, ipv4_dst_ip) VALUES (?,?,?,?,?,?,?,?,?,?,?,?))";
-            std::cout << query << std::endl;
             this->prep_stmt = this->connection->prepareStatement(query);
             this->prep_stmt->setInt(1, ipv4Layer->getIPv4Header()->ipVersion);
             this->prep_stmt->setInt(2, ipv4Layer->getIPv4Header()->internetHeaderLength);
@@ -256,7 +255,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
             this->prep_stmt->setInt(10, ipv4Layer->getIPv4Header()->headerChecksum);
             this->prep_stmt->setString(11, ipv4Layer->getSrcIPAddress().toString().c_str());
             this->prep_stmt->setString(12, ipv4Layer->getDstIPAddress().toString().c_str());
-            std::cout << query << std::endl;
             this->prep_stmt->executeUpdate();
             query = "";
             this->stmt = this->connection->createStatement();
@@ -270,7 +268,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
                 packetsQuery += ", ";
                 values += ", ";
             }
-            packetsQuery += "ivp4_id";
+            packetsQuery += "ipv4_id";
             values += "?";
         }
         if (packet.packet.isPacketOfType(pcpp::IPv6)) {
@@ -302,7 +300,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
                 packetsQuery += ", ";
                 values += ", ";
             }
-            packetsQuery += "ivp4_id";
+            packetsQuery += "ipv6_id";
             values += "?";
         }
         if (packet.packet.isPacketOfType(pcpp::ARP)) {
@@ -353,13 +351,14 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
             tcpLayer = std::make_shared<pcpp::TcpLayer>(*packet.packet.getLayerOfType<pcpp::TcpLayer>());
             query = R"(INSERT INTO tcp(tcp_src_port, tcp_dst_port, tcp_sequence_number
                     , tcp_acknowledgment_number, tcp_data_offset, tcp_reserved, tcp_SYN, tcp_ACK, tcp_FIN, tcp_RST, tcp_URG, tcp_PSH,
-                    tcp_window, tcp_checksum, tcp_urgent_pointer, tcp_options) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?))";
+                    tcp_window, tcp_checksum, tcp_urgent_pointer, tcp_options) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?))";
             this->prep_stmt = this->connection->prepareStatement(query);
-
+            pcpp::TcpOptionType tcpOption;
+            auto tcp_option = tcpLayer->getTcpOption(tcpOption);
             this->prep_stmt->setInt(1, tcpLayer->getSrcPort());
             this->prep_stmt->setInt(2, tcpLayer->getDstPort());
-            this->prep_stmt->setUInt(3, tcpLayer->getTcpHeader()->sequenceNumber);
-            this->prep_stmt->setUInt(4, tcpLayer->getTcpHeader()->ackNumber);
+            this->prep_stmt->setInt(3, tcpLayer->getTcpHeader()->sequenceNumber);
+            this->prep_stmt->setInt(4, tcpLayer->getTcpHeader()->ackNumber);
             this->prep_stmt->setInt(5, tcpLayer->getTcpHeader()->dataOffset);
             this->prep_stmt->setInt(6, tcpLayer->getTcpHeader()->reserved);
             this->prep_stmt->setBoolean(7, tcpLayer->getTcpHeader()->synFlag == 1 ? true : false);
@@ -371,6 +370,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
             this->prep_stmt->setInt(13, tcpLayer->getTcpHeader()->windowSize);
             this->prep_stmt->setInt(14, tcpLayer->getTcpHeader()->headerChecksum);
             this->prep_stmt->setInt(15, tcpLayer->getTcpHeader()->urgentPointer);
+            this->prep_stmt->setString(16, "NONE");
             this->prep_stmt->executeUpdate();
             query = "";
             this->stmt = this->connection->createStatement();
@@ -445,11 +445,11 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet) {
         if (packet.packet.isPacketOfType(pcpp::IGMPv3)) {
 
         }
-        int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, icmpv6_id{-1}, igmp_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1};
         query.clear();
-        query = packetsQuery + values;
-        this->prep_stmt->setInt(1, packet.id);
+        query = packetsQuery + ")" + values + ")";
         this->prep_stmt = this->connection->prepareStatement(query);
+        this->prep_stmt->setInt(1, packet.id);
+        this->prep_stmt->setDateTime(2, packet.captureTime);
         if (ethernet_id != -1) {
             this->prep_stmt->setInt(index++, ethernet_id);
         }

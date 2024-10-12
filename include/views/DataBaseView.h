@@ -17,6 +17,7 @@ public:
     DataBaseView();
 
     void draw(std::shared_ptr<DataBaseController> controller);
+    void drawProgressBar(std::shared_ptr<DataBaseController> controller);
 private:
 
     char host[128] = "localhost";

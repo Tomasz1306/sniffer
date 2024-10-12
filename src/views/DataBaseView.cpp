@@ -87,7 +87,16 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
             controller->disconnectFromDataBase();
         }
     }
+    this->drawProgressBar(controller);
     ImGui::PopFont();
     ImGui::End();
 }
+
+void DataBaseView::drawProgressBar(std::shared_ptr<DataBaseController> controller) {
+    float progress = 1.0f - (controller->getCapturedPacketVectorDatabaseSize() / controller->getMaxVectorSize());
+    ImGui::Text("Number of packets in vector: %d", controller->getCapturedPacketVectorDatabaseSize());
+    ImGui::Text("Number of threads: %d", controller->getNumberOfThreads());
+    ImGui::ProgressBar(progress);
+}
+
 

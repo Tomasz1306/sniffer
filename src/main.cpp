@@ -109,7 +109,6 @@ int main() {
     auto deviceView = std::make_shared<DeviceView>();
     auto deviceModel = std::make_shared<DeviceModel>();
     auto packetListener = std::make_shared<Listener>(packetCaptureModel);
-    //packetListener->openListener();
     LogController::getInstance();
     LogController::getInstance()->setModel(logModel);
     LogController::getInstance()->setView(logView);
@@ -162,16 +161,15 @@ int main() {
             ImGuiID dock_left_top_left = ImGui::DockBuilderSplitNode(dock_left_top,
                 ImGuiDir_Left, 0.5f, nullptr, &dock_left_top);
             ImGuiID dock_left_top_right = dock_left_top;
-
             ImGui::DockBuilderDockWindow("DEVICES", dock_left_top_left);
             //ImGui::DockBuilderDockWindow("WINDOW MANAGER", dock_left_top_right);
             ImGui::DockBuilderDockWindow("FILTERS", dock_left_mid);
             ImGui::DockBuilderDockWindow("PACKETS", dock_left_bot);
             ImGui::DockBuilderDockWindow("STATISTICS", dock_id_right_top);
-            ImGui::DockBuilderDockWindow("ANALYZER", dock_id_right);
-            ImGui::DockBuilderDockWindow("LOGS", dock_id_right);
-            ImGui::DockBuilderDockWindow("DB", dock_left_top_right);
+            ImGui::DockBuilderDockWindow("ANALYZER", dock_left_top_right);
 
+            ImGui::DockBuilderDockWindow("LOGS", dock_id_right);
+            ImGui::DockBuilderDockWindow("DB", dock_id_right);
             ImGui::DockBuilderFinish(dockspace_id);
             dockInitialized = true;
         }
@@ -181,8 +179,9 @@ int main() {
         deviceController->display();
         windowManagerController->display();
         statisticController->display();
-        LogController::getInstance()->display();
         dataBaseController->display();
+        LogController::getInstance()->display();
+
         analyzerController->display();
 
         ImGui::Render();

@@ -23,6 +23,7 @@ void PacketCaptureModel::writeFromDequeToVector(){
             auto &packet = this->capturedPackets_deque.back();
             this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.back());
             this->capturedPackets_database.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
+            database_cv.notify_all();
             ++this->counter;
             this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
             this->capturedPackets_deque.pop_back();

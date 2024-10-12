@@ -16,6 +16,7 @@ struct CapturedPackets {
     std::string captureTime;
     pcpp::Packet packet;
 
+    CapturedPackets() {};
     CapturedPackets(int _id, bool _selected, std::string _capturedTime, pcpp::Packet _packet);
 };
 

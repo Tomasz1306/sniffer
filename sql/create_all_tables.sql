@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS ethernet
     ethernet_dst_mac  CHAR(17),
     ethernet_eht_type VARCHAR(10)
 );
-/
+
 CREATE TABLE IF NOT EXISTS arp
 (
     arp_id         INT AUTO_INCREMENT PRIMARY KEY,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS arp
     arp_dst_mac    CHAR(17),
     arp_dst_ip     VARCHAR(15)
     );
-/
+
 CREATE TABLE IF NOT EXISTS icmpv4
 (
     icmpv4_id             INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,16 +28,7 @@ CREATE TABLE IF NOT EXISTS icmpv4
     icmpv4_checksum       INT,
     icmpv4_rest_of_header BLOB
 );
-/
-CREATE TABLE IF NOT EXISTS icmpv6
-(
-    icmpv6_id             INT AUTO_INCREMENT PRIMARY KEY,
-    icmpv6_type           INT,
-    icmpv6_code           INT,
-    icmpv6_checksum       INT,
-    icmpv6_rest_of_header BLOB
-);
-/
+
 CREATE TABLE IF NOT EXISTS ipv4
 (
     ipv4_id              INT AUTO_INCREMENT PRIMARY KEY,
@@ -92,10 +83,10 @@ CREATE TABLE IF NOT EXISTS tcp
 CREATE TABLE IF NOT EXISTS udp
 (
     udp_id   INT AUTO_INCREMENT PRIMARY KEY,
-    src_port INT,
-    dst_port INT,
-    length   INT,
-    checksum INT
+    udp_src_port INT,
+    udp_dst_port INT,
+    udp_length   INT,
+    udp_checksum INT
 );
 
 CREATE TABLE IF NOT EXISTS dhcpv4
@@ -116,75 +107,55 @@ CREATE TABLE IF NOT EXISTS dhcpv4
     dhcpv4_options    BLOB
 );
 
-CREATE TABLE IF NOT EXISTS dhcpv6
-(
-    dhcpv6_id      INT AUTO_INCREMENT PRIMARY KEY,
-    msg_type       INT,
-    transaction_id INT,
-    options        BLOB
-);
-
 CREATE TABLE IF NOT EXISTS dns
 (
     dns_id         INT AUTO_INCREMENT PRIMARY KEY,
-    transaction_id INT,
-    flags          INT,
-    questions      INT,
-    answer_rrs     INT,
-    authority_rrs  INT,
-    additional_rrs INT,
-    queries        BLOB,
-    answers        BLOB
+    dns_transaction_id INT,
+    dns_flags          INT,
+    dns_questions      INT,
+    dns_answer_rrs     INT,
+    dns_authority_rrs  INT,
+    dns_additional_rrs INT,
+    dns_queries        BLOB,
+    dns_answers        BLOB
 );
 
 CREATE TABLE IF NOT EXISTS ftp
 (
     ftp_id           INT AUTO_INCREMENT PRIMARY KEY,
-    command          VARCHAR(255),
-    argument         VARCHAR(255),
-    response_code    INT,
-    response_message VARCHAR(255)
+    ftp_command          VARCHAR(255),
+    ftp_argument         VARCHAR(255),
+    ftp_response_code    INT,
+    ftp_response_message VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS http
 (
     http_id       INT AUTO_INCREMENT PRIMARY KEY,
-    url           TEXT,
+    http_url           TEXT,
     http_version  VARCHAR(10),
-    status_code   INT,
-    reason_phrase TEXT,
-    headers       BLOB,
-    body          BLOB
+    http_status_code   INT,
+    http_reason_phrase TEXT,
+    http_headers       BLOB,
+    http_body          BLOB
 );
 
 CREATE TABLE IT NOT EXISTS smtp
 (
-    smtp_id
-    INT
-    AUTO_INCREMENT
-    PRIMARY
-    KEY,
-    command
-    VARCHAR
-(
-    255
-),
-    argument TEXT,
-    response_code INT,
-    response_message TEXT
-    );
+    smtp_id INT AUTO_INCREMENT PRIMARY KEY,
+    smtp_payload TEXT
+);
 
 CREATE TABLE IF NOT EXISTS ssh
 (
     ssh_id       INT AUTO_INCREMENT PRIMARY KEY,
-    message_type INT,
-    payload      BLOB
+    ssh_payload      BLOB
 );
 
 CREATE TABLE IF NOT EXISTS telnet
 (
     telent_id INT AUTO_INCREMENT PRIMARY KEY,
-    data      BLOB
+    telnet_data BLOB
 );
 
 CREATE TABLE IF NOT EXISTS Packets

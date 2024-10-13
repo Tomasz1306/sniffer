@@ -29,7 +29,7 @@ public:
     void writeFromDequeToVector();
     void clearCapturedPacketVector();
     void clearCapturedPacketVectorDatabase();
-    void setController(std::shared_ptr<MainController> controller);
+    void setMainController(std::shared_ptr<MainController> controller);
 
 private:
 

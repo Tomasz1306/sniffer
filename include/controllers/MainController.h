@@ -10,11 +10,13 @@
 #include "controllers/StatisticController.h"
 #include "controllers/DataBaseController.h"
 #include "PcapLiveDevice.h"
+#include "controllers/DeviceController.h"
 #include "views/PacketView.h"
 
 
 //Forward declaration
 class DataBaseController;
+class DeviceController;
 class StatisticController;
 class PacketCaptureModel;
 class PacketCaptureView;
@@ -27,7 +29,8 @@ public:
         std::shared_ptr<PacketCaptureView> _view,
         std::shared_ptr<Listener> _listener,
         std::shared_ptr<PacketView> _packetView,
-        std::shared_ptr<StatisticController> _statisticController);
+        std::shared_ptr<StatisticController> _statisticController,
+        std::shared_ptr<DeviceController> _deviceController);
     void display();
 
     static void onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie);
@@ -45,10 +48,13 @@ public:
     void addPacketToStatistics(pcpp::Packet &packet);
     bool isDeviceSelected();
     bool *getIsPacketDisplayed();
+    std::string getSessionData();
 
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 
+    std::shared_ptr<DeviceController> getDeviceController();
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
+
 private:
 
     bool isPacketDisplayed{false};
@@ -58,6 +64,7 @@ private:
     std::shared_ptr<Listener> listener;
     std::shared_ptr<PacketView> packetView;
     std::shared_ptr<StatisticController> statisticController;
+    std::shared_ptr<DeviceController> deviceController;
 };
 
 #endif // MAINCONTROLLER_H

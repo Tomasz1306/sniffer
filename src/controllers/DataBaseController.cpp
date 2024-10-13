@@ -39,15 +39,17 @@ void DataBaseController::connectToDataBase(std::string host, std::string port, s
         this->connection = this->driver->connect(host + ":" + port, username, password);
         for (int i = 0; i < 5; i++) {
             try {
+                int session_id{0};
                 auto connection = this->driver->connect(host + ":" + port, username, password);
                 this->threadConnections.insert({i, connection});
-                std::cout << "Connection " << i << " established successfully." << std::endl;
             } catch (const sql::SQLException &e) {
                 std::cerr << "SQLException in initializeDbThreadPool: " << e.what()
                           << ", error code: " << e.getErrorCode() << std::endl;
+                LogController::getInstance()->addLog(Utils::getTime(), e.what() , LogType::ERROR);
                 // Consider handling the error appropriately
             } catch (const std::exception &e) {
                 std::cerr << "Exception in initializeDbThreadPool: " << e.what() << std::endl;
+                LogController::getInstance()->addLog(Utils::getTime(), e.what() , LogType::ERROR);
                 // Consider handling the error appropriately
             }
         }
@@ -215,9 +217,42 @@ void DataBaseController::createTables() {
             stmt->execute(readSQLScript("create_table_tcp.sql"));
             stmt->execute(readSQLScript("create_table_telnet.sql"));
             stmt->execute(readSQLScript("create_table_udp.sql"));
-            stmt->execute(readSQLScript("create_table_Packets.sql"));
-            stmt->execute(readSQLScript("create_table_interfaces.sql"));
             stmt->execute(readSQLScript("create_table_Session.sql"));
+            stmt->execute(readSQLScript("create_table_interfaces.sql"));
+            stmt->execute(readSQLScript("create_table_Packets.sql"));
+
+            int session_id{0};
+            this->prep_stmt = this->connection->prepareStatement("INSERT INTO Sessions(session_date) VALUES(STR_TO_DATE(?, '%d-%m-%Y %H:%i:%s'))");
+            this->prep_stmt->setDateTime(1, this->mainController->getSessionData());
+            this->prep_stmt->execute();
+            stmt = connection->createStatement();
+            res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+            if (res->next()) {
+                session_id = res->getInt(1);
+            }
+            for (auto &device : this->mainController->getDeviceController()->getDevices()) {
+                std::string query = R"(INSERT INTO Interfaces(interface_name, interface_ipv4,
+                                             interface_ipv6, interface_mac_address, interface_default_gateway,
+                                             interface_dns_server, interface_mtu, session_id)
+                                             VALUES(?,?,?,?,?,?,?,?))";
+                this->prep_stmt = this->connection->prepareStatement(query);
+                this->prep_stmt->setString(1, device->getName());
+                this->prep_stmt->setString(2, device->getIPv4Address().toString());
+                this->prep_stmt->setString(3, device->getIPv6Address().toString());
+                this->prep_stmt->setString(4, device->getMacAddress().toString());
+                this->prep_stmt->setString(5, device->getDefaultGateway().toString());
+                this->prep_stmt->setString(6, device->getDnsServers().begin()->toString());
+                this->prep_stmt->setString(7, std::to_string(device->getMtu()));
+                this->prep_stmt->setInt(8, session_id);
+                this->prep_stmt->execute();
+                int interface_id{0};
+                stmt = connection->createStatement();
+                res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+                if (res->next()) {
+                    interface_id = res->getInt(1);
+                }
+                this->currentSessionInterfacesIds.emplace(interface_id, device->getName());
+            }
 
             LogController::getInstance()->addLog(Utils::getTime(), "CREATED ALL TABLES", LogType::SUCCESFULL);
         } catch (sql::SQLException& e) {
@@ -233,6 +268,7 @@ void DataBaseController::useDatabase() {
         this->stmt = this->connection->createStatement();
         stmt->execute("USE " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first);
         LogController::getInstance()->addLog(Utils::getTime(), "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first, LogType::SUCCESFULL);
+
     } catch (sql::SQLException& e) {
         LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::WARNING);
     }
@@ -291,7 +327,7 @@ std::string DataBaseController::readSQLScript(const std::string &file) {
 }
 
 void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connection *connection_local) {
-    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{3};
+    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{2};
     int icmpv6_id{-1}, igmp_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1}, httpRequest_id{-1};
     int ssh_id{-1}, smtp_id{-1}, telnet_id{-1}, dhcpv4_id{-1}, dhcpv6_id{-1}, httpResponse_id{-1};
     int ftpRequest_id{-1}, ftpResponse_id{-1}, dns_id{-1};
@@ -314,8 +350,9 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     std::shared_ptr<pcpp::DhcpLayer> dhcpv4Layer;
     std::string query = "";
     bool firstField = true;
-    std::string packetsQuery = "INSERT INTO Packets(packet_id, packet_capture_date, ";
-    std::string values = "VALUES(?, STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'), ";
+    bool isProtocolSupported = false;
+    std::string packetsQuery = "INSERT INTO Packets(packet_capture_date, ";
+    std::string values = "VALUES(STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'), ";
 
     try {
         sql::Statement *stmt;
@@ -324,37 +361,47 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
 
         if (packet.packet.isPacketOfType(pcpp::Ethernet)) {
             buildEthernetQuery(packet, ethLayer, firstField, ethernet_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::IPv4)) {
             buildIpv4Query(packet, ipv4Layer, firstField, ipv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::IPv6)) {
             buildIpv6Query(packet, ipv6Layer, firstField, ipv6_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::ARP)) {
             buildArpQuery(packet, arpLayer, firstField, arp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::ICMP)) {
             buildIcmpQuery(packet, icmpLayer, firstField, icmp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::TCP)) {
             buildTcpQuery(packet, tcpLayer, firstField, tcp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::UDP)) {
             buildUdpQuery(packet, udpLayer, firstField, udp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
             buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
             buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
         if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
             buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-
+            isProtocolSupported = true;
         } else if (auto isftpResponseLayer = dynamic_cast<pcpp::FtpResponseLayer*>(ftpLayer)) {
             buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         } else {
             //std::cout << "Unknown FTP type." << std::endl;
         }
@@ -363,18 +410,26 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         }
         if (packet.packet.isPacketOfType(pcpp::Telnet)) {
             buildTelnetQuery(packet, telnetLayer, firstField, telnet_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::DNS)) {
             buildDnsQuery(packet, dnsLayer, firstField, dns_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::DHCP)) {
             buildDhcpv4Query(packet, dhcpv4Layer, firstField, dhcpv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
+        }
+        if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1) {
+            return;
+        }
+        if (!isProtocolSupported) {
+            return;
         }
         query.clear();
         query = packetsQuery + ")" + values + ")";
         prep_stmt = connection_local->prepareStatement(query);
-        prep_stmt->setInt(1, packet.id);
-        prep_stmt->setDateTime(2, packet.captureTime);
+        prep_stmt->setDateTime(1, packet.captureTime);
         if (ethernet_id != -1) {
             prep_stmt->setInt(index++, ethernet_id);
         }
@@ -399,6 +454,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         if (udp_id != -1) {
             prep_stmt->setInt(index++, udp_id);
         }
+
         prep_stmt->executeUpdate();
 
     } catch (sql::SQLException &e) {
@@ -407,7 +463,8 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     }
 }
 
-void DataBaseController::buildIpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv4Layer> &layer, bool firstField, int &ipv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection_local, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildIpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv4Layer> &layer,
+    bool &firstField, int &ipv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection_local, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::IPv4Layer>(*packet.packet.getLayerOfType<pcpp::IPv4Layer>());
     std::string query = R"(INSERT INTO ipv4(ipv4_version, ipv4_ihl, ipv4_tos, ipv4_total_length,
                     ipv4_identification, ipv4_flags, ipv4_fragment_offset, ipv4_ttl, ipv4_protocol,
@@ -442,7 +499,8 @@ void DataBaseController::buildIpv4Query(CapturedPackets &packet, std::shared_ptr
     values += "?";
 }
 
-void DataBaseController::buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer, bool firstField, int &ipv6_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer,
+    bool &firstField, int &ipv6_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::IPv6Layer>(*packet.packet.getLayerOfType<pcpp::IPv6Layer>());
     std::string query = R"(INSERT INTO ipv6(ipv6_version, ipv6_traffic_class, ipv6_flow_label, ipv6_payload_length,
             ipv6_next_header, ipv6_hop_limit, ipv6_src_ip, ipv6_dst_ip) VALUES (?,?,?,?,?,?,?,?))";
@@ -475,10 +533,11 @@ void DataBaseController::buildIpv6Query(CapturedPackets &packet, std::shared_ptr
     values += "?";
 }
 
-void DataBaseController::buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer, bool firstField, int &arp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer,
+    bool &firstField, int &arp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::ArpLayer>(*packet.packet.getLayerOfType<pcpp::ArpLayer>());
-    std::string query = R"(INSERT INTO arp(arp_hw_type, arp_protocol_type, arp_hw_size, arp_protocol_size,
-            arp_opcode, arp_src_hw_addr, arp_src_protocol_addr, arp_dst_hw_addr, arp_dst_protocol_addr) VALUES (?,?,?,?,?,?,?,?,?))";
+    std::string query = R"(INSERT INTO arp(arp_hw_type, arp_proto_type, arp_hw_size, arp_proto_size,
+            arp_opcode, arp_src_mac, arp_src_ip, arp_dst_mac, arp_dst_ip) VALUES (?,?,?,?,?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
     prep_stmt->setInt(1, static_cast<int>(layer->getArpHeader()->hardwareType));
     prep_stmt->setInt(2, static_cast<int>(layer->getArpHeader()->protocolType));
@@ -506,7 +565,8 @@ void DataBaseController::buildArpQuery(CapturedPackets &packet, std::shared_ptr<
     values += "?";
 }
 
-void DataBaseController::buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer, bool firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer,
+    bool &firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::IcmpLayer>(*packet.packet.getLayerOfType<pcpp::IcmpLayer>());
     std::string query = R"(INSERT INTO icmp(icmp_type, icmp_code, icmp_checksum) VALUES (?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -532,7 +592,8 @@ void DataBaseController::buildIcmpQuery(CapturedPackets &packet, std::shared_ptr
     values += "?";
 }
 
-void DataBaseController::buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer, bool firstField, int &tcp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer,
+    bool &firstField, int &tcp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::TcpLayer>(*packet.packet.getLayerOfType<pcpp::TcpLayer>());
     std::string query = R"(INSERT INTO tcp(tcp_src_port, tcp_dst_port, tcp_sequence_number
                , tcp_acknowledgment_number, tcp_data_offset, tcp_reserved, tcp_SYN, tcp_ACK, tcp_FIN, tcp_RST, tcp_URG, tcp_PSH,
@@ -573,7 +634,8 @@ void DataBaseController::buildTcpQuery(CapturedPackets &packet, std::shared_ptr<
     values += "?";
 }
 
-void DataBaseController::buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer, bool firstField, int &udp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer,
+    bool &firstField, int &udp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::UdpLayer>(*packet.packet.getLayerOfType<pcpp::UdpLayer>());
     std::string query = R"(INSERT INTO udp(udp_src_port, udp_dst_port, udp_length, udp_checksum) VALUES (?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -599,7 +661,8 @@ void DataBaseController::buildUdpQuery(CapturedPackets &packet, std::shared_ptr<
     values += "?";
 }
 
-void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer, bool firstField, int &ethernet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection_local, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer,
+    bool &firstField, int &ethernet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection_local, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::EthLayer>(*packet.packet.getLayerOfType<pcpp::EthLayer>());
     std::string query = "INSERT INTO ethernet(ethernet_src_mac, ethernet_dst_mac, ethernet_eht_type) VALUES (?,?,?)";
     if (connection_local == nullptr) {
@@ -676,7 +739,8 @@ void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared
 //     packetsQuery += "smtp_id";
 //     values += "?";
 // }
-void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TelnetLayer> &layer, bool firstField, int &telnet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TelnetLayer> &layer,
+    bool &firstField, int &telnet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::TelnetLayer>(*packet.packet.getLayerOfType<pcpp::TelnetLayer>());
     std::string query = R"(INSERT INTO telnet(telnet_payload) VALUES (?))";
     prep_stmt = connection->prepareStatement(query);
@@ -700,7 +764,8 @@ void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_p
     values += "?";
 }
 
-void DataBaseController::buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer, bool firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer,
+    bool &firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::DhcpLayer>(*packet.packet.getLayerOfType<pcpp::DhcpLayer>());
     std::string query = R"(INSERT INTO dhcp (op_code, hardware_type, client_ip, your_ip, server_ip, gateway_ip, client_mac, options) VALUES (?,?,?,?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -747,7 +812,8 @@ void DataBaseController::buildDhcpv4Query(CapturedPackets &packet, std::shared_p
     values += "?";
 }
 
-void DataBaseController::buildHttpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpResponseLayer> &layer, bool firstField, int &httpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildHttpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpResponseLayer> &layer,
+    bool &firstField, int &httpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::HttpResponseLayer>(*packet.packet.getLayerOfType<pcpp::HttpResponseLayer>());
     std::string query = R"(INSERT INTO http_responses(http_status_code, http_reason_phrase, http_version, http_headers, http_body) VALUES (?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -797,7 +863,8 @@ void DataBaseController::buildHttpResponseQuery(CapturedPackets &packet, std::sh
     values += "?";
 }
 
-void DataBaseController::buildHttpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpRequestLayer> &layer, bool firstField, int &httpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildHttpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpRequestLayer> &layer,
+    bool &firstField, int &httpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
    layer = std::make_shared<pcpp::HttpRequestLayer>(*packet.packet.getLayerOfType<pcpp::HttpRequestLayer>());
     std::string query = R"(INSERT INTO http_requests(http_url, http_version, http_method, http_headers, http_body) VALUES (?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -862,14 +929,30 @@ void DataBaseController::buildHttpRequestQuery(CapturedPackets &packet, std::sha
     values += "?";
 }
 
-void DataBaseController::buildDnsQuery(CapturedPackets &packet, std::shared_ptr<pcpp::DnsLayer> &layer, bool firstField, int &dns_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildDnsQuery(CapturedPackets &packet, std::shared_ptr<pcpp::DnsLayer> &layer,
+    bool &firstField, int &dns_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::DnsLayer>(*packet.packet.getLayerOfType<pcpp::DnsLayer>());
-    std::string query = R"(INSERT INTO dns(dns_id, dns_query) VALUES (?,?))";
+    std::string query = R"(INSERT INTO dns(dns_transaction_id, dns_flags, dns_questions, dns_answer_rrs,
+                                            dns_authority_rrs, dns_additional_rrs, dns_queries, dns_answers) VALUES (?,?,?,?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
-
+    pcpp::dnshdr * dnsHeader = layer->getDnsHeader();
+    std::stringstream flags;
+    flags << "QR:" << dnsHeader->queryOrResponse << ", "
+          << "Opcode:" << dnsHeader->opcode << ", "
+          << "AA:" << dnsHeader->authoritativeAnswer << ", "
+          << "TC:" << dnsHeader->truncation << ", "
+          << "RD:" << dnsHeader->recursionDesired << ", "
+          << "RA:" << dnsHeader->recursionAvailable << ", "
+          << "Z:" << dnsHeader->zero << ", "
+          << "AD:" << dnsHeader->authenticData << ", "
+          << "CD:" << dnsHeader->checkingDisabled << ", "
+          << "RCODE:" << dnsHeader->responseCode;
     prep_stmt->setInt(1, layer->getDnsHeader()->transactionID);
-    prep_stmt->setString(2, layer->getFirstQuery()->getName().c_str());
-
+    prep_stmt->setString(2, flags.str().c_str());
+    prep_stmt->setInt(3, layer->getQueryCount());
+    prep_stmt->setInt(4, layer->getAnswerCount());
+    prep_stmt->setInt(5, layer->getAuthorityCount());
+    prep_stmt->setInt(6, layer->getAdditionalRecordCount());
     prep_stmt->executeUpdate();
     query = "";
     stmt = connection->createStatement();
@@ -887,7 +970,8 @@ void DataBaseController::buildDnsQuery(CapturedPackets &packet, std::shared_ptr<
     values += "?";
 }
 
-void DataBaseController::buildFtpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpRequestLayer> &layer, bool firstField, int &ftpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildFtpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpRequestLayer> &layer,
+    bool &firstField, int &ftpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::FtpRequestLayer>(*packet.packet.getLayerOfType<pcpp::FtpRequestLayer>());
     std::string query = R"(INSERT INTO ftp_requests(ftp_command, ftp_arguments, ftp_headers, ftp_payload) VALUES (?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
@@ -935,7 +1019,8 @@ void DataBaseController::buildFtpRequestQuery(CapturedPackets &packet, std::shar
     values += "?";
 }
 
-void DataBaseController::buildFtpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpResponseLayer> &layer, bool firstField, int &ftpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
+void DataBaseController::buildFtpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpResponseLayer> &layer,
+    bool &firstField, int &ftpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     // Initialize the ftpResponseLayer with data from the current packet
     layer = std::make_shared<pcpp::FtpResponseLayer>(*packet.packet.getLayerOfType<pcpp::FtpResponseLayer>());
     std::string query = R"(INSERT INTO ftp_responses(ftp_status_code, ftp_status_string, ftp_headers, ftp_payload) VALUES (?,?,?,?))";

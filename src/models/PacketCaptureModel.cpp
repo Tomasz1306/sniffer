@@ -49,7 +49,7 @@ PacketCaptureModel::~PacketCaptureModel() {
     }
 }
 
-void PacketCaptureModel::setController(std::shared_ptr<MainController> controller) {
+void PacketCaptureModel::setMainController(std::shared_ptr<MainController> controller) {
     this->controller = controller;
 }
 

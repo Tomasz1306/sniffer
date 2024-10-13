@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS telnet
 (
     telent_id INT AUTO_INCREMENT PRIMARY KEY,
-    data      BLOB
+    telnet_data BLOB
 );

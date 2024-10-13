@@ -29,3 +29,59 @@ std::shared_ptr<StatisticModel> StatisticController::getModel() {
 bool StatisticController::isDeviceSelected() {
     return this->listener->isDeviceSelected();
 }
+
+void StatisticController::updateData() {
+    addDataPoint(ethernetData, model->ethernetCount);
+    addDataPoint(arpData, model->arpCount);
+    addDataPoint(imcpv4Data, model->imcpv4Count);
+    addDataPoint(ipv4Data, model->ipv4Count);
+    addDataPoint(ipv6Data, model->ipv6Count);
+    addDataPoint(tcpData, model->tcpCount);
+    addDataPoint(udpData, model->udpCount);
+    addDataPoint(dhcpv4Data, model->dhcpv4Count);
+    addDataPoint(dnsData, model->dnsCount);
+    addDataPoint(ftpData, model->ftpCount);
+    addDataPoint(httpData, model->httpCount);
+    addDataPoint(sshData, model->sshCount);
+    addDataPoint(telnetData, model->telnetCount);
+    addDataPoint(smtpData, model->smtpCount);
+}
+
+void StatisticController::addDataPoint(std::deque<int>& dataDeque, int dataPoint) {
+    if (dataDeque.size() >= maxDataPoints) {
+        dataDeque.pop_front();
+    }
+    dataDeque.push_back(dataPoint);
+}
+
+std::vector<float> StatisticController::getDequeAsVector(std::deque<int>& dataDeque) {
+    return std::vector<float>(dataDeque.begin(), dataDeque.end());
+}
+
+int StatisticController::getMaxDataPoints() {
+    return maxDataPoints;
+}
+
+void StatisticController::clearStatistics() {
+    this->model->ethernetCount = 0;
+    this->model->arpCount = 0;
+    this->model->imcpv4Count = 0;
+    this->model->imcpv6Count = 0;
+    this->model->igmpCount = 0;
+    this->model->ipv4Count = 0;
+    this->model->ipv6Count = 0;
+    this->model->tcpCount = 0;
+    this->model->udpCount = 0;
+    this->model->sdpCount = 0;
+    this->model->sipCount = 0;
+    this->model->sslTslCount = 0;
+    this->model->bgpCount = 0;
+    this->model->dhcpv4Count = 0;
+    this->model->dhcpv6Count = 0;
+    this->model->dnsCount = 0;
+    this->model->ftpCount = 0;
+    this->model->httpCount = 0;
+    this->model->smtpCount = 0;
+    this->model->sshCount = 0;
+    this->model->telnetCount = 0;
+}

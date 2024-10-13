@@ -13,12 +13,14 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     std::shared_ptr<PacketCaptureView> _view,
     std::shared_ptr<Listener> _listener,
     std::shared_ptr<PacketView> _packetView,
-    std::shared_ptr<StatisticController> _statisticController) {
+    std::shared_ptr<StatisticController> _statisticController,
+    std::shared_ptr<DeviceController> _deviceController) {
     this->model = _model;
     this->view = _view;
     this->listener = _listener;
     this->packetView = _packetView;
     this->statisticController = _statisticController;
+    this->deviceController = _deviceController;
 }
 
 void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
@@ -52,6 +54,7 @@ void MainController::stopCapture() {
 void MainController::clearTableOfPackets() {
     this->model->clearCapturedPacketVector();
     this->model->clearCapturedPacketVectorDatabase();
+    this->statisticController->clearStatistics();
 }
 
 bool MainController::isDeviceOpen() {
@@ -107,5 +110,13 @@ bool *MainController::getIsPacketDisplayed() {
 
 std::vector<CapturedPackets> &MainController::getCapturedPacketVectorDatabase() {
     return this->model->getCapturedPacketVectorDatabase();
+}
+
+std::string MainController::getSessionData() {
+    return this->statisticController->getModel()->date;
+}
+
+std::shared_ptr<DeviceController> MainController::getDeviceController() {
+    return this->deviceController;
 }
 

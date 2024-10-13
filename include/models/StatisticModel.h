@@ -7,7 +7,7 @@
 
 #include <string>
 #include "Packet.h"
-
+#include <deque>
 class StatisticModel {
 public:
 
@@ -37,6 +37,8 @@ public:
     int smtpCount{0};
     int sshCount{0};
     int telnetCount{0};
+
 };
+
 
 #endif //STATISTICMODEL_H

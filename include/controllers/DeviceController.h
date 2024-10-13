@@ -8,10 +8,13 @@
 #include "models/DeviceModel.h"
 #include "views/DeviceView.h"
 #include "listeners/Listener.h"
+#include "controllers/MainController.h"
 #include <memory>
 
+class MainController;
 class DeviceModel;
 class DeviceView;
+class Listener;
 
 class DeviceController : public std::enable_shared_from_this<DeviceController> {
 public:
@@ -26,6 +29,7 @@ public:
         void closeCurrentDevice();
         bool isDeviceOpen();
         void setIsDeviceOpen(bool _isDeviceOpen);
+        std::vector<pcpp::PcapLiveDevice *> &getDevices();
 
 private:
 

@@ -27,6 +27,7 @@
 #include "views/AnalyzerView.h"
 
 #include "imgui.h"
+#include "implot.h"
 #include "GLFW/glfw3.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -77,6 +78,7 @@ int main() {
     // Ustawienia kontekstu ImGui
     // IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -122,14 +124,15 @@ int main() {
     windowManagerController->addView(filterView);
     windowManagerController->addView(deviceView);
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
+    auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel,
                                                             packetCaptureView,
                                                             packetListener,
                                                             packetView,
-                                                            statisticController);
+                                                            statisticController,
+                                                            deviceController);
     dataBaseController->setMainController(mainController);
-    packetCaptureModel->setController(mainController);
-    auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
+    packetCaptureModel->setMainController(mainController);
     bool dockInitialized = false;
 
     while (!glfwWindowShouldClose(window)) {
@@ -177,7 +180,7 @@ int main() {
         mainController->display();
         filterController->display();
         deviceController->display();
-        windowManagerController->display();
+        //windowManagerController->display();
         statisticController->display();
         dataBaseController->display();
         LogController::getInstance()->display();
@@ -186,8 +189,8 @@ int main() {
 
         ImGui::Render();
         int display_w, display_h;
-        // glfwGetFramebufferSize(window, &display_w, &display_h);
-        // glViewport(0, 0, display_w, display_h);
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
         glClearColor(0, 0, 0, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -200,6 +203,7 @@ int main() {
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
 
     glfwDestroyWindow(window);

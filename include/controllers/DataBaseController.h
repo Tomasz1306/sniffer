@@ -63,22 +63,22 @@ public:
     void initializeDbThreadPool();
     void stopDbThreadPool();
 
-    void buildIpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv4Layer> &layer, bool firstField, int &ipv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer, bool firstField, int &ipv6_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer, bool firstField, int &arp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer, bool firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer, bool firstField, int &tcp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer, bool firstField, int &udp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer, bool firstField, int &ethernet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildIpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv4Layer> &layer, bool &firstField, int &ipv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer, bool &firstField, int &ipv6_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer, bool &firstField, int &arp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer, bool &firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer, bool &firstField, int &tcp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer, bool &firstField, int &udp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer, bool &firstField, int &ethernet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     // void buildSshQuery(CapturedPackets &packet, std::shared_ptr<pcpp::SSHLayer> &layer, bool firstField, int &ssh_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     // void buildSmtpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::SmtpLayer> &layer, bool firstField, int &smtp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildTelnetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TelnetLayer> &layer, bool firstField, int &telnet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer, bool firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildHttpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpRequestLayer> &layer, bool firstField, int &httpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildHttpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpResponseLayer> &layer, bool firstField, int &httpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildDnsQuery(CapturedPackets &packet, std::shared_ptr<pcpp::DnsLayer> &layer, bool firstField, int &dns_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildFtpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpRequestLayer> &layer, bool firstField, int &ftpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
-    void buildFtpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpResponseLayer> &layer, bool firstField, int &ftpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildTelnetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TelnetLayer> &layer, bool &firstField, int &telnet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer, bool &firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildHttpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpRequestLayer> &layer, bool &firstField, int &httpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildHttpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpResponseLayer> &layer, bool &firstField, int &httpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildDnsQuery(CapturedPackets &packet, std::shared_ptr<pcpp::DnsLayer> &layer, bool &firstField, int &dns_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildFtpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpRequestLayer> &layer, bool &firstField, int &ftpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildFtpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::FtpResponseLayer> &layer, bool &firstField, int &ftpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
 
     bool isConnectedToDataBase();
 
@@ -101,6 +101,7 @@ private:
     std::shared_ptr<DataBaseView> view;
     std::shared_ptr<std::thread> dbThread;
 
+    std::map<int, std::string> currentSessionInterfacesIds;
 
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *connection;
@@ -118,7 +119,6 @@ private:
     bool dbThreadPoolInitialized = false;
     std::unordered_map<std::thread::id, int> threadIds;
     std::map<int, sql::Connection*> threadConnections;
-
 };
 
 #endif //DATABASECONTROLLER_H

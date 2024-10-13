@@ -13,6 +13,10 @@ DeviceController::DeviceController(std::shared_ptr<DeviceModel> _deviceModel, st
     this->deviceView->fillDeviceNames(this->deviceModel);
 }
 
+std::vector<pcpp::PcapLiveDevice*> & DeviceController::getDevices() {
+    return this->deviceModel->getDevices();
+}
+
 void DeviceController::display() {
     this->deviceView->draw(this->getController(), this->deviceModel);
 }

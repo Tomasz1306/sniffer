@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Packets
 (
-    packet_id           INT PRIMARY KEY,
+    packet_id           INT AUTO_INCREMENT PRIMARY KEY,
     packet_capture_date DATETIME NOT NULL,
     ethernet_id         INT,
     ipv4_id             INT,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Packets
     http_request_id     INT,
     http_response_id    INT,
     ftp_request_id      INT,
-    ftp_response_id      INT,
+    ftp_response_id     INT,
     smtp_id             INT,
     ssh_id              INT,
     telent_id           INT,
@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS Packets
     dhcpv4_id           INT,
     dns_id              INT,
     arp_id              INT,
+    interface_id        INT,
     FOREIGN KEY (ethernet_id) REFERENCES ethernet (ethernet_id),
     FOREIGN KEY (ipv4_id) REFERENCES ipv4 (ipv4_id),
     FOREIGN KEY (ipv6_id) REFERENCES ipv6 (ipv6_id),
@@ -33,5 +34,6 @@ CREATE TABLE IF NOT EXISTS Packets
     FOREIGN KEY (icmpv4_id) REFERENCES icmpv4 (icmpv4_id),
     FOREIGN KEY (dhcpv4_id) REFERENCES dhcpv4 (dhcpv4_id),
     FOREIGN KEY (dns_id) REFERENCES dns (dns_id),
-    FOREIGN KEY (arp_id) REFERENCES arp (arp_id)
+    FOREIGN KEY (arp_id) REFERENCES arp (arp_id),
+    FOREIGN KEY (interface_id) REFERENCES Interfaces (interface_id)
 );

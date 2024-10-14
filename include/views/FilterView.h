@@ -6,16 +6,20 @@
 #define FILTERVIEW_H
 #include "views/View.h"
 #include "models/FilterModel.h"
+#include "controllers/FilterController.h"
 
 #include <vector>
 #include <string>
 #include <memory>
 
+class FilterController;
+class FilterModel;
+
 class FilterView : public View {
 public:
     FilterView();
     virtual ~FilterView() {}
-    void draw(std::shared_ptr<FilterModel> model);
+    void draw(std::shared_ptr<FilterController> controller, std::shared_ptr<FilterModel> model);
 
     void addressIpSection(std::shared_ptr<FilterModel> model);
     void addressMacSection(std::shared_ptr<FilterModel> model);

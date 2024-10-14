@@ -87,8 +87,18 @@ int main() {
 
     // Ustawienia stylu ImGui
     ImGui::StyleColorsDark();
-    ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f);
 
+    ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5f, 0.5f);
+    auto& style = ImGui::GetStyle();
+    style = ImGuiStyle();
+    style.WindowBorderSize = 1.f * 1.0f;
+    style.FrameBorderSize = 1.f * 1.0f;
+    style.FrameRounding = 5.f;
+    style.Colors[ImGuiCol_ScrollbarBg] = ImVec4( 1, 1, 1, 0.03f );
+    style.Colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.25f);
+    style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.35f);
+    style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.26f, 0.59f, 0.98f, 0.45f);
+    style.Colors[ImGuiCol_TitleBgCollapsed] = style.Colors[ImGuiCol_TitleBg];
     // Inicjalizacja ImGui dla GLFW i OpenGL
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
@@ -133,6 +143,8 @@ int main() {
                                                             deviceController);
     dataBaseController->setMainController(mainController);
     packetCaptureModel->setMainController(mainController);
+    filterController->setMainController(mainController);
+    analyzerController->setMainController(mainController);
     bool dockInitialized = false;
 
     while (!glfwWindowShouldClose(window)) {

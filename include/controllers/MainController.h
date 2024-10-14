@@ -49,6 +49,7 @@ public:
     bool isDeviceSelected();
     bool *getIsPacketDisplayed();
     std::string getSessionData();
+    std::vector<CapturedPackets> &getCapturedVectorData();
 
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 

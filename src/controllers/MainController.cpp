@@ -120,3 +120,8 @@ std::shared_ptr<DeviceController> MainController::getDeviceController() {
     return this->deviceController;
 }
 
+std::vector<CapturedPackets> &MainController::getCapturedVectorData() {
+    return this->model->getCapturedPacketVector();
+}
+
+

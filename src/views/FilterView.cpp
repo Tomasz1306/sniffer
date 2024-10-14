@@ -13,41 +13,35 @@
 //TODO wykonac refactor metody draw
 FilterView::FilterView() {
     this->windowTitle = "FILTERS";
-    // this->windowHeight = 1200.0f;
-    // this->windowWidth = 250.0f;
-    // this->windowX = 0.0f;
-    // this->windowY = 200.0f;
     this->isWindowOpened = true;
-    // this->windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus;
 }
 
-void FilterView::draw(std::shared_ptr<FilterModel> model) {
-    //ImGui::SetWindowSize(this->windowTitle.c_str(), ImVec2(this->windowHeight, this->windowWidth));
-    // if (!this->isWindowInitialized) {
-    //     ImGui::SetNextWindowPos(ImVec2(this->windowX, this->windowY));
-    //     this->isWindowInitialized = true;
-    // }
+void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_ptr<FilterModel> model) {
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
 
-    this->displayOption(model);
+    if (controller->isDeviceOpen()) {
+        this->displayOption(model);
+        ImGui::Columns(4, "mycolumns", false);
+        ImGui::SetColumnWidth(0,310);
+        ImGui::SetColumnWidth(1, 310);
+        ImGui::SetColumnWidth(2, 180);
+        ImGui::SetColumnWidth(3, 180);
+        ImGui::SetNextItemWidth(300);
+        this->addressIpSection(model);
+        ImGui::NextColumn();
+        ImGui::SetNextItemWidth(300);
+        this->addressMacSection(model);
+        ImGui::NextColumn();
+        ImGui::SetNextItemWidth(300);
+        this->tcpFlagsSection(model);
+        ImGui::NextColumn();
+        ImGui::SetNextItemWidth(300);
+        this->protocolsSection(model);
+        ImGui::Columns(1);
+    } else {
+        ImGui::Text("Device is not opened. Please open interface");
+    }
 
-    ImGui::Columns(4, "mycolumns", false); // 2 kolumny
-    ImGui::SetColumnWidth(0,310);
-    ImGui::SetColumnWidth(1, 310);
-    ImGui::SetColumnWidth(2, 180);
-    ImGui::SetColumnWidth(3, 180);
-    ImGui::SetNextItemWidth(300);
-    this->addressIpSection(model);
-    ImGui::NextColumn();
-    ImGui::SetNextItemWidth(300);
-    this->addressMacSection(model);
-    ImGui::NextColumn();
-    ImGui::SetNextItemWidth(300);
-    this->tcpFlagsSection(model);
-    ImGui::NextColumn();
-    ImGui::SetNextItemWidth(300);
-    this->protocolsSection(model);
-    ImGui::Columns(1);
 
     ImGui::End();
 }

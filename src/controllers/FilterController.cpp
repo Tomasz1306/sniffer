@@ -67,5 +67,16 @@ void FilterController::update(){
 }
 
 void FilterController::display(){
-    this->view->draw(this->model);
+    this->view->draw(shared_from_this(), this->model);
+}
+
+void FilterController::setMainController(std::shared_ptr<MainController> controller) {
+    this->mainController = controller;
+}
+
+bool FilterController::isDeviceOpen() {
+    if (this->mainController == nullptr) {
+        return false;
+    }
+    return this->mainController->isDeviceOpen();
 }

@@ -15,12 +15,10 @@ FilterModel::FilterModel() {
     this->etherTypeFilter.emplace_back("TCP", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("UDP", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("ICMP", std::make_shared<bool>(true));
-    this->etherTypeFilter.emplace_back("VLAN", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("IPv4", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("IPv6", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("ARP", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("ETH", std::make_shared<bool>(true));
-
 }
 
 void FilterModel::setUpdate(bool _update) {

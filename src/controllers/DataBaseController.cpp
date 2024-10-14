@@ -62,10 +62,27 @@ void DataBaseController::connectToDataBase(std::string host, std::string port, s
 }
 
 void DataBaseController::disconnectFromDataBase() {
+    if (!this->model->isConnected()) {
+        return;
+    }
 
+    if (!this->connection->isClosed()) {
+        this->connection->close();
+        delete this->connection;
+    }
+    for (int i = 0; i < this->threadConnections.size(); i++) {
+        if (!this->threadConnections.at(i)->isClosed()) {
+            this->threadConnections.at(i)->close();
+            this->threadConnections.erase(i);
+        }
+    }
+    this->model->setIsConnected(false);
 }
 
 void DataBaseController::loadDatabases() {
+    if (!this->model->isConnected()) {
+        return;
+    }
     try {
         this->stmt = this->connection->createStatement();
         this->res = this->stmt->executeQuery("SHOW DATABASES");

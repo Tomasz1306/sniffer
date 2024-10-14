@@ -39,6 +39,7 @@ private:
     std::vector<CapturedPackets> capturedPackets_vector;
     std::vector<pcpp::Packet> capturedPackets_deque;
     std::vector<CapturedPackets> capturedPackets_database;
+    std::vector<CapturedPackets> capturedPackets_analize;
     std::shared_ptr<MainController> controller;
     std::mutex dequeGuard;
     std::condition_variable dequeCV;

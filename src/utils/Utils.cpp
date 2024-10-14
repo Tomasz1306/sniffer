@@ -28,10 +28,10 @@ std::string Utils::formatTimestamp(const std::time_t *tp) {
     return timeString;
 }
 
-void Utils::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
-    auto model = static_cast<std::shared_ptr<PacketCaptureModel>*>(cookie);
-    (*model)->addToCapturedPacketDeque(pcpp::Packet(packet));
-}
+// void Utils::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
+//     auto model = static_cast<std::shared_ptr<PacketCaptureModel>*>(cookie);
+//     (*model)->addToCapturedPacketDeque(pcpp::Packet(packet));
+// }
 
 std::string Utils::getTime() {
     time_t tt;

@@ -23,6 +23,24 @@ public:
     void setLargerFont(ImFont *font);
     ImFont *getSmallerFont();
     ImFont *getLargerFont();
+
+
+    void SetGreenBorderColor() {
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_Border] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+    }
+
+
+    void SetRedBorderColor() {
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_Border] = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+    }
+
+
+    void SetWhiteBorderColor() {
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_Border] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+    }
 private:
     static Utils *instance;
     Utils(){};

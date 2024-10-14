@@ -6,11 +6,103 @@
 AnalyzerController::AnalyzerController(std::shared_ptr<AnalyzerModel> model, std::shared_ptr<AnalyzerView> view) {
     this->model = model;
     this->view = view;
+    // this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
 }
+
+void AnalyzerController::threadAnalyzer() {
+    // while (true) {
+    //     if (this->mainController != nullptr) {
+    //         if (!this->mainController->getCapturedPacketVectorAnalyze().empty()) {
+    //             this->analyzeCapturedPackets(this->mainController->getCapturedPacketVectorAnalyze());
+    //         }
+    //     }
+    // }
+}
+
 std::shared_ptr<AnalyzerController> AnalyzerController::getController() {
     return shared_from_this();
 }
 
 void AnalyzerController::display() {
     this->view->draw(shared_from_this());
+}
+
+void AnalyzerController::setMainController(std::shared_ptr<MainController> controller) {
+    this->mainController = controller;
+}
+
+std::vector<CapturedPackets> &AnalyzerController::getCapturedPacketsVectorAnalyze() {
+    return this->mainController->getCapturedVectorData();
+}
+
+std::unordered_map<std::string, std::string> &AnalyzerController::getWarnings() {
+    return this->warnings;
+}
+
+void AnalyzerController::analyzePacketForPingSweep(CapturedPackets packet) {
+    auto icmpLayer = packet.packet.getLayerOfType<pcpp::IcmpLayer>();
+    if (icmpLayer != nullptr && icmpLayer->getMessageType() == pcpp::ICMP_ECHO_REQUEST) {
+        std::string sourceIp = packet.packet.getLayerOfType<pcpp::IPv4Layer>()->getSrcIPAddress().toString();
+        pingRequests[sourceIp]++;
+        if (pingRequests[sourceIp] > 10 && warnings.find(sourceIp) == warnings.end()) {
+            std::ostringstream oss;
+            oss << "Potential Ping Sweep detected from IP: " << sourceIp;
+            warnings[sourceIp] = oss.str();
+        }
+    }
+}
+
+void AnalyzerController::analyzePacketForARPSpoofing(CapturedPackets packet) {
+    auto arpLayer = packet.packet.getLayerOfType<pcpp::ArpLayer>();
+    if (arpLayer != nullptr) {
+        std::string srcIP = arpLayer->getSenderIpAddr().toString();
+        std::string srcMac = arpLayer->getSenderMacAddress().toString();
+        std::string dstIP = arpLayer->getTargetIpAddr().toString();
+        std::string dstMac = arpLayer->getTargetMacAddress().toString();
+
+        // Check if IP mapping to MAC address changes
+        if (arpMapping[srcIP] != srcMac) {
+            std::ostringstream oss;
+            oss << "Potential ARP spoofing detected: IP " << srcIP << " now maps to MAC " << srcMac
+                << " (was " << arpMapping[srcIP] << ")";
+            warnings[srcIP] = oss.str();
+        }
+
+        // Update ARP mapping
+        arpMapping[srcIP] = srcMac;
+    }
+}
+
+void AnalyzerController::analyzePacketForBruteForce(CapturedPackets packet) {
+    auto ipLayer = packet.packet.getLayerOfType<pcpp::IPv4Layer>();
+    auto tcpLayer = packet.packet.getLayerOfType<pcpp::TcpLayer>();
+    if (ipLayer != nullptr && tcpLayer != nullptr) {
+        std::string sourceIp = ipLayer->getSrcIPAddress().toString();
+        uint16_t destPort = ntohs(tcpLayer->getTcpHeader()->portDst);
+
+        if (destPort == 22) { // Port 22 dla SSH
+            std::string key = sourceIp + ":" + packet.captureTime;
+            bruteForceAttempts[key]++;
+            if (bruteForceAttempts[key] > 30 && warnings.find(key) == warnings.end()) {
+                std::ostringstream oss;
+                oss << "Potential SSH brute force attempt from IP: " << sourceIp << " on " << packet.captureTime;
+                warnings[sourceIp] = oss.str();
+            }
+        }
+    }
+}
+
+void AnalyzerController::analyzePacketForPortScan(CapturedPackets packet) {
+    auto ipLayer = packet.packet.getLayerOfType<pcpp::IPv4Layer>();
+    auto tcpLayer = packet.packet.getLayerOfType<pcpp::TcpLayer>();
+    if (ipLayer != nullptr && tcpLayer != nullptr) {
+        std::string sourceIp = ipLayer->getSrcIPAddress().toString();
+        uint16_t destPort = ntohs(tcpLayer->getTcpHeader()->portDst);
+        sourceIpToPorts[sourceIp].insert(destPort);
+        if (sourceIpToPorts[sourceIp].size() > 10 && warnings.find(sourceIp) == warnings.end()) {
+            std::ostringstream oss;
+            oss << "Potential port scan detected from IP: " << sourceIp << " " << "Date: " << packet.captureTime;
+            warnings[sourceIp] = oss.str();
+        }
+    }
 }

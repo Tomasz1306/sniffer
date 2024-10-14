@@ -19,7 +19,7 @@ public:
     void draw(std::shared_ptr<AnalyzerController> controller);
 
 private:
-
+    bool isAnalyzingEnable = false;
 };
 
 #endif //ANALYZERVIEW_H

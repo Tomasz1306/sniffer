@@ -124,4 +124,9 @@ std::vector<CapturedPackets> &MainController::getCapturedVectorData() {
     return this->model->getCapturedPacketVector();
 }
 
+std::vector<CapturedPackets> MainController::getCapturedVectorDataCopy() {
+    return this->model->getCapturedPacketVector();
+}
+
+
 

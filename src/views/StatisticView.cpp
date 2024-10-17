@@ -174,16 +174,16 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
         } else {
             ImGui::Text("No HTTP Data available");
         }
-        ImGui::Text("SMTP: %d", controller->getModel()->smtpCount);
-        if (!controller->getDhcpv4Data().empty()) {
-            const std::vector<float>& data = controller->getSmtpData();
-            ImGui::PushStyleColor(ImGuiCol_PlotLines, colors[7]);
-            ImGui::PlotLines("SMTP", data.data(), data.size(), 0, nullptr,
-                0.0f, *max_element(data.begin(), data.end()), ImVec2(350, 50.0f));
-            ImGui::PopStyleColor();
-        } else {
-            ImGui::Text("No SMTP Data available");
-        }
+        // ImGui::Text("SMTP: %d", controller->getModel()->smtpCount);
+        // if (!controller->getDhcpv4Data().empty()) {
+        //     const std::vector<float>& data = controller->getSmtpData();
+        //     ImGui::PushStyleColor(ImGuiCol_PlotLines, colors[7]);
+        //     ImGui::PlotLines("SMTP", data.data(), data.size(), 0, nullptr,
+        //         0.0f, *max_element(data.begin(), data.end()), ImVec2(350, 50.0f));
+        //     ImGui::PopStyleColor();
+        // } else {
+        //     ImGui::Text("No SMTP Data available");
+        // }
         ImGui::Text("SSH: %d", controller->getModel()->sshCount);
         if (!controller->getDhcpv4Data().empty()) {
             const std::vector<float>& data = controller->getSshData();

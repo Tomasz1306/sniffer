@@ -50,6 +50,7 @@ public:
     bool *getIsPacketDisplayed();
     std::string getSessionData();
     std::vector<CapturedPackets> &getCapturedVectorData();
+    std::vector<CapturedPackets> getCapturedVectorDataCopy();
 
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 

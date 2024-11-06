@@ -1,4 +1,0 @@
-/home/tomasz/Desktop/projects/sniffer/lib/cmake-build-debug/CMakeFiles/imgui.dir
-/home/tomasz/Desktop/projects/sniffer/lib/cmake-build-debug/CMakeFiles/imgui_backend.dir
-/home/tomasz/Desktop/projects/sniffer/lib/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/tomasz/Desktop/projects/sniffer/lib/cmake-build-debug/CMakeFiles/rebuild_cache.dir

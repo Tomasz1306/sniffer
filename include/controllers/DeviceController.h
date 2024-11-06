@@ -28,7 +28,9 @@ public:
         void openCurrentDevice();
         void closeCurrentDevice();
         bool isDeviceOpen();
+        bool isCapturing();
         void setIsDeviceOpen(bool _isDeviceOpen);
+        void setMainController(std::shared_ptr<MainController> controller) {this->mainController = controller;}
         std::vector<pcpp::PcapLiveDevice *> &getDevices();
 
 private:
@@ -37,9 +39,8 @@ private:
         std::shared_ptr<DeviceModel> deviceModel;
         std::shared_ptr<DeviceView> deviceView;
         std::shared_ptr<Listener> listener;
+        std::shared_ptr<MainController> mainController;
 
 };
-
-
 
 #endif //DEVICECONTROLLER_H

@@ -145,6 +145,7 @@ int main() {
     packetCaptureModel->setMainController(mainController);
     filterController->setMainController(mainController);
     analyzerController->setMainController(mainController);
+    deviceController->setMainController(mainController);
     bool dockInitialized = false;
 
     while (!glfwWindowShouldClose(window)) {

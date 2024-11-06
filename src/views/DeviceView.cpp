@@ -42,9 +42,15 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
     ImGui::SameLine();
     if (_controller->getCurrentDeviceName() != "") {
         if (_controller->isDeviceOpen()) {
-            if (ImGui::Button("Close Device", ImVec2(100.0f, 25.0f))) {
-                _controller->setIsDeviceOpen(false);
-                _controller->closeCurrentDevice();
+            if (_controller->isCapturing()) {
+                ImGui::BeginDisabled();
+                ImGui::Button("Close Device", ImVec2(100, 25.0f));
+                ImGui::EndDisabled();
+            } else {
+                if (ImGui::Button("Close Device", ImVec2(100.0f, 25.0f))) {
+                    _controller->setIsDeviceOpen(false);
+                    _controller->closeCurrentDevice();
+                }
             }
         } else {
             if (ImGui::Button("Open Device", ImVec2(100.0f, 25.0f))) {

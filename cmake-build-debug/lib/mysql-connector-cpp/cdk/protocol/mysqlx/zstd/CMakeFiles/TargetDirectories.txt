@@ -1,3 +1,0 @@
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zstd/CMakeFiles/zstd.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zstd/CMakeFiles/edit_cache.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/zstd/CMakeFiles/rebuild_cache.dir

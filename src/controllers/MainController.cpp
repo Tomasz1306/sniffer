@@ -127,4 +127,9 @@ std::vector<CapturedPackets> &MainController::getCapturedVectorData() {
 bool MainController::isCapturing() {
     return this->listener->isDeviceCapturing();
 }
+std::vector<CapturedPackets> MainController::getCapturedVectorDataCopy() {
+    return this->model->getCapturedPacketVector();
+}
+
+
 

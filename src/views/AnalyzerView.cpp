@@ -13,17 +13,21 @@ AnalyzerView::AnalyzerView() {
 
 void AnalyzerView::draw(std::shared_ptr<AnalyzerController> controller) {
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
-    if (controller->getCapturedPacketsVectorAnalyze().empty()) {
+    if (controller->getCapturedVectorData().empty()) {
         ImGui::Text("No packets received");
     } else {
-        if (this->isAnalyzingEnable) {
-            if (ImGui::Button("Disable analizer", ImVec2(200, 20))) {
-                this->isAnalyzingEnable = !this->isAnalyzingEnable;
+        if (!controller->getIsAnalyzingEnable()) {
+            if (ImGui::Button("Start analyzer", ImVec2(200, 20))) {
+                controller->setIsAnalyzingEnable(true);
+                controller->analyzePackets(controller->getCapturedVectorData());
             }
         } else {
-            if (ImGui::Button("Enable analizer", ImVec2(200, 20))) {
-                this->isAnalyzingEnable = !this->isAnalyzingEnable;
+            analyzerGuard.lock();
+            if (controller->getPacketsToAnalyzeCount() != 0 && controller->getAnalyzedPacketsCount() != 0) {
+                float progress = 1.0f - (controller->getPacketsToAnalyzeCount() / controller->getAnalyzedPacketsCount());
+                ImGui::ProgressBar(progress);
             }
+            analyzerGuard.unlock();
         }
 
         if (ImGui::BeginTable("WarningTable", 1, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {

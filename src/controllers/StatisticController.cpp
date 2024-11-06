@@ -44,7 +44,6 @@ void StatisticController::updateData() {
     addDataPoint(httpData, model->httpCount);
     addDataPoint(sshData, model->sshCount);
     addDataPoint(telnetData, model->telnetCount);
-    addDataPoint(smtpData, model->smtpCount);
 }
 
 void StatisticController::addDataPoint(std::deque<int>& dataDeque, int dataPoint) {
@@ -66,22 +65,15 @@ void StatisticController::clearStatistics() {
     this->model->ethernetCount = 0;
     this->model->arpCount = 0;
     this->model->imcpv4Count = 0;
-    this->model->imcpv6Count = 0;
-    this->model->igmpCount = 0;
     this->model->ipv4Count = 0;
     this->model->ipv6Count = 0;
     this->model->tcpCount = 0;
     this->model->udpCount = 0;
-    this->model->sdpCount = 0;
-    this->model->sipCount = 0;
     this->model->sslTslCount = 0;
-    this->model->bgpCount = 0;
     this->model->dhcpv4Count = 0;
-    this->model->dhcpv6Count = 0;
     this->model->dnsCount = 0;
     this->model->ftpCount = 0;
     this->model->httpCount = 0;
-    this->model->smtpCount = 0;
     this->model->sshCount = 0;
     this->model->telnetCount = 0;
 }

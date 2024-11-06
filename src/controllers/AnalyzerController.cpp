@@ -6,18 +6,30 @@
 AnalyzerController::AnalyzerController(std::shared_ptr<AnalyzerModel> model, std::shared_ptr<AnalyzerView> view) {
     this->model = model;
     this->view = view;
-    // this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
+    //this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
 }
 
 void AnalyzerController::threadAnalyzer() {
-    // while (true) {
-    //     if (this->mainController != nullptr) {
-    //         if (!this->mainController->getCapturedPacketVectorAnalyze().empty()) {
-    //             this->analyzeCapturedPackets(this->mainController->getCapturedPacketVectorAnalyze());
-    //         }
-    //     }
-    // }
+
+    if (!this->packetsToAnalyze.empty()) {
+        this->analyzeCapturedPackets();
+    }
 }
+
+std::vector<CapturedPackets> &AnalyzerController::getPacketsToAnalyze() {
+    return this->packetsToAnalyze;
+}
+
+void AnalyzerController::analyzePackets(std::vector<CapturedPackets> packets) {
+    this->packetsToAnalyze.assign(packets.begin(), packets.end());
+    analyzerGuard.lock();
+    this->packetToAnalyzeCount = this->packetsToAnalyze.size();
+    analyzerGuard.unlock();
+    this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
+
+    this->analyzerThread->detach();
+}
+
 
 std::shared_ptr<AnalyzerController> AnalyzerController::getController() {
     return shared_from_this();
@@ -31,13 +43,14 @@ void AnalyzerController::setMainController(std::shared_ptr<MainController> contr
     this->mainController = controller;
 }
 
-std::vector<CapturedPackets> &AnalyzerController::getCapturedPacketsVectorAnalyze() {
-    return this->mainController->getCapturedVectorData();
-}
-
 std::unordered_map<std::string, std::string> &AnalyzerController::getWarnings() {
     return this->warnings;
 }
+
+std::vector<CapturedPackets> &AnalyzerController::getCapturedVectorData() {
+    return this->mainController->getCapturedVectorData();
+}
+
 
 void AnalyzerController::analyzePacketForPingSweep(CapturedPackets packet) {
     auto icmpLayer = packet.packet.getLayerOfType<pcpp::IcmpLayer>();

@@ -27,19 +27,29 @@ public:
     std::shared_ptr<AnalyzerController> getController();
     void display();
     void setMainController(std::shared_ptr<MainController> controller);
-    std::vector<CapturedPackets> &getCapturedPacketsVectorAnalyze();
+    std::vector<CapturedPackets> &getPacketsToAnalyze();
+    std::vector<CapturedPackets> &getCapturedVectorData();
     std::unordered_map<std::string, std::string> &getWarnings();
+    void analyzePackets(std::vector<CapturedPackets> packets);
 
-    void analyzeCapturedPackets(std::vector<CapturedPackets> &packets) {
-        for (int i =0 ; i < packets.size(); i++) {
-            analyzePacketForPortScan(packets[i]);
-            analyzePacketForBruteForce(packets[i]);
+    void analyzeCapturedPackets() {
+        for (int i =0 ; i < packetsToAnalyze.size(); i++) {
+            analyzePacketForPortScan(packetsToAnalyze[i]);
+            analyzePacketForBruteForce(packetsToAnalyze[i]);
             //analyzePacketForARPSpoofing(packets[i]);
             //analyzePacketForPingSweep(packets[i]);
+            packetsToAnalyze.erase(packetsToAnalyze.begin() + i);
             std::lock_guard<std::mutex> lock(analyzerGuard);
-            packets.erase(packets.begin() + i);
+            analyzedPacketsCount++;
         }
+        {
+            std::lock_guard<std::mutex> lock(analyzerGuard);
+            packetToAnalyzeCount = 0;
+        }
+        this->isAnalyzingEnable = false;
     }
+    int getPacketsToAnalyzeCount() { return this->packetToAnalyzeCount; }
+    int getAnalyzedPacketsCount() {return this->analyzedPacketsCount; }
     void setIsAnalyzingEnable(bool isAnalyzingEnable) { this->isAnalyzingEnable = isAnalyzingEnable; }
     bool getIsAnalyzingEnable() {return this->isAnalyzingEnable; }
 
@@ -54,12 +64,15 @@ private:
     std::shared_ptr<MainController> mainController;
     std::shared_ptr<AnalyzerModel> model;
     std::shared_ptr<AnalyzerView> view;
+    std::vector<CapturedPackets> packetsToAnalyze;
     std::unordered_map<std::string, std::set<uint16_t>> sourceIpToPorts;
     std::unordered_map<std::string, std::string> warnings;
     std::unordered_map<std::string, int> bruteForceAttempts; // IP:Date to count attempts
     std::unordered_map<std::string, std::string> arpMapping; // IP to MAC mapping
     std::unordered_map<std::string, int> pingRequests;       // IP to Ping request count
     bool isAnalyzingEnable{false};
+    int packetToAnalyzeCount{0};
+    int analyzedPacketsCount{0};
 };
 
 #endif //ANALYZERCONTROLLER_H

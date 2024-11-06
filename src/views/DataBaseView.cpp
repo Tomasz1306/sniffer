@@ -5,6 +5,7 @@
 #include "views/DataBaseView.h"
 #include "controllers/LogController.h"
 #include "utils/Utils.h"
+#include "global/Global.h"
 
 #include "imgui.h"
 
@@ -35,32 +36,35 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
             ImGui::TableSetupColumn("Database");
             ImGui::TableHeadersRow();
             int i = 0;
-            for (auto & database : controller->getDatabases()) {
-                ImGui::TableNextRow();
-                ImGui::TableSetColumnIndex(0);
-                if (ImGui::Selectable(std::string("##" + database.first).c_str(), database.second)) {
-                    if (controller->getSelectedDatabaseIndex() == -1) {
-                        database.second = !database.second;
-                        controller->selectDatabaseIndex(i);
-                        controller->useDatabase();
-                        controller->createTables();
-                    }else if (controller->getSelectedDatabaseIndex() != -1 && database.second) {
-                        database.second = !database.second;
-                        controller->selectDatabaseIndex(-1);
-                    } else {
-                        LogController::getInstance()->addLog(Utils::getTime(), "CANT OPEN DATABASE BECAUSE OTHER DATABASE IS CURRENTLY SELECTED", LogType::WARNING);
+            if (controller->isConnectedToDataBase()) {
+
+                for (auto & database : controller->getDatabases()) {
+                    ImGui::TableNextRow();
+                    ImGui::TableSetColumnIndex(0);
+                    if (ImGui::Selectable(std::string("##" + database.first).c_str(), database.second)) {
+                        if (controller->getSelectedDatabaseIndex() == -1) {
+                            database.second = !database.second;
+                            controller->selectDatabaseIndex(i);
+                            controller->useDatabase();
+                            controller->createTables();
+                        } else if (controller->getSelectedDatabaseIndex() != -1 && database.second) {
+                            database.second = !database.second;
+                            controller->selectDatabaseIndex(-1);
+                        } else {
+                            LogController::getInstance()->addLog(Utils::getTime(), "CANT OPEN DATABASE BECAUSE OTHER DATABASE IS CURRENTLY SELECTED", LogType::WARNING);
+                        }
                     }
 
+                    if (database.second) {
+                        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+                    } else {
+                        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
+                    }
+                    ImGui::SameLine();
+                    ImGui::Text("%s", database.first.c_str());
+                    ImGui::PopStyleColor();
+                    i++;
                 }
-                if (database.second) {
-                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-                } else {
-                    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
-                }
-                ImGui::SameLine();
-                ImGui::Text("%s", database.first.c_str());
-                ImGui::PopStyleColor();
-                i++;
             }
             ImGui::EndTable();
         }

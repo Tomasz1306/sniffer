@@ -116,6 +116,7 @@ private:
     std::shared_ptr<std::mutex> mutex = nullptr;
     std::shared_ptr<std::mutex> stmtMutex = nullptr;
     bool done = false;
+    bool areConnectionsForThreadInitialized = false;
     bool dbThreadPoolInitialized = false;
     std::unordered_map<std::thread::id, int> threadIds;
     std::map<int, sql::Connection*> threadConnections;

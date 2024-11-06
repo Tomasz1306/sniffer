@@ -12,7 +12,7 @@
 DataBaseController::DataBaseController(std::shared_ptr<DataBaseModel> model, std::shared_ptr<DataBaseView> view) {
     this->model = model;
     this->view = view;
-
+    this->mutex = std::make_shared<std::mutex>();
     this->driver = sql::mysql::get_mysql_driver_instance();
 }
 
@@ -37,7 +37,7 @@ void DataBaseController::display() {
 void DataBaseController::connectToDataBase(std::string host, std::string port, std::string username, std::string password) {
     try {
         this->connection = this->driver->connect(host + ":" + port, username, password);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             try {
                 int session_id{0};
                 auto connection = this->driver->connect(host + ":" + port, username, password);
@@ -46,13 +46,12 @@ void DataBaseController::connectToDataBase(std::string host, std::string port, s
                 std::cerr << "SQLException in initializeDbThreadPool: " << e.what()
                           << ", error code: " << e.getErrorCode() << std::endl;
                 LogController::getInstance()->addLog(Utils::getTime(), e.what() , LogType::ERROR);
-                // Consider handling the error appropriately
             } catch (const std::exception &e) {
                 std::cerr << "Exception in initializeDbThreadPool: " << e.what() << std::endl;
                 LogController::getInstance()->addLog(Utils::getTime(), e.what() , LogType::ERROR);
-                // Consider handling the error appropriately
             }
         }
+        this->areConnectionsForThreadInitialized = true;
         LogController::getInstance()->addLog(Utils::getTime(), "Connected to database succesfully", LogType::SUCCESFULL);
         this->model->setConnection(host, port, username, password, Utils::getTime());
         this->model->setIsConnected(true);
@@ -70,6 +69,7 @@ void DataBaseController::disconnectFromDataBase() {
         this->connection->close();
         delete this->connection;
     }
+    this->stopDbThreadPool();
     for (int i = 0; i < this->threadConnections.size(); i++) {
         if (!this->threadConnections.at(i)->isClosed()) {
             this->threadConnections.at(i)->close();
@@ -86,6 +86,7 @@ void DataBaseController::loadDatabases() {
     try {
         this->stmt = this->connection->createStatement();
         this->res = this->stmt->executeQuery("SHOW DATABASES");
+        std::lock_guard<std::mutex> guard(getDatabasesMutex);
         this->model->getDatabases().clear();
         while (this->res->next()) {
             if (this->res->getString(1).find("sniffer_") != std::string::npos) {
@@ -111,9 +112,6 @@ void DataBaseController::newDatabase(std::string database) {
 
 void DataBaseController::selectDatabaseIndex(int databaseIndex) {
     this->model->selectDatabaseIndex(databaseIndex);
-    //this->dbThread = std::make_shared<std::thread>(&DataBaseController::dataBaseThread, this);
-    // Utworzenie i uruchomienie puli wątków
-    // Stwórz i uruchom pulę wątków, jeśli jeszcze nie została uruchomiona
     if (!this->dbThreadPoolInitialized) {
         initializeDbThreadPool();
         this->dbThreadPoolInitialized = true;
@@ -121,11 +119,10 @@ void DataBaseController::selectDatabaseIndex(int databaseIndex) {
 }
 
 void DataBaseController::initializeDbThreadPool() {
-    //const int numThreads = std::thread::hardware_concurrency(); // lub dowolna liczba, którą wybierzesz
     const int numThreads = 2;
     this->done = false;
     this->cv = std::make_shared<std::condition_variable>();
-    this->mutex = std::make_shared<std::mutex>();
+
     LogController::getInstance()->addLog(Utils::getTime(), "Before Database thread started", LogType::SUCCESFULL);
 
     auto workerFunction = [this]() {
@@ -139,9 +136,8 @@ void DataBaseController::initializeDbThreadPool() {
             CapturedPackets packet;
                 {
                 std::unique_lock<std::mutex> lock(*this->mutex);
-
                 database_cv.wait(lock, [this]() {
-                    return !this->mainController->getCapturedPacketVectorDatabase().empty() || this->done;
+                    return !this->mainController->getCapturedPacketVectorDatabase().empty() || this->done || !this->areConnectionsForThreadInitialized;
                 });
 
                 if (this->done) {
@@ -158,37 +154,27 @@ void DataBaseController::initializeDbThreadPool() {
         }
     };
 
-    for (int i = 0; i < numThreads; ++i) {
-        std::thread t([this, workerFunction]() { workerFunction(); });
-        {
-            std::lock_guard<std::mutex> guard(*this->mutex);
-            this->stmt = this->threadConnections[i]->createStatement();
-            stmt->execute("USE " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first);
-            LogController::getInstance()->addLog(Utils::getTime(), "THREAD: " + std::to_string(i)
-                + "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first,
-                LogType::SUCCESFULL);
-            this->threadIds[t.get_id()] = i;
-        }
-        this->dbThreadPool.push_back(std::move(t));
-    }
+    try {
+        for (int i = 0; i < numThreads; ++i) {
 
+            std::thread t([this, workerFunction]() { workerFunction(); });
+            {
+                std::scoped_lock lock(*this->mutex, getDatabasesMutex);
+                this->stmt = this->threadConnections[i]->createStatement();
+                stmt->execute("USE " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first);
+                LogController::getInstance()->addLog(Utils::getTime(), "THREAD: " + std::to_string(i)
+                    + "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first,
+                    LogType::SUCCESFULL);
+                this->threadIds[t.get_id()] = i;
+            }
+            this->dbThreadPool.push_back(std::move(t));
+        }
+    } catch (sql::SQLException& e) {
+        LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::ERROR);
+    }
     LogController::getInstance()->addLog(Utils::getTime(), "Database thread started", LogType::SUCCESFULL);
 
-    // Powiadomienie wszystkich wątków roboczych
     database_cv.notify_all();
-}
-void DataBaseController::dataBaseThread() {
-    // LogController::getInstance()->addLog(Utils::getTime(), "Database thread", LogType::SUCCESFULL);
-    // while (1) {
-    //     if (!this->mainController->getCapturedPacketVectorDatabase().empty()) {
-    //         std::lock_guard<std::mutex> lock(guard_4);
-    //         CapturedPackets packet = this->mainController->getCapturedPacketVectorDatabase().back();
-    //         this->mainController->getCapturedPacketVectorDatabase().pop_back();
-    //         insertNewPacket(packet);
-    //     }
-    //     //std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    // }
-    //LogController::getInstance()->addLog(Utils::getTime(), "Database thread started", LogType::SUCCESSFUL);
 }
 
 void DataBaseController::stopDbThreadPool() {
@@ -198,13 +184,14 @@ void DataBaseController::stopDbThreadPool() {
         database_cv.notify_all();
     }
 
-    // Oczekiwanie na zakończenie wszystkich wątków
     for (std::thread &worker : this->dbThreadPool) {
         if (worker.joinable()) {
             worker.join();
         }
     }
     this->dbThreadPool.clear();
+    this->done = false;
+    this->dbThreadPoolInitialized = false;
 }
 
 int DataBaseController::getNumberOfThreads() {
@@ -681,6 +668,9 @@ void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared
     layer = std::make_shared<pcpp::EthLayer>(*packet.packet.getLayerOfType<pcpp::EthLayer>());
     std::string query = "INSERT INTO ethernet(ethernet_src_mac, ethernet_dst_mac, ethernet_eht_type) VALUES (?,?,?)";
     if (connection_local == nullptr) {
+        return;
+    }
+    if (connection_local->isClosed()) {
         return;
     }
     if (connection_local->isValid()) {

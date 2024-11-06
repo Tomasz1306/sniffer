@@ -37,7 +37,7 @@ private:
 
     std::shared_ptr<std::thread> thread_1;
     std::vector<CapturedPackets> capturedPackets_vector;
-    std::vector<pcpp::Packet> capturedPackets_deque;
+    std::deque<pcpp::Packet> capturedPackets_deque;
     std::vector<CapturedPackets> capturedPackets_database;
     std::vector<CapturedPackets> capturedPackets_analize;
     std::shared_ptr<MainController> controller;

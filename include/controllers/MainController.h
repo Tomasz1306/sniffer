@@ -40,6 +40,7 @@ public:
     void clearTableOfPackets();
     void setIsDisplayedPakcet(bool _isDisplayedPakcet);
     bool isDisplayedPakcet();
+    bool isCapturing();
     void setCurrentPacketId(int _id);
     void displayNextPacket();
     void displayPrevPacket();

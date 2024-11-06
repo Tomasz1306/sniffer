@@ -52,6 +52,10 @@ void DeviceController::setIsDeviceOpen(bool _isDeviceOpen) {
     this->m_isDeviceOpen = _isDeviceOpen;
 }
 
+bool DeviceController::isCapturing() {
+    return this->mainController->isCapturing();
+}
+
 
 
 

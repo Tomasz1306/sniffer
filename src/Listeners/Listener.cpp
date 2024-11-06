@@ -36,6 +36,10 @@ void Listener::closeListener(){
         //WRITE TO LOG
         return;
     }
+    if (this->dev->captureActive()) {
+        LogController::getInstance()->addLog(Utils::getTime(), "ERROR DEVICE IS CAPTURING", LogType::WARNING);
+        return;
+    }
     if (!this->dev->isOpened()) {
         LogController::getInstance()->addLog(Utils::getTime(), "ERROR DEVICE IS NOT OPEN", LogType::ERROR);
         //WRITE TO LOG
@@ -128,4 +132,8 @@ bool Listener::isDeviceSelected() {
     } else {
         return true;
     }
+}
+
+bool Listener::isDeviceCapturing() {
+    return this->dev->captureActive();
 }

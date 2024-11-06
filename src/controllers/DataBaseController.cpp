@@ -138,10 +138,8 @@ void DataBaseController::initializeDbThreadPool() {
         while (true) {
             CapturedPackets packet;
                 {
-                // Zablokowanie mutexa
                 std::unique_lock<std::mutex> lock(*this->mutex);
 
-                // Oczekiwanie na warunek: jest praca do wykonania lub zakończenie pracy
                 database_cv.wait(lock, [this]() {
                     return !this->mainController->getCapturedPacketVectorDatabase().empty() || this->done;
                 });
@@ -150,7 +148,6 @@ void DataBaseController::initializeDbThreadPool() {
                     break;
                 }
 
-                // Pobranie pakietu z końca wektora
                 if (!this->mainController->getCapturedPacketVectorDatabase().empty()) {
                     std::lock_guard<std::mutex> guard(guard_4);
                     packet = this->mainController->getCapturedPacketVectorDatabase().back();
@@ -161,14 +158,15 @@ void DataBaseController::initializeDbThreadPool() {
         }
     };
 
-    // Utworzenie wątków roboczych
     for (int i = 0; i < numThreads; ++i) {
         std::thread t([this, workerFunction]() { workerFunction(); });
         {
             std::lock_guard<std::mutex> guard(*this->mutex);
             this->stmt = this->threadConnections[i]->createStatement();
             stmt->execute("USE " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first);
-            LogController::getInstance()->addLog(Utils::getTime(), "THREAD: " + std::to_string(i) + "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first, LogType::SUCCESFULL);
+            LogController::getInstance()->addLog(Utils::getTime(), "THREAD: " + std::to_string(i)
+                + "USING DATABASE: " + this->model->getDatabases()[this->model->getSelectedDatabaseIndex()].first,
+                LogType::SUCCESFULL);
             this->threadIds[t.get_id()] = i;
         }
         this->dbThreadPool.push_back(std::move(t));
@@ -784,7 +782,7 @@ void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_p
 void DataBaseController::buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer,
     bool &firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::DhcpLayer>(*packet.packet.getLayerOfType<pcpp::DhcpLayer>());
-    std::string query = R"(INSERT INTO dhcp (op_code, hardware_type, client_ip, your_ip, server_ip, gateway_ip, client_mac, options) VALUES (?,?,?,?,?,?,?,?))";
+    std::string query = R"(INSERT INTO dhcpv4 (op_code, hardware_type, client_ip, your_ip, server_ip, gateway_ip, client_mac, options) VALUES (?,?,?,?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
 
     // Setting basic DHCP fields

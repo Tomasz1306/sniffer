@@ -40,6 +40,7 @@ public:
     void clearTableOfPackets();
     void setIsDisplayedPakcet(bool _isDisplayedPakcet);
     bool isDisplayedPakcet();
+    bool isCapturing();
     void setCurrentPacketId(int _id);
     void displayNextPacket();
     void displayPrevPacket();
@@ -50,6 +51,7 @@ public:
     bool *getIsPacketDisplayed();
     std::string getSessionData();
     std::vector<CapturedPackets> &getCapturedVectorData();
+    std::vector<CapturedPackets> getCapturedVectorDataCopy();
 
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 

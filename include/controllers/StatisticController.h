@@ -4,14 +4,16 @@
 
 #ifndef STATISTICCONTROLLER_H
 #define STATISTICCONTROLLER_H
-#include <memory>
 
+#include "controllers/MainController.h"
 #include "models/StatisticModel.h"
-#include "listeners/Listener.h"
 #include "views/StatisticView.h"
-#include "Packet.h"
-#include <map>
+#include "listeners/Listener.h"
 
+#include <memory>
+#include <deque>
+
+class MainController;
 class StatisticModel;
 class StatisticView;
 class Listener;
@@ -44,6 +46,7 @@ public:
     std::vector<float> getTelnetData() { return getDequeAsVector(telnetData); }
     std::vector<float> getSmtpData() { return getDequeAsVector(smtpData); }
 
+    void setMainController(std::shared_ptr<MainController> controller) {this->mainController = controller;}
     int getMaxDataPoints();
     void clearStatistics();
 
@@ -67,6 +70,7 @@ private:
     std::deque<int> smtpData;
     const int maxDataPoints = 10000;
 
+    std::shared_ptr<MainController> mainController;
 };
 
 #endif //STATISTICCONTROLLER_H

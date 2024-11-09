@@ -13,12 +13,18 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     std::shared_ptr<PacketCaptureView> _view,
     std::shared_ptr<Listener> _listener,
     std::shared_ptr<PacketView> _packetView,
+    std::shared_ptr<AnalyzerController> _analyzerController,
+    std::shared_ptr<DataBaseController> _databaseController,
+    std::shared_ptr<FilterController> _filterController,
     std::shared_ptr<StatisticController> _statisticController,
     std::shared_ptr<DeviceController> _deviceController) {
     this->model = _model;
     this->view = _view;
     this->listener = _listener;
     this->packetView = _packetView;
+    this->analyzerController = _analyzerController;
+    this->databaseController = _databaseController;
+    this->filterController = _filterController;
     this->statisticController = _statisticController;
     this->deviceController = _deviceController;
 }

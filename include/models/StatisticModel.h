@@ -7,7 +7,7 @@
 
 #include <string>
 #include "Packet.h"
-#include <deque>
+
 class StatisticModel {
 public:
 

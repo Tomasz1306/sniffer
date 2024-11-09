@@ -4,9 +4,10 @@
 
 #ifndef FILTERVIEW_H
 #define FILTERVIEW_H
+
+#include "controllers/FilterController.h"
 #include "views/View.h"
 #include "models/FilterModel.h"
-#include "controllers/FilterController.h"
 
 #include <vector>
 #include <string>

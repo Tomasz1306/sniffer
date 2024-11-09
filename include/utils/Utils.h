@@ -1,14 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <Packet.h>
 #include <PcapLiveDevice.h>
 #include <string>
-#include <iomanip>
 #include <ctime>
 #include "imgui.h"
-
-#include <deque>
 
 class Utils{
 

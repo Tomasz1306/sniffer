@@ -8,8 +8,6 @@
 #include "views/View.h"
 #include "controllers/LogController.h"
 
-#include <memory>
-
 class LogController;
 
 class LogView : public View {

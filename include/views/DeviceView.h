@@ -5,15 +5,11 @@
 #ifndef DEVICEVIEW_H
 #define DEVICEVIEW_H
 
-#include <controllers/DeviceController.h>
+#include "controllers/DeviceController.h"
 #include "models/DeviceModel.h"
 #include "views/View.h"
 
-
-#include "imgui.h"
 #include <memory>
-#include <vector>
-#include <iostream>
 #include <string>
 #include <map>
 

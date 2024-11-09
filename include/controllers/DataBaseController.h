@@ -4,34 +4,30 @@
 
 #ifndef DATABASECONTROLLER_H
 #define DATABASECONTROLLER_H
-#include <mysql_connection.h>
-#include <mysql_driver.h>
-#include <cppconn/statement.h>
-#include <cppconn/resultset.h>
-#include "cppconn/prepared_statement.h"
 
 #include "controllers/MainController.h"
 #include "models/DataBaseModel.h"
 #include "views/DataBaseView.h"
 
-#include "Packet.h"
 #include "IPv4Layer.h"
 #include "IPv6Layer.h"
 #include "EthLayer.h"
 #include "ArpLayer.h"
 #include "DnsLayer.h"
 #include "IcmpLayer.h"
-#include "IcmpV6Layer.h"
 #include "FtpLayer.h"
-#include "SmtpLayer.h"
-#include "IgmpLayer.h"
 #include "TcpLayer.h"
-#include "UdpLayer.h"
-#include "SSHLayer.h"
 #include "TelnetLayer.h"
 #include "HttpLayer.h"
 #include "DhcpLayer.h"
-#include "DhcpV6Layer.h"
+#include "UdpLayer.h"
+#include "SSHLayer.h"
+
+#include <mysql_connection.h>
+#include <mysql_driver.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include "cppconn/prepared_statement.h"
 
 #include <memory>
 #include <thread>

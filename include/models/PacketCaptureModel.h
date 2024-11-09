@@ -1,9 +1,9 @@
 #ifndef PACKETCAPTUREMODEL_H
 #define PACKETCAPTUREMODEL_H
 
+#include "controllers/MainController.h"
 #include "models/Model.h"
 #include "models/PacketModel.h"
-#include "controllers/MainController.h"
 
 #include <thread>
 #include <memory>

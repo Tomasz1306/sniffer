@@ -6,7 +6,6 @@
 AnalyzerController::AnalyzerController(std::shared_ptr<AnalyzerModel> model, std::shared_ptr<AnalyzerView> view) {
     this->model = model;
     this->view = view;
-    //this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
 }
 
 void AnalyzerController::threadAnalyzer() {
@@ -26,10 +25,8 @@ void AnalyzerController::analyzePackets(std::vector<CapturedPackets> packets) {
     this->packetToAnalyzeCount = this->packetsToAnalyze.size();
     analyzerGuard.unlock();
     this->analyzerThread = std::make_shared<std::thread>(&AnalyzerController::threadAnalyzer, this);
-
     this->analyzerThread->detach();
 }
-
 
 std::shared_ptr<AnalyzerController> AnalyzerController::getController() {
     return shared_from_this();
@@ -50,7 +47,6 @@ std::unordered_map<std::string, std::string> &AnalyzerController::getWarnings() 
 std::vector<CapturedPackets> &AnalyzerController::getCapturedVectorData() {
     return this->mainController->getCapturedVectorData();
 }
-
 
 void AnalyzerController::analyzePacketForPingSweep(CapturedPackets packet) {
     auto icmpLayer = packet.packet.getLayerOfType<pcpp::IcmpLayer>();

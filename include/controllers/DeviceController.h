@@ -5,10 +5,11 @@
 #ifndef DEVICECONTROLLER_H
 #define DEVICECONTROLLER_H
 
+#include "controllers/MainController.h"
 #include "models/DeviceModel.h"
 #include "views/DeviceView.h"
 #include "listeners/Listener.h"
-#include "controllers/MainController.h"
+
 #include <memory>
 
 class MainController;

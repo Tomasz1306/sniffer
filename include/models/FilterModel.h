@@ -14,7 +14,6 @@
 #include <string>
 #include <utility>
 #include <atomic>
-#include <mutex>
 
 class FilterModel : public Model {
 public:

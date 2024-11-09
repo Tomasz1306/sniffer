@@ -4,14 +4,16 @@
 
 #ifndef FILTERCONTROLLER_H
 #define FILTERCONTROLLER_H
+
+#include "controllers/MainController.h"
 #include "models/FilterModel.h"
 #include "views/FilterView.h"
 #include "listeners/Listener.h"
-#include "controllers/MainController.h"
 
 #include <memory>
 #include <thread>
 
+class Listener;
 class MainController;
 class FilterModel;
 class FilterView;

@@ -337,7 +337,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
     std::shared_ptr<pcpp::ArpLayer> arpLayer;
     std::shared_ptr<pcpp::IcmpLayer> icmpLayer;
-    std::shared_ptr<pcpp::IgmpLayer> igmpLayer;
     std::shared_ptr<pcpp::TcpLayer> tcpLayer;
     std::shared_ptr<pcpp::UdpLayer> udpLayer;
     std::shared_ptr<pcpp::EthLayer> ethLayer;
@@ -345,7 +344,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     std::shared_ptr<pcpp::HttpResponseLayer> httpResponseLayer;
     std::shared_ptr<pcpp::FtpRequestLayer> ftpRequestLayer;
     std::shared_ptr<pcpp::FtpResponseLayer> ftpResponseLayer;
-    std::shared_ptr<pcpp::SmtpLayer> smtpLayer;
     std::shared_ptr<pcpp::TelnetLayer> telnetLayer;
     std::shared_ptr<pcpp::SSHLayer> sshLayer;
     std::shared_ptr<pcpp::DnsLayer> dnsLayer;

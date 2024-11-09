@@ -5,20 +5,21 @@
 #ifndef ANALYZERCONTROLLER_H
 #define ANALYZERCONTROLLER_H
 
-#include "models/AnalyzerModel.h"
-#include "views/AnalyzerView.h"
 #include "controllers/MainController.h"
+#include "models/AnalyzerModel.h"
+#include "models/PacketModel.h"
+#include "views/AnalyzerView.h"
 #include "global/Global.h"
-
-class MainController;
-class AnalyzerModel;
-class AnalyzerView;
 
 #include <memory>
 #include <set>
 #include <mutex>
 #include <thread>
 #include "netinet/in.h"
+
+class MainController;
+class AnalyzerModel;
+class AnalyzerView;
 
 class AnalyzerController : public std::enable_shared_from_this<AnalyzerController> {
 public:

@@ -2,12 +2,11 @@
 // Created by tomasz on 9/1/24.
 //
 
+#include "controllers/LogController.h"
 #include "views/DeviceView.h"
+#include "utils/Utils.h"
 
 #include <iostream>
-
-#include "controllers/LogController.h"
-#include "utils/Utils.h"
 
 DeviceView::DeviceView() {
     this->windowTitle = "DEVICES";

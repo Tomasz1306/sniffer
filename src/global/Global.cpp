@@ -8,4 +8,5 @@ std::mutex logGuard;
 std::mutex warningGuard;
 std::mutex analyzerGuard;
 std::condition_variable database_cv;
+std::mutex getDatabasesMutex;
 bool packetWindowInitialized{false};

@@ -1,16 +1,15 @@
 #ifndef PACKETCAPTUREVIEW_H
 #define PACKETCAPTUREVIEW_H
 
-#include "imgui.h"
-#include "View.h"
-#include "models/PacketModel.h"
 #include "controllers/MainController.h"
+#include "models/PacketModel.h"
+#include "View.h"
 
 #include <vector>
 #include <ctime>
 
+#include "imgui.h"
 #include "imgui_internal.h"
-
 
 class MainController;
 

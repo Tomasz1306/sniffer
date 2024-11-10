@@ -10,9 +10,6 @@
 #include "models/DeviceModel.h"
 #include <views/DeviceView.h>
 #include <views/PacketView.h>
-#include "controllers/WindowManagerController.h"
-#include "models/WindowManagerModel.h"
-#include "views/WindowManagerView.h"
 #include "controllers/StatisticController.h"
 #include "models/StatisticModel.h"
 #include "views/StatisticView.h"
@@ -111,8 +108,6 @@ int main() {
     auto logModel = std::make_shared<LogModel>(Utils::getTime());
     auto statisticView = std::make_shared<StatisticView>();
     auto statisticModel = std::make_shared<StatisticModel>(Utils::getTime());
-    auto windowManagerView = std::make_shared<WindowManagerView>();
-    auto windowManagerModel = std::make_shared<WindowManagerModel>();
     auto packetView = std::make_shared<PacketView>();
     auto packetCaptureView = std::make_shared<PacketCaptureView>();
     auto packetCaptureModel = std::make_shared<PacketCaptureModel>();
@@ -127,18 +122,15 @@ int main() {
     auto analyzerController = std::make_shared<AnalyzerController>(analyzerModel, analyzerView);
     auto dataBaseController = std::make_shared<DataBaseController>(dataBaseModel, dataBaseView);
     auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView, packetListener);
-    auto windowManagerController = std::make_shared<WindowManagerController>(windowManagerModel, windowManagerView);
-    windowManagerController->addView(windowManagerView);
-    windowManagerController->addView(packetView);
-    windowManagerController->addView(packetCaptureView);
-    windowManagerController->addView(filterView);
-    windowManagerController->addView(deviceView);
     auto filterController = std::make_shared<FilterController>(filterModel, filterView, packetListener);
     auto deviceController = std::make_shared<DeviceController>(deviceModel, deviceView, packetListener);
     auto mainController = std::make_shared<MainController>(packetCaptureModel,
                                                             packetCaptureView,
                                                             packetListener,
                                                             packetView,
+                                                            analyzerController,
+                                                            dataBaseController,
+                                                            filterController,
                                                             statisticController,
                                                             deviceController);
     dataBaseController->setMainController(mainController);
@@ -146,6 +138,7 @@ int main() {
     filterController->setMainController(mainController);
     analyzerController->setMainController(mainController);
     deviceController->setMainController(mainController);
+    statisticController->setMainController(mainController);
     bool dockInitialized = false;
 
     while (!glfwWindowShouldClose(window)) {

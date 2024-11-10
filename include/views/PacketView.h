@@ -4,11 +4,14 @@
 
 #ifndef PACKETVIEW_H
 #define PACKETVIEW_H
-#include "View.h"
-#include "models/PacketModel.h"
+
 #include "controllers/MainController.h"
+#include "models/PacketModel.h"
+#include "View.h"
+
 #include <memory>
 #include <string>
+
 class MainController;
 
 class PacketView : public View {

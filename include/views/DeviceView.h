@@ -5,15 +5,11 @@
 #ifndef DEVICEVIEW_H
 #define DEVICEVIEW_H
 
-#include <controllers/DeviceController.h>
+#include "controllers/DeviceController.h"
 #include "models/DeviceModel.h"
 #include "views/View.h"
 
-
-#include "imgui.h"
 #include <memory>
-#include <vector>
-#include <iostream>
 #include <string>
 #include <map>
 
@@ -26,6 +22,7 @@ public:
     DeviceView();
     void fillDeviceNames(std::shared_ptr<DeviceModel> _model);
     void draw(std::shared_ptr<DeviceController> _controller, std::shared_ptr<DeviceModel> _model);
+    std::map<int, std::string> getDeviceNames() {return this->deviceNames;}
 
 private:
     bool packetWindowInitialized{false};

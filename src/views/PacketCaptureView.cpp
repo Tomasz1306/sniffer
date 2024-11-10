@@ -362,14 +362,20 @@ void PacketCaptureView::setCurrentSelectedPacketId(int id) {
 
 void PacketCaptureView::keyboardHandling(std::shared_ptr<MainController> controller, std::vector<CapturedPackets> &packets, CapturedPackets &packet) {
     int size = packets.size();
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Enter))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
         if (!controller->isDisplayedPakcet() && packet.selected) {
             this->selectedRow = packet.id;
             controller->setIsDisplayedPakcet(true);
         }
     }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Enter))) {
+    //     if (!controller->isDisplayedPakcet() && packet.selected) {
+    //         this->selectedRow = packet.id;
+    //         controller->setIsDisplayedPakcet(true);
+    //     }
+    // }
     if (packet.selected && !controller->isDisplayedPakcet()) {
-        if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow)) && !isDownKeyPressed) {
+        if (ImGui::IsKeyPressed((ImGuiKey_DownArrow)) && !isDownKeyPressed) {
             if (packet.id + 1 < size) {
                 packet.selected = false;
                 packets[packet.id + 1].selected = true;
@@ -377,7 +383,7 @@ void PacketCaptureView::keyboardHandling(std::shared_ptr<MainController> control
 
             }
         }
-        if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)) && !isUpKeyPressed) {
+        if (ImGui::IsKeyPressed((ImGuiKey_UpArrow)) && !isUpKeyPressed) {
             if (packet.id - 1 >= 0) {
                 packet.selected = false;
                 packets[packet.id - 1].selected = true;
@@ -385,6 +391,23 @@ void PacketCaptureView::keyboardHandling(std::shared_ptr<MainController> control
             }
         }
     }
+    // if (packet.selected && !controller->isDisplayedPakcet()) {
+    //     if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow)) && !isDownKeyPressed) {
+    //         if (packet.id + 1 < size) {
+    //             packet.selected = false;
+    //             packets[packet.id + 1].selected = true;
+    //             isDownKeyPressed = true;
+    //
+    //         }
+    //     }
+    //     if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)) && !isUpKeyPressed) {
+    //         if (packet.id - 1 >= 0) {
+    //             packet.selected = false;
+    //             packets[packet.id - 1].selected = true;
+    //             isUpKeyPressed = true;
+    //         }
+    //     }
+    // }
 }
 
 

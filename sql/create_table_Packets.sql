@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS Packets
 (
     packet_id           INT AUTO_INCREMENT PRIMARY KEY,
     packet_capture_date DATETIME NOT NULL,
+    payload             VARCHAR(1000),
     ethernet_id         INT,
     ipv4_id             INT,
     ipv6_id             INT,

@@ -5,10 +5,11 @@
 #ifndef DEVICECONTROLLER_H
 #define DEVICECONTROLLER_H
 
+#include "controllers/MainController.h"
 #include "models/DeviceModel.h"
 #include "views/DeviceView.h"
 #include "listeners/Listener.h"
-#include "controllers/MainController.h"
+
 #include <memory>
 
 class MainController;
@@ -27,6 +28,7 @@ public:
         void setNewDeviceByName(std::string);
         void openCurrentDevice();
         void closeCurrentDevice();
+        int getDeviceId(std::string name);
         bool isDeviceOpen();
         bool isCapturing();
         void setIsDeviceOpen(bool _isDeviceOpen);

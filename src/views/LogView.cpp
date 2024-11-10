@@ -14,8 +14,8 @@ void LogView::draw() {
     ImGui::Begin(this->windowTitle.c_str(), nullptr, this->windowFlags);
     if (ImGui::BeginTable("LogTable__", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
         // Ustawienia nagłówków kolumn
-        ImGui::TableSetupColumn("Date", ImGuiTableColumnFlags_WidthFixed, 100);
-        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthFixed, 500);
+        ImGui::TableSetupColumn("Date", ImGuiTableColumnFlags_WidthFixed, 150);
+        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthFixed, 450);
         ImGui::TableSetupColumn("Status", ImGuiTableColumnFlags_WidthFixed, 100);
         ImGui::TableHeadersRow();
         for (auto &log : LogController::getInstance()->getLogs()) {

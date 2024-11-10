@@ -102,22 +102,38 @@ void PacketView::displayApplicationLayer(CapturedPackets &_packet) {
 }
 
 void PacketView::keyboardHandling(std::shared_ptr<MainController> controller, CapturedPackets &_packet) {
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_RightArrow))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_RightArrow)) {
         controller->displayNextPacket();
     }
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_LeftArrow))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow)) {
         controller->displayPrevPacket();
     }
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_DownArrow)) {
         controller->displayNextPacket();
     }
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_UpArrow)) {
         controller->displayPrevPacket();
     }
-    if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape))) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         controller->setIsDisplayedPakcet(false);
         controller->setCurrentPacketId(-1);
     }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_RightArrow))) {
+    //     controller->displayNextPacket();
+    // }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_LeftArrow))) {
+    //     controller->displayPrevPacket();
+    // }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow))) {
+    //     controller->displayNextPacket();
+    // }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow))) {
+    //     controller->displayPrevPacket();
+    // }
+    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape))) {
+    //     controller->setIsDisplayedPakcet(false);
+    //     controller->setCurrentPacketId(-1);
+    // }
 }
 
 

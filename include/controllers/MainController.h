@@ -1,20 +1,22 @@
 #ifndef MAINCONTROLLER_H
 #define MAINCONTROLLER_H
 
-#include <memory>
-
-#include "views/PacketCaptureView.h"
-#include "views/PacketView.h"
-#include "models/PacketCaptureModel.h"
-#include "listeners/Listener.h"
+#include "controllers/FilterController.h"
+#include "controllers/DeviceController.h"
+#include "controllers/AnalyzerController.h"
 #include "controllers/StatisticController.h"
 #include "controllers/DataBaseController.h"
-#include "PcapLiveDevice.h"
-#include "controllers/DeviceController.h"
+#include "models/PacketCaptureModel.h"
+#include "views/PacketCaptureView.h"
 #include "views/PacketView.h"
+#include "listeners/Listener.h"
 
+#include "PcapLiveDevice.h"
 
-//Forward declaration
+#include <memory>
+
+class AnalyzerController;
+class FilterController;
 class DataBaseController;
 class DeviceController;
 class StatisticController;
@@ -29,6 +31,9 @@ public:
         std::shared_ptr<PacketCaptureView> _view,
         std::shared_ptr<Listener> _listener,
         std::shared_ptr<PacketView> _packetView,
+        std::shared_ptr<AnalyzerController> _analyzerController,
+        std::shared_ptr<DataBaseController> _dataBaseController,
+        std::shared_ptr<FilterController> _filterController,
         std::shared_ptr<StatisticController> _statisticController,
         std::shared_ptr<DeviceController> _deviceController);
     void display();
@@ -48,6 +53,8 @@ public:
     int getPacketCapturedVectorSize();
     void addPacketToStatistics(pcpp::Packet &packet);
     bool isDeviceSelected();
+    std::string getDeviceName();
+    int getDeviceId(std::string name);
     bool *getIsPacketDisplayed();
     std::string getSessionData();
     std::vector<CapturedPackets> &getCapturedVectorData();
@@ -68,6 +75,9 @@ private:
     std::shared_ptr<PacketView> packetView;
     std::shared_ptr<StatisticController> statisticController;
     std::shared_ptr<DeviceController> deviceController;
+    std::shared_ptr<AnalyzerController> analyzerController;
+    std::shared_ptr<DataBaseController> databaseController;
+    std::shared_ptr<FilterController> filterController;
 };
 
 #endif // MAINCONTROLLER_H

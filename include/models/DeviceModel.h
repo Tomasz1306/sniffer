@@ -5,8 +5,8 @@
 #ifndef DEVICEMODEL_H
 #define DEVICEMODEL_H
 
-#include "controllers/DeviceController.h"
 #include <PcapLiveDevice.h>
+
 #include <vector>
 #include <memory>
 

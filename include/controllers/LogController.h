@@ -14,8 +14,6 @@
 class LogModel;
 class LogView;
 
-
-
 class LogController : public std::enable_shared_from_this<LogController> {
 public:
     LogController();

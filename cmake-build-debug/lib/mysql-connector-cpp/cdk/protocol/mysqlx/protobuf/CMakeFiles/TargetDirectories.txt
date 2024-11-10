@@ -1,8 +1,0 @@
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/CMakeFiles/edit_cache.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/CMakeFiles/rebuild_cache.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/libprotobuf-lite.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/libprotobuf.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/libprotoc.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/protoc.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/edit_cache.dir
-/home/tomasz/Desktop/projects/sniffer/cmake-build-debug/lib/mysql-connector-cpp/cdk/protocol/mysqlx/protobuf/protobuf-3.19.6/cmake/CMakeFiles/rebuild_cache.dir

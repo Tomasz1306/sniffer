@@ -28,6 +28,7 @@ public:
         void setNewDeviceByName(std::string);
         void openCurrentDevice();
         void closeCurrentDevice();
+        int getDeviceId(std::string name);
         bool isDeviceOpen();
         bool isCapturing();
         void setIsDeviceOpen(bool _isDeviceOpen);

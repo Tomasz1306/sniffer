@@ -22,6 +22,7 @@ public:
     DeviceView();
     void fillDeviceNames(std::shared_ptr<DeviceModel> _model);
     void draw(std::shared_ptr<DeviceController> _controller, std::shared_ptr<DeviceModel> _model);
+    std::map<int, std::string> getDeviceNames() {return this->deviceNames;}
 
 private:
     bool packetWindowInitialized{false};

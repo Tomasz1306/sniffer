@@ -56,6 +56,15 @@ bool DeviceController::isCapturing() {
     return this->mainController->isCapturing();
 }
 
+int DeviceController::getDeviceId(std::string name) {
+    for (auto device : this->deviceView->getDeviceNames()) {
+        if (device.second == name) {
+            return device.first;
+        }
+    }
+    return -1;
+}
+
 
 
 

@@ -329,15 +329,14 @@ std::string DataBaseController::readSQLScript(const std::string &file) {
 }
 
 void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connection *connection_local) {
-    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{2};
-    int icmpv6_id{-1}, igmp_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1}, httpRequest_id{-1};
-    int ssh_id{-1}, smtp_id{-1}, telnet_id{-1}, dhcpv4_id{-1}, dhcpv6_id{-1}, httpResponse_id{-1};
+    int ipv4_id{-1}, ipv6_id{-1}, arp_id{-1}, icmp_id{-1}, index{4};
+    int icmpv6_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1}, httpRequest_id{-1};
+    int ssh_id{-1}, telnet_id{-1}, dhcpv4_id{-1}, httpResponse_id{-1};
     int ftpRequest_id{-1}, ftpResponse_id{-1}, dns_id{-1};
     std::shared_ptr<pcpp::IPv4Layer> ipv4Layer;
     std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
     std::shared_ptr<pcpp::ArpLayer> arpLayer;
     std::shared_ptr<pcpp::IcmpLayer> icmpLayer;
-    std::shared_ptr<pcpp::IgmpLayer> igmpLayer;
     std::shared_ptr<pcpp::TcpLayer> tcpLayer;
     std::shared_ptr<pcpp::UdpLayer> udpLayer;
     std::shared_ptr<pcpp::EthLayer> ethLayer;
@@ -345,7 +344,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     std::shared_ptr<pcpp::HttpResponseLayer> httpResponseLayer;
     std::shared_ptr<pcpp::FtpRequestLayer> ftpRequestLayer;
     std::shared_ptr<pcpp::FtpResponseLayer> ftpResponseLayer;
-    std::shared_ptr<pcpp::SmtpLayer> smtpLayer;
     std::shared_ptr<pcpp::TelnetLayer> telnetLayer;
     std::shared_ptr<pcpp::SSHLayer> sshLayer;
     std::shared_ptr<pcpp::DnsLayer> dnsLayer;
@@ -353,8 +351,8 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     std::string query = "";
     bool firstField = true;
     bool isProtocolSupported = false;
-    std::string packetsQuery = "INSERT INTO Packets(packet_capture_date, ";
-    std::string values = "VALUES(STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'), ";
+    std::string packetsQuery = "INSERT INTO Packets(packet_capture_date,payload, interface_id,";
+    std::string values = "VALUES(STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'),?,?, ";
 
     try {
         sql::Statement *stmt;
@@ -422,7 +420,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             buildDhcpv4Query(packet, dhcpv4Layer, firstField, dhcpv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
-        if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1) {
+        if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1 && dns_id == -1 && dhcpv4_id == -1) {
             return;
         }
         if (!isProtocolSupported) {
@@ -432,6 +430,9 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         query = packetsQuery + ")" + values + ")";
         prep_stmt = connection_local->prepareStatement(query);
         prep_stmt->setDateTime(1, packet.captureTime);
+        std::string payloadStr(reinterpret_cast<const char*>(packet.packet.getLastLayer()->getLayerPayload()), packet.packet.getLastLayer()->getLayerPayloadSize());
+        prep_stmt->setString(2,packet.packet.toString());
+        prep_stmt->setInt(3, mainController->getDeviceId(mainController->getDeviceName()) + 1);
         if (ethernet_id != -1) {
             prep_stmt->setInt(index++, ethernet_id);
         }
@@ -456,12 +457,18 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         if (udp_id != -1) {
             prep_stmt->setInt(index++, udp_id);
         }
-
+        if (dns_id != -1) {
+            prep_stmt->setInt(index++, dns_id);
+        }
+        if (dhcpv4_id != -1) {
+            prep_stmt->setInt(index++, dhcpv4_id);
+        }
         prep_stmt->executeUpdate();
 
     } catch (sql::SQLException &e) {
         std::lock_guard<std::mutex> lock(logGuard);
-        LogController::getInstance()->addLog(Utils::getTime(), e.what() + std::string(" ") + __PRETTY_FUNCTION__, LogType::WARNING);
+        LogController::getInstance()->addLog(Utils::getTime(), e.what() + std::string(" ") + query + std::string(" ") + __PRETTY_FUNCTION__, LogType::WARNING);
+        std::cout << packet.packet.toString() << std::endl;
     }
 }
 

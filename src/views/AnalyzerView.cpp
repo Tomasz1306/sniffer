@@ -17,7 +17,7 @@ void AnalyzerView::draw(std::shared_ptr<AnalyzerController> controller) {
         ImGui::Text("No packets received");
     } else {
         if (!controller->getIsAnalyzingEnable()) {
-            if (ImGui::Button("Start analyzer", ImVec2(200, 20))) {
+            if (ImGui::Button("Enable analyzer", ImVec2(200, 20))) {
                 controller->setIsAnalyzingEnable(true);
                 controller->analyzePackets(controller->getCapturedVectorData());
             }

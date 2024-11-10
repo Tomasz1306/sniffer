@@ -137,5 +137,12 @@ std::vector<CapturedPackets> MainController::getCapturedVectorDataCopy() {
     return this->model->getCapturedPacketVector();
 }
 
+std::string MainController::getDeviceName() {
+    return this->deviceController->getCurrentDeviceName();
+}
+
+int MainController::getDeviceId(std::string name) {
+    return this->deviceController->getDeviceId(name);
+}
 
 

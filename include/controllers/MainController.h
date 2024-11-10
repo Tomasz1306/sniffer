@@ -53,6 +53,8 @@ public:
     int getPacketCapturedVectorSize();
     void addPacketToStatistics(pcpp::Packet &packet);
     bool isDeviceSelected();
+    std::string getDeviceName();
+    int getDeviceId(std::string name);
     bool *getIsPacketDisplayed();
     std::string getSessionData();
     std::vector<CapturedPackets> &getCapturedVectorData();

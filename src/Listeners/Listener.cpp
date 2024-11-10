@@ -99,6 +99,21 @@ void Listener::setFilters(pcpp::AndFilter filter) {
     }
 }
 
+void Listener::setFilters(pcpp::OrFilter filter) {
+    if (this->dev == nullptr) {
+        LogController::getInstance()->addLog(Utils::getTime(), "ERROR DEVICE IS NOT SELECTED", LogType::ERROR);
+        return;
+    }
+    if (this->dev->captureActive()) {
+        this->stopCapturePackets();
+        this->dev->setFilter(filter);
+        this->startCapturePackets();
+    }
+    if (!this->dev->captureActive()) {
+        this->dev->setFilter(filter);
+    }
+}
+
 void Listener::setDeviceByName(std::string name) {
     if (this->dev != nullptr) {
         if (this->dev->isOpened()) {

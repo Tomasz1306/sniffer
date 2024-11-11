@@ -59,6 +59,7 @@ public:
     std::string getSessionData();
     std::vector<CapturedPackets> &getCapturedVectorData();
     std::vector<CapturedPackets> getCapturedVectorDataCopy();
+    std::vector<CapturedPackets> &getCapturedVectorToAnalyze();
 
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
 

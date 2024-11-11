@@ -23,10 +23,13 @@ void PacketCaptureModel::writeFromDequeToVector(){
             auto &packet = this->capturedPackets_deque.back();
             this->capturedPackets_vector.emplace_back(this->counter, false, "", this->capturedPackets_deque.back());
             this->capturedPackets_database.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
+            this->capturedPackets_analize.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
             database_cv.notify_all();
             ++this->counter;
             this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
             this->capturedPackets_deque.pop_back();
+        } else {
+            std::this_thread::sleep_for(std::chrono::milliseconds(5));
         }
     }
 }
@@ -55,4 +58,8 @@ void PacketCaptureModel::setMainController(std::shared_ptr<MainController> contr
 
 std::vector<CapturedPackets> &PacketCaptureModel::getCapturedPacketVectorDatabase() {
     return this->capturedPackets_database;
+}
+
+std::vector<CapturedPackets> &PacketCaptureModel::getCapturedPacketToAnalyze() {
+    return capturedPackets_analize;
 }

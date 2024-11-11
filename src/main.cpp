@@ -56,6 +56,7 @@ int main() {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
+    last_time = std::chrono::steady_clock::now();
 
     // Tworzenie okna z kontekstem OpenGL
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

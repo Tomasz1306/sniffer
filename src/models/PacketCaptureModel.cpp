@@ -27,6 +27,8 @@ void PacketCaptureModel::writeFromDequeToVector(){
             ++this->counter;
             this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
             this->capturedPackets_deque.pop_back();
+        } else {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
     }
 }

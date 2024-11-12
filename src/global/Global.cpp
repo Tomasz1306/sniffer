@@ -9,4 +9,5 @@ std::mutex warningGuard;
 std::mutex analyzerGuard;
 std::condition_variable database_cv;
 std::mutex getDatabasesMutex;
+std::chrono::steady_clock::time_point last_time;
 bool packetWindowInitialized{false};

@@ -145,4 +145,8 @@ int MainController::getDeviceId(std::string name) {
     return this->deviceController->getDeviceId(name);
 }
 
+std::vector<CapturedPackets> &MainController::getCapturedVectorToAnalyze() {
+    return this->model->getCapturedPacketToAnalyze();
+}
+
 

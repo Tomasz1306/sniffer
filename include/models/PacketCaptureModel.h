@@ -25,6 +25,7 @@ public:
 
     std::vector<CapturedPackets> &getCapturedPacketVector();
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
+    std::vector<CapturedPackets> &getCapturedPacketToAnalyze();
     void addToCapturedPacketDeque(pcpp::Packet packet);
     void writeFromDequeToVector();
     void clearCapturedPacketVector();

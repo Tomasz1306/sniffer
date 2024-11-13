@@ -2,6 +2,7 @@
 #define MAINCONTROLLER_H
 
 #include "controllers/FilterController.h"
+#include "controllers/SearchController.h"
 #include "controllers/DeviceController.h"
 #include "controllers/AnalyzerController.h"
 #include "controllers/StatisticController.h"
@@ -15,6 +16,7 @@
 
 #include <memory>
 
+class SearchController;
 class AnalyzerController;
 class FilterController;
 class DataBaseController;
@@ -35,7 +37,8 @@ public:
         std::shared_ptr<DataBaseController> _dataBaseController,
         std::shared_ptr<FilterController> _filterController,
         std::shared_ptr<StatisticController> _statisticController,
-        std::shared_ptr<DeviceController> _deviceController);
+        std::shared_ptr<DeviceController> _deviceController,
+        std::shared_ptr<SearchController> _searchController);
     void display();
 
     static void onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie);
@@ -79,6 +82,7 @@ private:
     std::shared_ptr<AnalyzerController> analyzerController;
     std::shared_ptr<DataBaseController> databaseController;
     std::shared_ptr<FilterController> filterController;
+    std::shared_ptr<SearchController> searchController;
 };
 
 #endif // MAINCONTROLLER_H

@@ -22,6 +22,9 @@
 #include "controllers/AnalyzerController.h"
 #include "models/AnalyzerModel.h"
 #include "views/AnalyzerView.h"
+#include "controllers/SearchController.h"
+#include "models/SearchModel.h"
+#include "views/SearchView.h"
 
 #include "imgui.h"
 #include "implot.h"
@@ -39,9 +42,11 @@
 #include <vector>
 #include <ctime>
 
-//TODO uporzadkowac includy i usunca nieporzebne
-//TODO Napisac "forward declaration" dla kazdego zbioru MVC
-//TODO zabezpieczyc wybieranie innego interfacu jezeli inny jest otwarty
+//TODO WYSWIETLAC PAKIETY ZE ZLA SUMA KONTROLNA I DODAC DO STATYSTYK
+//TODO zapewnic przesuwanie po osi x
+//TODO ZAPISYWANIE POJEDYNCZEGO PAKIETU DO PLIKU
+//TODO PRZYCISKI DO PRZECHODZENIA NA GORE I NA DOL LISTY
+//TODO FILTROWANIE WYSWIETLANIA
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
@@ -101,6 +106,8 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+    auto searchView = std::make_shared<SearchView>();
+    auto searchModel = std::make_shared<SearchModel>();
     auto analyzerView = std::make_shared<AnalyzerView>();
     auto analyzerModel = std::make_shared<AnalyzerModel>();
     auto dataBaseView = std::make_shared<DataBaseView>();
@@ -120,6 +127,7 @@ int main() {
     LogController::getInstance();
     LogController::getInstance()->setModel(logModel);
     LogController::getInstance()->setView(logView);
+    auto searchController = std::make_shared<SearchController>(searchModel, searchView);
     auto analyzerController = std::make_shared<AnalyzerController>(analyzerModel, analyzerView);
     auto dataBaseController = std::make_shared<DataBaseController>(dataBaseModel, dataBaseView);
     auto statisticController = std::make_shared<StatisticController>(statisticModel, statisticView, packetListener);
@@ -133,13 +141,15 @@ int main() {
                                                             dataBaseController,
                                                             filterController,
                                                             statisticController,
-                                                            deviceController);
+                                                            deviceController,
+                                                            searchController);
     dataBaseController->setMainController(mainController);
     packetCaptureModel->setMainController(mainController);
     filterController->setMainController(mainController);
     analyzerController->setMainController(mainController);
     deviceController->setMainController(mainController);
     statisticController->setMainController(mainController);
+    searchController->setMainController(mainController);
     bool dockInitialized = false;
 
     while (!glfwWindowShouldClose(window)) {
@@ -176,6 +186,7 @@ int main() {
             ImGui::DockBuilderDockWindow("PACKETS", dock_left_bot);
             ImGui::DockBuilderDockWindow("STATISTICS", dock_id_right_top);
             ImGui::DockBuilderDockWindow("ANALYZER", dock_left_top_right);
+            ImGui::DockBuilderDockWindow("SEARCH", dock_left_top_right);
             ImGui::DockBuilderDockWindow("LOGS", dock_id_right);
             ImGui::DockBuilderDockWindow("DB", dock_id_right);
             ImGui::DockBuilderFinish(dockspace_id);
@@ -189,6 +200,7 @@ int main() {
         dataBaseController->display();
         LogController::getInstance()->display();
         analyzerController->display();
+        searchController->display();
 
         ImGui::Render();
         int display_w, display_h;

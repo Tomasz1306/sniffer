@@ -468,7 +468,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     } catch (sql::SQLException &e) {
         std::lock_guard<std::mutex> lock(logGuard);
         LogController::getInstance()->addLog(Utils::getTime(), e.what() + std::string(" ") + query + std::string(" ") + __PRETTY_FUNCTION__, LogType::WARNING);
-        std::cout << packet.packet.toString() << std::endl;
+        // std::cout << packet.packet.toString() << std::endl;
     }
 }
 

@@ -15,10 +15,10 @@ PacketView::PacketView() {
     this->windowTitle = "PACKET";
     this->windowHeight = 1000.0f;
     this->windowWidth = 800.0f;
-    // this->windowX = 200.0f;
-    // this->windowY = 200.0f;
+    this->windowX = 600.0f;
+    this->windowY = 50.0f;
     this->isWindowOpened = false;
-    // this->windowFlags = 0;
+    this->windowFlags = 0;
 }
 
 std::string PacketView::byteToHex(unsigned char byte) {
@@ -35,8 +35,12 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
     }
     this->keyboardHandling(controller, _packet);
     ImGui::Begin(this->windowTitle.c_str(), controller->getIsPacketDisplayed(), this->windowFlags);
-    ImGui::Text("Packet");
-    if (ImGui::Button("Close")) {
+    if (ImGui::Button("Close", ImVec2(980, 25))) {
+        controller->setIsDisplayedPakcet(false);
+        controller->setCurrentPacketId(-1);
+    }
+    if (!ImGui::IsWindowFocused())
+    {
         controller->setIsDisplayedPakcet(false);
         controller->setCurrentPacketId(-1);
     }
@@ -55,6 +59,7 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
     if (payloadLayer !=nullptr) {
         const uint8_t *payload = _packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayload();
         int payloadSize = _packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayloadLen();
+        std::string hexAndAsciiLine;
         if (payload) {
             ImGui::Text("Payload");
 
@@ -77,9 +82,22 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
                 for (int j = line_length; j < 16; ++j) {
                     hexStream << "   "; // Dwa znaki hex + jedna spacja
                 }
+                hexAndAsciiLine += hexStream.str() + "     " + asciiStream.str() + '\n';
 
-                ImGui::Text("%s    %s", hexStream.str().c_str(), asciiStream.str().c_str());
+                // ImGui::Text("%s    %s", hexStream.str().c_str(), asciiStream.str().c_str());
+                // ImGui::InputText(inputTextId.c_str(), buffer, bufferSize, ImGuiInputTextFlags_ReadOnly);
             }
+            const size_t bufferSize = 256;
+            static char buffer[bufferSize];
+            strncpy(buffer, hexAndAsciiLine.c_str(), bufferSize);
+            buffer[bufferSize - 1] = '\0';
+            ImVec4 originalBackgroundColor = ImGui::GetStyle().Colors[ImGuiCol_FrameBg];
+            ImVec4 originalBorderColor = ImGui::GetStyle().Colors[ImGuiCol_Border];
+            ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0, 0, 0, 0);
+            ImGui::GetStyle().Colors[ImGuiCol_Border] = ImVec4(0, 0, 0, 0);
+            ImGui::InputTextMultiline("##payloadMultiLine", buffer, bufferSize, ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 6), ImGuiInputTextFlags_ReadOnly);
+            ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = originalBackgroundColor;
+            ImGui::GetStyle().Colors[ImGuiCol_Border] = originalBorderColor;
         }
     }
     ImGui::End();

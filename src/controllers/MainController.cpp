@@ -17,7 +17,8 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     std::shared_ptr<DataBaseController> _databaseController,
     std::shared_ptr<FilterController> _filterController,
     std::shared_ptr<StatisticController> _statisticController,
-    std::shared_ptr<DeviceController> _deviceController) {
+    std::shared_ptr<DeviceController> _deviceController,
+    std::shared_ptr<SearchController> _searchController) {
     this->model = _model;
     this->view = _view;
     this->listener = _listener;
@@ -27,6 +28,7 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     this->filterController = _filterController;
     this->statisticController = _statisticController;
     this->deviceController = _deviceController;
+    this->searchController = _searchController;
 }
 
 void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){

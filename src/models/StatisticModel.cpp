@@ -9,30 +9,31 @@ StatisticModel::StatisticModel(std::string date) {
 }
 
 void StatisticModel::addPacketToStatistics(pcpp::Packet &packet) {
-    if (packet.isPacketOfType(pcpp::Ethernet))
-        ethernetCount++;
+    // if (packet.isPacketOfType(pcpp::Ethernet))
+    //     ethernetCount++;
+
     if (packet.isPacketOfType(pcpp::ARP))
         arpCount++;
-    if (packet.isPacketOfType(pcpp::ICMP))
+    else if (packet.isPacketOfType(pcpp::ICMP))
         imcpv4Count++;
-    if (packet.isPacketOfType(pcpp::IPv4))
-        ipv4Count++;
-    if (packet.isPacketOfType(pcpp::IPv6))
-        ipv6Count++;
-    if (packet.isPacketOfType(pcpp::TCP))
+    else if (packet.isPacketOfType(pcpp::TCP))
         tcpCount++;
-    if (packet.isPacketOfType(pcpp::UDP))
+    else if (packet.isPacketOfType(pcpp::UDP))
         udpCount++;
-    if (packet.isPacketOfType(pcpp::DHCP))
+    else if (packet.isPacketOfType(pcpp::DHCP))
         dhcpv4Count++;
-    if (packet.isPacketOfType(pcpp::DNS))
+    else if (packet.isPacketOfType(pcpp::DNS))
         dnsCount++;
-    if (packet.isPacketOfType(pcpp::FTP))
+    else if (packet.isPacketOfType(pcpp::FTP))
         ftpCount++;
-    if (packet.isPacketOfType(pcpp::HTTP))
+    else if (packet.isPacketOfType(pcpp::HTTP))
         httpCount++;
-    if (packet.isPacketOfType(pcpp::SSH))
+    else if (packet.isPacketOfType(pcpp::SSH))
         sshCount++;
-    if (packet.isPacketOfType(pcpp::Telnet))
+    else if (packet.isPacketOfType(pcpp::Telnet))
         telnetCount++;
+    else if (packet.isPacketOfType(pcpp::IPv4))
+        ipv4Count++;
+    else if (packet.isPacketOfType(pcpp::IPv6))
+        ipv6Count++;
 }

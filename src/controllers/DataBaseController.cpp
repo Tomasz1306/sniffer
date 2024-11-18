@@ -333,6 +333,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     int icmpv6_id{-1}, tcp_id{-1}, udp_id{-1}, ethernet_id{-1}, httpRequest_id{-1};
     int ssh_id{-1}, telnet_id{-1}, dhcpv4_id{-1}, httpResponse_id{-1};
     int ftpRequest_id{-1}, ftpResponse_id{-1}, dns_id{-1};
+    std::string secondQuery;
     std::shared_ptr<pcpp::IPv4Layer> ipv4Layer;
     std::shared_ptr<pcpp::IPv6Layer> ipv6Layer;
     std::shared_ptr<pcpp::ArpLayer> arpLayer;
@@ -353,7 +354,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     bool isProtocolSupported = false;
     std::string packetsQuery = "INSERT INTO Packets(packet_capture_date,payload, interface_id,";
     std::string values = "VALUES(STR_TO_DATE(?,'%d-%m-%Y %H:%i:%s'),?,?, ";
-
     try {
         sql::Statement *stmt;
         sql::PreparedStatement *prep_stmt;
@@ -387,39 +387,39 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             buildUdpQuery(packet, udpLayer, firstField, udp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
-        if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
-            buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        }
-        if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
-            buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        }
-        auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
-        if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
-            buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        } else if (auto isftpResponseLayer = dynamic_cast<pcpp::FtpResponseLayer*>(ftpLayer)) {
-            buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        } else {
-            //std::cout << "Unknown FTP type." << std::endl;
-        }
-        if (packet.packet.isPacketOfType(pcpp::SSH)) {
-            // this->buildSshQuery(packet, sshLayer, firstField, ssh_id, packetsQuery, values);
-        }
-        if (packet.packet.isPacketOfType(pcpp::Telnet)) {
-            buildTelnetQuery(packet, telnetLayer, firstField, telnet_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        }
-        if (packet.packet.isPacketOfType(pcpp::DNS)) {
-            buildDnsQuery(packet, dnsLayer, firstField, dns_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        }
-        if (packet.packet.isPacketOfType(pcpp::DHCP)) {
-            buildDhcpv4Query(packet, dhcpv4Layer, firstField, dhcpv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-            isProtocolSupported = true;
-        }
+        // if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
+        //     buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // }
+        // if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
+        //     buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // }
+        // auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
+        // if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
+        //     buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // } else if (auto isftpResponseLayer = dynamic_cast<pcpp::FtpResponseLayer*>(ftpLayer)) {
+        //     buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // } else {
+        //     //std::cout << "Unknown FTP type." << std::endl;
+        // }
+        // if (packet.packet.isPacketOfType(pcpp::SSH)) {
+        //     // this->buildSshQuery(packet, sshLayer, firstField, ssh_id, packetsQuery, values);
+        // }
+        // if (packet.packet.isPacketOfType(pcpp::Telnet)) {
+        //     buildTelnetQuery(packet, telnetLayer, firstField, telnet_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // }
+        // if (packet.packet.isPacketOfType(pcpp::DNS)) {
+        //     buildDnsQuery(packet, dnsLayer, firstField, dns_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // }
+        // if (packet.packet.isPacketOfType(pcpp::DHCP)) {
+        //     buildDhcpv4Query(packet, dhcpv4Layer, firstField, dhcpv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+        //     isProtocolSupported = true;
+        // }
         if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1 && dns_id == -1 && dhcpv4_id == -1) {
             return;
         }
@@ -468,7 +468,6 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
     } catch (sql::SQLException &e) {
         std::lock_guard<std::mutex> lock(logGuard);
         LogController::getInstance()->addLog(Utils::getTime(), e.what() + std::string(" ") + query + std::string(" ") + __PRETTY_FUNCTION__, LogType::WARNING);
-        // std::cout << packet.packet.toString() << std::endl;
     }
 }
 

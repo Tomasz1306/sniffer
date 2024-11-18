@@ -136,22 +136,6 @@ void PacketView::keyboardHandling(std::shared_ptr<MainController> controller, Ca
         controller->setIsDisplayedPakcet(false);
         controller->setCurrentPacketId(-1);
     }
-    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_RightArrow))) {
-    //     controller->displayNextPacket();
-    // }
-    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_LeftArrow))) {
-    //     controller->displayPrevPacket();
-    // }
-    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_DownArrow))) {
-    //     controller->displayNextPacket();
-    // }
-    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow))) {
-    //     controller->displayPrevPacket();
-    // }
-    // if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape))) {
-    //     controller->setIsDisplayedPakcet(false);
-    //     controller->setCurrentPacketId(-1);
-    // }
 }
 
 

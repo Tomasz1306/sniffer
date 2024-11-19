@@ -50,7 +50,7 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
     if (controller->isDeviceSelected()) {
         controller->updateData();
 
-        this->histogramData[0] = static_cast<float>(controller->getModel()->ethernetCount);
+        //this->histogramData[0] = static_cast<float>(controller->getModel()->ethernetCount);
         this->histogramData[1] = static_cast<float>(controller->getModel()->arpCount);
         this->histogramData[2] = static_cast<float>(controller->getModel()->imcpv4Count);
         this->histogramData[3] = static_cast<float>(controller->getModel()->ipv4Count);
@@ -63,16 +63,16 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
         this->histogramData[10] = static_cast<float>(controller->getModel()->httpCount);
         this->histogramData[11] = static_cast<float>(controller->getModel()->sshCount);
         this->histogramData[12] = static_cast<float>(controller->getModel()->telnetCount);
-        ImGui::Text("Ethernet: %d", controller->getModel()->ethernetCount);
-        if (!controller->getEthernetData().empty()) {
-            const std::vector<float>& data = controller->getEthernetData();
-            ImGui::PushStyleColor(ImGuiCol_PlotLines, colors[0]);
-            ImGui::PlotLines("Ethernet", data.data(), data.size(), 0, nullptr,
-                0.0f, *max_element(data.begin(), data.end()), ImVec2(350, 50.0f));
-            ImGui::PopStyleColor();
-        } else {
-            ImGui::Text("No Ethernet Data available");
-        }
+        // ImGui::Text("Ethernet: %d", controller->getModel()->ethernetCount);
+        // if (!controller->getEthernetData().empty()) {
+        //     const std::vector<float>& data = controller->getEthernetData();
+        //     ImGui::PushStyleColor(ImGuiCol_PlotLines, colors[0]);
+        //     ImGui::PlotLines("Ethernet", data.data(), data.size(), 0, nullptr,
+        //         0.0f, *max_element(data.begin(), data.end()), ImVec2(350, 50.0f));
+        //     ImGui::PopStyleColor();
+        // } else {
+        //     ImGui::Text("No Ethernet Data available");
+        // }
         ImGui::Text("ARP: %d", controller->getModel()->arpCount);
         if (!controller->getArpData().empty()) {
             const std::vector<float>& data = controller->getArpData();
@@ -212,7 +212,8 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
         }
 
         if (!histogramData.empty()) {
-            const char* labels[] = {"Ethernet", "ARP", "ICMP", "IPv4", "IPv6", "TCP", "UDP", "dhcp", "DNS", "FTP", "HTTP", "SMTP", "SSH", "Telnet"};
+            // const char* labels[] = {"Ethernet", "ARP", "ICMP", "IPv4", "IPv6", "TCP", "UDP", "dhcp", "DNS", "FTP", "HTTP", "SMTP", "SSH", "Telnet"};
+            const char* labels[] = {"ARP", "ICMP", "IPv4", "IPv6", "TCP", "UDP", "dhcp", "DNS", "FTP", "HTTP", "SMTP", "SSH", "Telnet"};
 
             if (ImPlot::BeginPlot("Histogram", ImVec2(600, 200))) {
 
@@ -226,7 +227,7 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
 
                 ImPlot::SetupAxis(ImAxis_X1, nullptr, ImPlotAxisFlags_NoTickLabels);
 
-                ImPlot::PlotBarGroups(labels, intHistogram.data(), 14, 1, 100, 10);
+                ImPlot::PlotBarGroups(labels, intHistogram.data(), 13, 1, 100, 10);
                 ImPlot::EndPlot();
             }
         } else {

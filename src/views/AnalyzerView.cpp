@@ -55,8 +55,9 @@ void AnalyzerView::draw(std::shared_ptr<AnalyzerController> controller)
             }
         }
         ImGui::EndTable();
+        ImGui::PopStyleColor();
     }
-    ImGui::PopStyleColor();
+
 
     ImGui::End();
 }

@@ -27,11 +27,13 @@ public:
     void tcpFlagsSection(std::shared_ptr<FilterModel> model);
     void protocolsSection(std::shared_ptr<FilterModel> model);
     void displayOption(std::shared_ptr<FilterModel> model);
+    void portSection(std::shared_ptr<FilterModel> model);
 
 private:
     std::vector<std::string> items;
     char buf_ip[64]{""};
     char buf_mac[64]{""};
+    char buf_port[100]{""};
 };
 
 

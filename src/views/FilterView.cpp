@@ -7,6 +7,7 @@
 #include "PcapFilter.h"
 
 #include <vector>
+#include <stdlib.h>
 #include <string>
 
 #include "imgui_internal.h"
@@ -38,11 +39,10 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
         ImGui::SetNextItemWidth(300);
         this->protocolsSection(model);
         ImGui::Columns(1);
+        this->portSection(model);
     } else {
         ImGui::Text("Device is not opened. Please open interface");
     }
-
-
     ImGui::End();
 }
 
@@ -155,6 +155,44 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
     ImGui::Columns(1);
     ImGui::EndChild();
 }
+
+void FilterView::portSection(std::shared_ptr<FilterModel> model) {
+    ImGui::SetNextItemWidth(300);
+    ImGui::InputText("##Label_port", this->buf_port, sizeof(this->buf_port));
+    if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip("PORT HERE");
+    }
+    if (ImGui::Button("ADD_PORT", ImVec2(300.0f, 20.0f))) {
+        const std::string port(this->buf_port);
+        if (!port.empty()) {
+            model->addPortFilter(atoi(this->buf_port), pcpp::PortFilter(atoi(this->buf_port), pcpp::SRC_OR_DST));
+            strcpy(this->buf_port, "");
+        }
+    }
+    if (ImGui::BeginTable("port_table", 2, ImGuiTableFlags_Borders
+        | ImGuiTableFlags_ScrollX, ImVec2(300, 80)))
+    {
+        ImGui::TableSetupColumn("PORTS", ImGuiTableColumnFlags_WidthFixed, 180.0f);
+        ImGui::TableSetupColumn("Operations_port", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+        ImGui::TableHeadersRow();
+        for (int row = 0; row < model->getPortFilterVector().size(); row++)
+        {
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            std::string port{std::to_string(model->getPortFilterVector()[row].first)};
+            ImGui::Text("%s",port.c_str());
+
+            ImGui::TableNextColumn();
+            if (ImGui::Button("Delete_mac"))
+            {
+                model->getPortFilterVector().erase(model->getPortFilterVector().begin() + row);
+                row--;
+            }
+        }
+        ImGui::EndTable();
+    }
+}
+
 
 void FilterView::displayOption(std::shared_ptr<FilterModel> model) {
     ImGui::BeginGroup();

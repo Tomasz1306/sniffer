@@ -23,12 +23,14 @@ void FilterController::update(){
             pcpp::AndFilter andFilter;
             pcpp::OrFilter orFilterIpAddress;
             pcpp::OrFilter orFilterMacAddress;
+            pcpp::OrFilter portOrFilter;
             pcpp::ProtoFilter tcpFilter(pcpp::TCP), udpFilter(pcpp::UDP), icmpFilter(pcpp::ICMP),
                             ivp4Filter(pcpp::IPv4), ipv6Filter(pcpp::IPv6), arpFilter(pcpp::ARP);
             uint8_t tcpFlags = 0;
             pcpp::AndFilter tcpAndFilter;
-            bool isTcp{false}, isIpOrMacAddress{false};
+            bool isTcp{false}, isIpOrMacAddress{false}, isPortSelected{false};
             pcpp::TcpFlagsFilter globalTcpFlagsFilter(0, pcpp::TcpFlagsFilter::MatchOneAtLeast);
+            pcpp::PortFilter portFilter(80, pcpp::SRC_OR_DST);
 
             for (auto &ethType : this->model->getEtherTypeFilterVector()) {
                 if (*ethType.second) {
@@ -88,6 +90,13 @@ void FilterController::update(){
                     }
                 }
             }
+            if (!this->model->getPortFilterVector().empty()) {
+                for (auto &port : this->model->getPortFilterVector()) {
+                    portOrFilter.addFilter(&port.second);
+                }
+                isPortSelected = true;
+                andFilter.addFilter(&portOrFilter);
+            }
 
             if (!this->model->getIpFilterVector().empty()) {
                 for (auto &ip : this->model->getIpFilterVector()) {
@@ -103,7 +112,7 @@ void FilterController::update(){
                 isIpOrMacAddress = true;
                 andFilter.addFilter(&orFilterMacAddress);
             }
-            if (isIpOrMacAddress) {
+            if (isIpOrMacAddress || isPortSelected) {
                 andFilter.addFilter(&orFilter);
                 std::string filterString;
                 andFilter.parseToString(filterString);

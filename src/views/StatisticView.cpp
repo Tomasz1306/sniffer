@@ -51,18 +51,18 @@ void StatisticView::draw(std::shared_ptr<StatisticController> controller) {
         controller->updateData();
 
         //this->histogramData[0] = static_cast<float>(controller->getModel()->ethernetCount);
-        this->histogramData[1] = static_cast<float>(controller->getModel()->arpCount);
-        this->histogramData[2] = static_cast<float>(controller->getModel()->imcpv4Count);
-        this->histogramData[3] = static_cast<float>(controller->getModel()->ipv4Count);
-        this->histogramData[4] = static_cast<float>(controller->getModel()->ipv6Count);
-        this->histogramData[5] = static_cast<float>(controller->getModel()->tcpCount);
-        this->histogramData[6] = static_cast<float>(controller->getModel()->udpCount);
-        this->histogramData[7] = static_cast<float>(controller->getModel()->dhcpv4Count);
-        this->histogramData[8] = static_cast<float>(controller->getModel()->dnsCount);
-        this->histogramData[9] = static_cast<float>(controller->getModel()->ftpCount);
-        this->histogramData[10] = static_cast<float>(controller->getModel()->httpCount);
-        this->histogramData[11] = static_cast<float>(controller->getModel()->sshCount);
-        this->histogramData[12] = static_cast<float>(controller->getModel()->telnetCount);
+        this->histogramData[0] = static_cast<float>(controller->getModel()->arpCount);
+        this->histogramData[1] = static_cast<float>(controller->getModel()->imcpv4Count);
+        this->histogramData[2] = static_cast<float>(controller->getModel()->ipv4Count);
+        this->histogramData[3] = static_cast<float>(controller->getModel()->ipv6Count);
+        this->histogramData[4] = static_cast<float>(controller->getModel()->tcpCount);
+        this->histogramData[5] = static_cast<float>(controller->getModel()->udpCount);
+        this->histogramData[6] = static_cast<float>(controller->getModel()->dhcpv4Count);
+        this->histogramData[7] = static_cast<float>(controller->getModel()->dnsCount);
+        this->histogramData[8] = static_cast<float>(controller->getModel()->ftpCount);
+        this->histogramData[9] = static_cast<float>(controller->getModel()->httpCount);
+        this->histogramData[10] = static_cast<float>(controller->getModel()->sshCount);
+        this->histogramData[11] = static_cast<float>(controller->getModel()->telnetCount);
         // ImGui::Text("Ethernet: %d", controller->getModel()->ethernetCount);
         // if (!controller->getEthernetData().empty()) {
         //     const std::vector<float>& data = controller->getEthernetData();

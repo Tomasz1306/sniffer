@@ -39,40 +39,35 @@ public:
         std::shared_ptr<StatisticController> _statisticController,
         std::shared_ptr<DeviceController> _deviceController,
         std::shared_ptr<SearchController> _searchController);
+
     void display();
-
     static void onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie);
-
     void startCapture();
     void stopCapture();
     void clearTableOfPackets();
     void setIsDisplayedPakcet(bool _isDisplayedPakcet);
-    bool isDisplayedPakcet();
-    bool isCapturing();
     void setCurrentPacketId(int _id);
     void displayNextPacket();
     void displayPrevPacket();
-    bool isDeviceOpen();
-    int getPacketCapturedVectorSize();
     void addPacketToStatistics(pcpp::Packet &packet);
-    bool isDeviceSelected();
-    std::string getDeviceName();
     int getDeviceId(std::string name);
+    int getPacketCapturedVectorSize();
     bool *getIsPacketDisplayed();
+    bool isDeviceOpen();
+    bool isCapturing();
+    bool isDisplayedPakcet();
+    bool isDeviceSelected();
     std::string getSessionData();
-    std::vector<CapturedPackets> &getCapturedVectorData();
+    std::string getDeviceName();
     std::vector<CapturedPackets> getCapturedVectorDataCopy();
+    std::vector<CapturedPackets> &getCapturedVectorData();
     std::vector<CapturedPackets> &getCapturedVectorToAnalyze();
-
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
-
     std::shared_ptr<DeviceController> getDeviceController();
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
 
 private:
-
     bool isPacketDisplayed{false};
-
     std::shared_ptr<PacketCaptureView> view;
     std::shared_ptr<PacketCaptureModel> model;
     std::shared_ptr<Listener> listener;

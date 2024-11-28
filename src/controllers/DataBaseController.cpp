@@ -77,6 +77,7 @@ void DataBaseController::disconnectFromDataBase() {
         }
     }
     this->model->setIsConnected(false);
+    this->model->selectDatabaseIndex(-1);
 }
 
 void DataBaseController::loadDatabases() {

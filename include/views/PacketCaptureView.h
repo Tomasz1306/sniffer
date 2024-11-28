@@ -50,7 +50,7 @@ private:
     void displayIndex(CapturedPackets&, std::shared_ptr<MainController> controller);
     void displayTime(const pcpp::Packet&);
     void displayPacketSize(const pcpp::Packet&);
-    void displayEthernetLayer(const pcpp::Packet&);
+    void displayDataLinkLayer(const pcpp::Packet&);
     void displayNetworkProtocol(const pcpp::Packet&);
     void displayTransportProtocol(const pcpp::Packet&);
     void displayTransportLayer(const pcpp::Packet&);

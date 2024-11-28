@@ -56,6 +56,7 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
                     }
 
                     if (database.second) {
+
                         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
                     } else {
                         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
@@ -69,9 +70,9 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
             ImGui::EndTable();
         }
 
-        if (ImGui::Button("Refresh", ImVec2(300, 40))) {
-            controller->loadDatabases();
-        }
+        // if (ImGui::Button("Refresh", ImVec2(300, 40))) {
+        //     controller->loadDatabases();
+        // }
         if (ImGui::Button("New database", ImVec2(300, 40))) {
             ImGui::OpenPopup("newDatabasePopup");
         }

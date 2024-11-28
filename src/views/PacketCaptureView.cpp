@@ -117,19 +117,6 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
         clipper.Begin(controller->getPacketCapturedVectorSize());
 
         std::lock_guard<std::mutex> lock(guard_1);
-        // for (auto& packet : packets) {
-        // this->keyboardHandling(controller, packets, packet);
-        // auto &pcapPacket = packet.packet;
-        // ImGui::TableNextRow();
-        //
-        // this->displayIndex(packet, controller);
-        // this->displayTime(pcapPacket);
-        // this->displayPacketSize(pcapPacket);
-        // this->displayEthernetLayer(pcapPacket);
-        // this->displayNetworkProtocol(pcapPacket);
-        // this->displayTransportProtocol(pcapPacket);
-        // this->displayTransportLayer(pcapPacket);
-        // }
         while (clipper.Step()) {
             for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
                 auto &packet = packets[i];
@@ -140,7 +127,7 @@ void PacketCaptureView::displayTableOfPackets(std::vector<CapturedPackets> &pack
                 this->displayIndex(packet, controller);
                 this->displayTime(pcapPacket);
                 this->displayPacketSize(pcapPacket);
-                this->displayEthernetLayer(pcapPacket);
+                this->displayDataLinkLayer(pcapPacket);
                 this->displayNetworkProtocol(pcapPacket);
                 this->displayTransportProtocol(pcapPacket);
                 this->displayTransportLayer(pcapPacket);
@@ -203,7 +190,7 @@ void PacketCaptureView::displayPacketSize(const pcpp::Packet &packet) {
     ImGui::Text("%d", frameLength);
 }
 
-void PacketCaptureView::displayEthernetLayer(const pcpp::Packet &packet) {
+void PacketCaptureView::displayDataLinkLayer(const pcpp::Packet &packet) {
 
     std::shared_ptr<pcpp::EthLayer> ethLayer;
 

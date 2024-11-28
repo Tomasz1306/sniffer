@@ -23,10 +23,6 @@ private:
 
     bool isInitialized{false};
 
-    void displayEthernetLayer(CapturedPackets &_packet);
-    void displayNetworkLayer(CapturedPackets &_packet);
-    void displayTransportLayer(CapturedPackets &_packet);
-    void displayApplicationLayer(CapturedPackets &_packet);
     void keyboardHandling(std::shared_ptr<MainController> controller, CapturedPackets &_packet);
     std::string byteToHex(unsigned char byte);
 };

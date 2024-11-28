@@ -22,7 +22,7 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
 
     if (controller->isDeviceOpen()) {
         this->displayOption(model);
-        ImGui::Columns(4, "mycolumns", false);
+        ImGui::Columns(5, "mycolumns", false);
         ImGui::SetColumnWidth(0,310);
         ImGui::SetColumnWidth(1, 310);
         ImGui::SetColumnWidth(2, 180);
@@ -38,7 +38,7 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
         ImGui::NextColumn();
         ImGui::SetNextItemWidth(300);
         this->protocolsSection(model);
-        ImGui::Columns(1);
+        ImGui::NextColumn();
         this->portSection(model);
     } else {
         ImGui::Text("Device is not opened. Please open interface");
@@ -147,7 +147,7 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
     auto i = 0;
     for (auto &ethType : model->getEtherTypeFilterVector()) {
         ImGui::Checkbox(ethType.first.c_str(),  ethType.second.get());
-        if (i == 3) {
+        if (i == 4) {
             ImGui::NextColumn();
         }
         i++;
@@ -192,8 +192,6 @@ void FilterView::portSection(std::shared_ptr<FilterModel> model) {
         ImGui::EndTable();
     }
 }
-
-
 void FilterView::displayOption(std::shared_ptr<FilterModel> model) {
     ImGui::BeginGroup();
     if (ImGui::Button("Confirm", ImVec2(525, 20))) {

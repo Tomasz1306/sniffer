@@ -26,6 +26,7 @@ public:
 
     void addLog(std::string date, std::string description, LogType type);
     std::vector<LogData>& getLogs();
+    const std::vector<LogData>& getLogsConst();
 
 private:
 

@@ -13,7 +13,7 @@
 
 PacketView::PacketView() {
     this->windowTitle = "PACKET";
-    this->windowHeight = 1000.0f;
+    this->windowHeight = 800.0f;
     this->windowWidth = 800.0f;
     this->windowX = 600.0f;
     this->windowY = 50.0f;
@@ -48,7 +48,6 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
     std::vector<std::string> info;
     _packet.packet.toStringList(info);
     for (auto &layer : info) {
-        // ImGui::BulletText("%s", layer.c_str());
         if (ImGui::Selectable(layer.c_str())) {
             ImGui::SetClipboardText(layer.c_str());
         }
@@ -62,7 +61,6 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
         std::string hexAndAsciiLine;
         if (payload) {
             ImGui::Text("Payload");
-
             for (int i = 0; i < payloadSize; i += 16) {
                 std::stringstream hexStream;
                 std::stringstream asciiStream;
@@ -77,15 +75,10 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
                     hexStream << byteToHex(byte);
                     asciiStream << (isprint(byte) ? static_cast<char>(byte) : '.');
                 }
-
-                // Dodać przestrzeń, jeśli linia jest krótsza niż 16 bajtów
                 for (int j = line_length; j < 16; ++j) {
-                    hexStream << "   "; // Dwa znaki hex + jedna spacja
+                    hexStream << "   ";
                 }
                 hexAndAsciiLine += hexStream.str() + "     " + asciiStream.str() + '\n';
-
-                // ImGui::Text("%s    %s", hexStream.str().c_str(), asciiStream.str().c_str());
-                // ImGui::InputText(inputTextId.c_str(), buffer, bufferSize, ImGuiInputTextFlags_ReadOnly);
             }
             const size_t bufferSize = 256;
             static char buffer[bufferSize];
@@ -101,22 +94,6 @@ void PacketView::draw(std::shared_ptr<MainController> controller, CapturedPacket
         }
     }
     ImGui::End();
-}
-
-void PacketView::displayEthernetLayer(CapturedPackets &_packet) {
-
-}
-
-void PacketView::displayNetworkLayer(CapturedPackets &_packet) {
-
-}
-
-void PacketView::displayTransportLayer(CapturedPackets &_packet) {
-
-}
-
-void PacketView::displayApplicationLayer(CapturedPackets &_packet) {
-
 }
 
 void PacketView::keyboardHandling(std::shared_ptr<MainController> controller, CapturedPackets &_packet) {

@@ -17,13 +17,16 @@ void PacketCaptureModel::addToCapturedPacketDeque(pcpp::Packet packet){
 }
 
 void PacketCaptureModel::writeFromDequeToVector(){
-    while(1) {
+    while(this->isRunning) {
         if (!this->capturedPackets_deque.empty()) {
             std::scoped_lock lock(guard_1, guard_3, guard_4);
             auto &packet = this->capturedPackets_deque.back();
-            this->capturedPackets_vector.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
-            this->capturedPackets_database.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
-            this->capturedPackets_analize.emplace_back(this->counter, false, Utils::getTime(), this->capturedPackets_deque.back());
+            this->capturedPackets_vector.emplace_back(this->counter, false,
+                Utils::getTime(), this->capturedPackets_deque.back());
+            this->capturedPackets_database.emplace_back(this->counter, false,
+                Utils::getTime(), this->capturedPackets_deque.back());
+            this->capturedPackets_analize.emplace_back(this->counter, false,
+                Utils::getTime(), this->capturedPackets_deque.back());
             database_cv.notify_all();
             ++this->counter;
             this->controller->addPacketToStatistics(this->capturedPackets_vector.back().packet);
@@ -47,6 +50,7 @@ void PacketCaptureModel::clearCapturedPacketVectorDatabase() {
 
 
 PacketCaptureModel::~PacketCaptureModel() {
+    this->isRunning = false;
     if (this->thread_1->joinable()) {
         this->thread_1->join();
     }

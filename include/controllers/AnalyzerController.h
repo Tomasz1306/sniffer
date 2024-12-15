@@ -16,6 +16,7 @@
 #include <mutex>
 #include <thread>
 #include "netinet/in.h"
+#include <map>
 
 class MainController;
 class AnalyzerModel;
@@ -46,6 +47,7 @@ public:
     int getAnalyzedPacketsCount() {return this->analyzedPacketsCount; }
     void setIsAnalyzingEnable(bool isAnalyzingEnable) { this->isAnalyzingEnable = isAnalyzingEnable; }
     bool getIsAnalyzingEnable() {return this->isAnalyzingEnable; }
+    void analyzePacketHttp(CapturedPackets packet);
 
     void threadAnalyzer();
     void analyzePacketForPortScan(CapturedPackets packet);
@@ -67,6 +69,8 @@ private:
     bool isAnalyzingEnable{false};
     int packetToAnalyzeCount{0};
     int analyzedPacketsCount{0};
+    std::map<std::string, int> xssAttempts;
+    std::map<std::string, int> sqlInjectionAttempts;
 };
 
 #endif //ANALYZERCONTROLLER_H

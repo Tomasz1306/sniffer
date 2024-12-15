@@ -31,16 +31,16 @@ MainController::MainController(std::shared_ptr<PacketCaptureModel> _model,
     this->searchController = _searchController;
 }
 
-void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie){
+void MainController::onPacketArrivesBlockingMode(pcpp::RawPacket *packet,
+    pcpp::PcapLiveDevice *dev, void *cookie){
     auto model = static_cast<std::shared_ptr<PacketCaptureModel>*>(cookie);
-    if (packet->getRawDataLen() <= 65535) {
-        try {
-            std::lock_guard<std::mutex> lock(guard_3);
-            pcpp::Packet parsedPacket(packet);
-            (*model)->addToCapturedPacketDeque(parsedPacket);
-        } catch (const std::exception& e) {
-            LogController::getInstance()->addLog(Utils::getTime(), "Error while adding packet to vector", LogType::WARNING);
-        }
+    try {
+        std::lock_guard<std::mutex> lock(guard_3);
+        pcpp::Packet parsedPacket(packet);
+        (*model)->addToCapturedPacketDeque(parsedPacket);
+    } catch (const std::exception& e) {
+        LogController::getInstance()->addLog(Utils::getTime(),
+        "Error while adding packet to vector", LogType::WARNING);
     }
 }
 

@@ -30,31 +30,53 @@ bool StatisticController::isDeviceSelected() {
     return this->listener->isDeviceSelected();
 }
 
-void StatisticController::updateData() {
-    addDataPoint(ethernetData, model->ethernetCount);
-    addDataPoint(arpData, model->arpCount);
-    addDataPoint(imcpv4Data, model->imcpv4Count);
-    addDataPoint(ipv4Data, model->ipv4Count);
-    addDataPoint(ipv6Data, model->ipv6Count);
-    addDataPoint(tcpData, model->tcpCount);
-    addDataPoint(udpData, model->udpCount);
-    addDataPoint(dhcpv4Data, model->dhcpv4Count);
-    addDataPoint(dnsData, model->dnsCount);
-    addDataPoint(ftpData, model->ftpCount);
-    addDataPoint(httpData, model->httpCount);
-    addDataPoint(sshData, model->sshCount);
-    addDataPoint(telnetData, model->telnetCount);
+void StatisticController::updateData(const std::string& timestamp) {
+    std::tm t{};
+    std::istringstream ss(timestamp);
+
+    ss >> std::get_time(&t, "%Y-%m-%d %H:%M:%S");
+    if (ss.fail()) {
+        throw std::runtime_error{"failed to parse time string"};
+    }
+
+    std::time_t epochTime = mktime(&t);
+    double numericTimestamp = static_cast<double>(epochTime);
+
+    if (firstMeasurement) {
+        startTime = numericTimestamp;
+        firstMeasurement = false;
+    }
+
+    double relativeTime = numericTimestamp - startTime;
+    addDataPoint(ethernetData, model->ethernetCount, relativeTime);
+    addDataPoint(arpData, model->arpCount, relativeTime);
+    addDataPoint(imcpv4Data, model->imcpv4Count, relativeTime);
+    addDataPoint(ipv4Data, model->ipv4Count, relativeTime);
+    addDataPoint(ipv6Data, model->ipv6Count, relativeTime);
+    addDataPoint(tcpData, model->tcpCount, relativeTime);
+    addDataPoint(udpData, model->udpCount, relativeTime);
+    addDataPoint(dhcpv4Data, model->dhcpv4Count, relativeTime);
+    addDataPoint(dnsData, model->dnsCount, relativeTime);
+    addDataPoint(ftpData, model->ftpCount, relativeTime);
+    addDataPoint(httpData, model->httpCount, relativeTime);
+    addDataPoint(sshData, model->sshCount, relativeTime);
+    addDataPoint(telnetData, model->telnetCount, relativeTime);
 }
 
-void StatisticController::addDataPoint(std::deque<int>& dataDeque, int dataPoint) {
+void StatisticController::addDataPoint(std::deque<std::pair<double, int>>& dataDeque, int dataPoint, double time) {
     if (dataDeque.size() >= maxDataPoints) {
         dataDeque.pop_front();
     }
-    dataDeque.push_back(dataPoint);
+    dataDeque.push_back({time, dataPoint});
 }
 
-std::vector<float> StatisticController::getDequeAsVector(std::deque<int>& dataDeque) {
-    return std::vector<float>(dataDeque.begin(), dataDeque.end());
+std::vector<std::pair<float, float>> StatisticController::getDequeAsVector(std::deque<std::pair<double, int>>& dataDeque) {
+    std::vector<std::pair<float, float>> vec;
+    vec.reserve(dataDeque.size());
+    for (const auto& p : dataDeque) {
+        vec.push_back({static_cast<float>(p.first), static_cast<float>(p.second)});
+    }
+    return vec;
 }
 
 int StatisticController::getMaxDataPoints() {
@@ -62,7 +84,28 @@ int StatisticController::getMaxDataPoints() {
 }
 
 void StatisticController::clearStatistics() {
-    this->model->ethernetCount = 0;
+    // this->model->ethernetCount.first = 0;
+    // this->model->ethernetCount.second = "";
+    // this->model->arpCount.first = 0;
+    // this->model->arpCount.second = "";
+    // this->model->imcpv4Count.first = 0;
+    // this->model->imcpv4Count.second = "";
+    // this->model->ipv4Count.first = 0;
+    // this->model->ipv4Count.second = "";
+    // this->model->ipv6Count.first = 0;
+    // this->model->ipv6Count.second = "";
+    // this->model->tcpCount.first = 0;
+    // this->model->tcpCount.second = "";
+    // this->model->udpCount.first = 0;
+    // this->model->udpCount.second = "";
+    // this->model->ftpCount.first = 0;
+    // this->model->ftpCount.second = "";
+    // this->model->httpCount.first = 0;
+    // this->model->httpCount.second = "";
+    // this->model->sshCount.first = 0;
+    // this->model->sshCount.second = "";
+    // this->model->telnetCount.first = 0;
+    // this->model->telnetCount.second = "";
     this->model->arpCount = 0;
     this->model->imcpv4Count = 0;
     this->model->ipv4Count = 0;

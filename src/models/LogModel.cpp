@@ -15,3 +15,6 @@ void LogModel::addLog(std::string date, std::string description, LogType type) {
 std::vector<LogData>& LogModel::getLogs() {
     return this->logs;
 }
+const std::vector<LogData>& LogModel::getLogsConst() {
+    return this->logs;
+}

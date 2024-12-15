@@ -5,6 +5,9 @@
 #include "controllers/LogController.h"
 #include "utils/Utils.h"
 #include <iostream>
+#include "HttpLayer.h"
+#include "PcapFilter.h"
+
 
 FilterController::FilterController(std::shared_ptr<FilterModel> _model, std::shared_ptr<FilterView> _view, std::shared_ptr<Listener> _listener) {
     this->thread_update = std::make_shared<std::thread>(&FilterController::update, this);
@@ -20,12 +23,15 @@ void FilterController::update(){
     while(1) {
         if (this->model != nullptr && this->model->getUpdate()) {
             pcpp::OrFilter orFilter;
+            pcpp::OrFilter applicationLayerOrFilter;
             pcpp::AndFilter andFilter;
             pcpp::OrFilter orFilterIpAddress;
             pcpp::OrFilter orFilterMacAddress;
             pcpp::OrFilter portOrFilter;
             pcpp::ProtoFilter tcpFilter(pcpp::TCP), udpFilter(pcpp::UDP), icmpFilter(pcpp::ICMP),
-                            ivp4Filter(pcpp::IPv4), ipv6Filter(pcpp::IPv6), arpFilter(pcpp::ARP);
+                            ivp4Filter(pcpp::IPv4), ipv6Filter(pcpp::IPv6), arpFilter(pcpp::ARP),
+                            httpFilter(pcpp::HTTP), sshFilter(pcpp::SSH), telnetFilter(pcpp::Telnet),
+                            ftpFilter(pcpp::FTP), icmpv6Filter(pcpp::ICMPv6);
             uint8_t tcpFlags = 0;
             pcpp::AndFilter tcpAndFilter;
             bool isTcp{false}, isIpOrMacAddress{false}, isPortSelected{false};
@@ -88,6 +94,9 @@ void FilterController::update(){
                     if (ethType.first == "ARP") {
                         orFilter.addFilter(&arpFilter);
                     }
+                    if (ethType.first == "ICMPv6") {
+                        orFilter.addFilter(&icmpv6Filter);
+                    }
                 }
             }
             if (!this->model->getPortFilterVector().empty()) {
@@ -131,7 +140,6 @@ void FilterController::update(){
                 LogController::getInstance()->addLog(Utils::getTime(), filterString, LogType::SUCCESFULL);
                 this->model->setUpdate(false);
             }
-
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }

@@ -17,14 +17,14 @@ FilterModel::FilterModel() {
     this->etherTypeFilter.emplace_back("ICMP", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("IPv4", std::make_shared<bool>(true));
     this->etherTypeFilter.emplace_back("IPv6", std::make_shared<bool>(true));
-    this->etherTypeFilter.emplace_back("ARP", std::make_shared<bool>(true));
-    this->etherTypeFilter.emplace_back("ETH", std::make_shared<bool>(true));
+    this->etherTypeFilter.emplace_back("ARP", std::make_shared<bool>(false));
+    this->etherTypeFilter.emplace_back("ICMP6", std::make_shared<bool>(true));
+
 }
 
 void FilterModel::setUpdate(bool _update) {
     this->update.store(_update, std::memory_order_relaxed);
 }
-
 
 void FilterModel::addIpFilter(pcpp::IPAddress _ipAddress, pcpp::IPFilter  _ipFilter) {
     this->ipFilter.emplace_back(_ipAddress, _ipFilter);
@@ -41,4 +41,5 @@ void FilterModel::addPortFilter(int _port, pcpp::PortFilter  _portFilter) {
 void FilterModel::addEtherTypeFilter(std::string _protocolType, std::shared_ptr<bool>  _etherTypeFilter) {
     this->etherTypeFilter.emplace_back(_protocolType, _etherTypeFilter);
 }
+
 

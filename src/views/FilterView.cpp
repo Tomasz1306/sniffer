@@ -22,11 +22,11 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
 
     if (controller->isDeviceOpen()) {
         this->displayOption(model);
-        ImGui::Columns(4, "mycolumns", false);
+        ImGui::Columns(5, "mycolumns", false);
         ImGui::SetColumnWidth(0,310);
         ImGui::SetColumnWidth(1, 310);
         ImGui::SetColumnWidth(2, 180);
-        ImGui::SetColumnWidth(3, 180);
+        ImGui::SetColumnWidth(3, 220);
         ImGui::SetNextItemWidth(300);
         this->addressIpSection(model);
         ImGui::NextColumn();
@@ -36,7 +36,7 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
         ImGui::SetNextItemWidth(300);
         this->tcpFlagsSection(model);
         ImGui::NextColumn();
-        ImGui::SetNextItemWidth(300);
+        ImGui::SetNextItemWidth(390);
         this->protocolsSection(model);
         ImGui::Columns(1);
         this->portSection(model);
@@ -142,12 +142,12 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
     ImGui::Text("Protocols");
     ImGui::BeginChild("InnerColumnsProtocol");
     ImGui::Columns(2, "protocolSectionColumns", false);
-    ImGui::SetColumnWidth(0,70);
-    ImGui::SetColumnWidth(1, 70);
+    ImGui::SetColumnWidth(0,90);
+    ImGui::SetColumnWidth(1, 90);
     auto i = 0;
     for (auto &ethType : model->getEtherTypeFilterVector()) {
         ImGui::Checkbox(ethType.first.c_str(),  ethType.second.get());
-        if (i == 3) {
+        if (i == 4) {
             ImGui::NextColumn();
         }
         i++;
@@ -192,8 +192,6 @@ void FilterView::portSection(std::shared_ptr<FilterModel> model) {
         ImGui::EndTable();
     }
 }
-
-
 void FilterView::displayOption(std::shared_ptr<FilterModel> model) {
     ImGui::BeginGroup();
     if (ImGui::Button("Confirm", ImVec2(525, 20))) {

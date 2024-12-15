@@ -18,7 +18,7 @@ public:
     void draw(std::shared_ptr<SearchController> controller);
 
 private:
-    char searchText[100];
+    char searchText[100]{""};
 };
 
 #endif //SEARCHVIEW_H

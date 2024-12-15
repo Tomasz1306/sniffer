@@ -18,6 +18,7 @@ class PacketCaptureModel;
 
 class Listener {
 public:
+    Listener() {}
     Listener(std::shared_ptr<PacketCaptureModel> model);
 
     void openListener();

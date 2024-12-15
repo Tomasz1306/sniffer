@@ -59,7 +59,9 @@ std::vector<CapturedPackets> &AnalyzerController::getCapturedVectorData() {
 void AnalyzerController::analyzePacketForPortScan(CapturedPackets packet) {
     auto ipLayer = packet.packet.getLayerOfType<pcpp::IPv4Layer>();
     auto tcpLayer = packet.packet.getLayerOfType<pcpp::TcpLayer>();
+    std::cout << "HALO JESTM TU TUUUUUU" << std::endl;
     if (ipLayer != nullptr && tcpLayer != nullptr) {
+        std::cout << "HALO SPRAWDZAM ESZ" << std::endl;
         std::string sourceIp = ipLayer->getSrcIPAddress().toString();
         uint16_t destPort = ntohs(tcpLayer->getTcpHeader()->portDst);
         sourceIpToPorts[sourceIp].insert(destPort);
@@ -106,20 +108,19 @@ void AnalyzerController::analyzePacketForARPSpoofing(CapturedPackets packet) {
     }
 }
 
-void AnalyzerController::analyzePacketForBruteForce(CapturedPackets packet) {
+void AnalyzerController::analyzePacketForBruteForce(const CapturedPackets packet) {
     auto ipLayer = packet.packet.getLayerOfType<pcpp::IPv4Layer>();
     auto tcpLayer = packet.packet.getLayerOfType<pcpp::TcpLayer>();
     if (ipLayer != nullptr && tcpLayer != nullptr) {
         std::string sourceIp = ipLayer->getSrcIPAddress().toString();
         uint16_t destPort = ntohs(tcpLayer->getTcpHeader()->portDst);
-
         if (destPort == 22) { // Port 22 dla SSH
             std::string key = sourceIp + ":" + packet.captureTime;
-            bruteForceAttempts[key]++;
-            if (bruteForceAttempts[key] > 30 && warnings.find(key) == warnings.end()) {
+            this->bruteForceAttempts[key]++;
+            if (this->bruteForceAttempts[key] > 20 && this->warnings.find(key) == this->warnings.end()) {
                 std::ostringstream oss;
                 oss << "Potential SSH brute force attempt from IP: " << sourceIp << " on " << packet.captureTime;
-                warnings[packet.captureTime] = Warning(sourceIp, oss.str());
+                this->warnings[packet.captureTime] = Warning(sourceIp, oss.str());
             }
         }
     }
@@ -165,8 +166,6 @@ void AnalyzerController::analyzePacketHttp(CapturedPackets packet) {
             xssAttempts[sourceIp]++;
             isXSS = true;
         }
-
-
         if (isXSS && isSQL) {
             warnings[packet.captureTime] = Warning(sourceIp, std::string("Potential SQL Injection and XSS attempt: " + asciiString + " at " + packet.captureTime));
         } else if (isXSS) {

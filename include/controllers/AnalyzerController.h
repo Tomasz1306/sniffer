@@ -63,9 +63,9 @@ private:
     std::vector<CapturedPackets> packetsToAnalyze;
     std::unordered_map<std::string, std::set<uint16_t>> sourceIpToPorts;
     std::unordered_map<std::string, Warning> warnings;
-    std::unordered_map<std::string, int> bruteForceAttempts; // IP:Date to count attempts
-    std::unordered_map<std::string, std::string> arpMapping; // IP to MAC mapping
-    std::unordered_map<std::string, int> pingRequests;       // IP to Ping request count
+    std::unordered_map<std::string, int> bruteForceAttempts;
+    std::unordered_map<std::string, std::string> arpMapping;
+    std::unordered_map<std::string, int> pingRequests;
     bool isAnalyzingEnable{false};
     int packetToAnalyzeCount{0};
     int analyzedPacketsCount{0};

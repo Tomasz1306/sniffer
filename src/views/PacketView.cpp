@@ -13,7 +13,7 @@
 
 PacketView::PacketView() {
     this->windowTitle = "PACKET";
-    this->windowHeight = 1000.0f;
+    this->windowHeight = 800.0f;
     this->windowWidth = 800.0f;
     this->windowX = 600.0f;
     this->windowY = 50.0f;

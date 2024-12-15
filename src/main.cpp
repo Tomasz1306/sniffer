@@ -41,6 +41,7 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <gtest/gtest.h>
 
 //TODO WYSWIETLAC PAKIETY ZE ZLA SUMA KONTROLNA I DODAC DO STATYSTYK
 //TODO zapewnic przesuwanie po osi x
@@ -51,7 +52,9 @@ void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error " << error << ": " << description << std::endl;
 }
 
-int main() {
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
     auto utils = Utils::getInstance();
     // Ustawienie callbacka błędów GLFW
     glfwSetErrorCallback(glfw_error_callback);
@@ -85,8 +88,8 @@ int main() {
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    Utils::getInstance()->setSmallerFont(io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 16.0f));
-    Utils::getInstance()->setLargerFont(io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 24.0f));
+    Utils::getInstance()->setSmallerFont(io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 20.0f));
+    Utils::getInstance()->setLargerFont(io.Fonts->AddFontFromFileTTF("../rsc/fonts/JetBrainsMonoNL-Regular.ttf", 29.0f));
 
     // Ustawienia stylu ImGui
     ImGui::StyleColorsDark();

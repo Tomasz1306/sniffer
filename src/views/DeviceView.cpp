@@ -27,7 +27,8 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
                     if (this->deviceNames[i] == this->deviceNames[this->selectedDevice]) {
                         if (_controller->isDeviceOpen()) {
                             this->selectedDevice = previousDeviceIndex;
-                            LogController::getInstance()->addLog(Utils::getTime(), "Other device is opened", LogType::ERROR);
+                            LogController::getInstance()->addLog(Utils::getTime(),
+                                "Other device is opened", LogType::ERROR);
                         } else {
                             _controller->setNewDeviceByName(this->deviceNames[i]);
                         }
@@ -46,13 +47,13 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
                 ImGui::Button("Close Device", ImVec2(100, 25.0f));
                 ImGui::EndDisabled();
             } else {
-                if (ImGui::Button("Close Device", ImVec2(100.0f, 25.0f))) {
+                if (ImGui::Button("Close Device", ImVec2(110.0f, 25.0f))) {
                     _controller->setIsDeviceOpen(false);
                     _controller->closeCurrentDevice();
                 }
             }
         } else {
-            if (ImGui::Button("Open Device", ImVec2(100.0f, 25.0f))) {
+            if (ImGui::Button("Open Device", ImVec2(110.0f, 25.0f))) {
                 _controller->setIsDeviceOpen(true);
                 _controller->openCurrentDevice();
             }
@@ -60,7 +61,7 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
 
     } else {
         ImGui::BeginDisabled();
-        ImGui::Button("Open Device", ImVec2(100.0f, 25.0f));
+        ImGui::Button("Open Device", ImVec2(110.0f, 25.0f));
         ImGui::EndDisabled();
     }
 
@@ -71,9 +72,6 @@ void DeviceView::draw(std::shared_ptr<DeviceController> _controller, std::shared
         } else {
             ImGui::Text("Device Status: CLOSE");
         }
-        // ImGui::Text("Received packets: %ld", _model->getDeviceStats()[0]);
-        // ImGui::Text("Droped packets: %ld", _model->getDeviceStats()[1]);
-        // ImGui::Text("Droped packets by interface: %ld", _model->getDeviceStats()[2]);
         ImGui::Text("IPv4 address: %s", _model->getDeviceIPv4Address().c_str());
         ImGui::Text("IPv6 address: %s", _model->getDeviceIPv6Address().c_str());
         ImGui::Text("MAC address: %s", _model->getDeviceMacAddress().c_str());

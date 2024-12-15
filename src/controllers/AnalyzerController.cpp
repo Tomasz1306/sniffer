@@ -2,6 +2,8 @@
 // Created by tomasz on 02.10.24.
 //
 
+#include <regex>
+
 #include "controllers/AnalyzerController.h"
 AnalyzerController::AnalyzerController(std::shared_ptr<AnalyzerModel> model, std::shared_ptr<AnalyzerView> view) {
     this->model = model;
@@ -25,12 +27,10 @@ void AnalyzerController::analyzePackets(std::vector<CapturedPackets> packets) {
 }
 
 void AnalyzerController::analyzeCapturedPackets(std::vector<CapturedPackets> packets) {
-    std::cout << "ANALIZA: " << packets.size() << std::endl;
     for (int i =0 ; i < packets.size(); i++) {
             analyzePacketForPortScan(packets[i]);
-            //analyzePacketForBruteForce(packetsToAnalyze[i]);
-            //analyzePacketForARPSpoofing(packets[i]);
-            //analyzePacketForPingSweep(packets[i]);
+            analyzePacketForBruteForce(packets[i]);
+            analyzePacketHttp(packets[i]);
             analyzedPacketsCount++;
     }
     sourceIpToPorts.clear();
@@ -125,3 +125,55 @@ void AnalyzerController::analyzePacketForBruteForce(CapturedPackets packet) {
     }
 }
 
+void AnalyzerController::analyzePacketHttp(CapturedPackets packet) {
+    auto httpLayer = packet.packet.getLayerOfType<pcpp::HttpRequestLayer>();
+    auto rawPacket = packet.packet.getRawPacket();
+
+    if (httpLayer != nullptr) {
+        auto firstLine = httpLayer->getFirstLine();
+        std::string uri = firstLine->getUri();
+        std::string info = httpLayer->toString();
+        std::cout << uri << std::endl;
+        std::stringstream asciiStream;
+        std::string sourceIp = packet.packet.getLayerOfType<pcpp::IPv4Layer>()->getSrcIPAddress().toString();
+        pcpp::PayloadLayer* payloadLayer = packet.packet.getLayerOfType<pcpp::PayloadLayer>();
+        if (payloadLayer !=nullptr) {
+            const uint8_t *payload = packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayload();
+            int payloadSize = packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayloadLen();
+            if (payload) {
+                for (int i = 0; i < payloadSize; i++) {
+                    unsigned char byte = payload[i];
+                    std::stringstream hexStream;
+                    asciiStream << (isprint(byte) ? static_cast<char>(byte) : '.');
+                }
+            }
+        }
+        bool isXSS{false}, isSQL{false};
+        std::cout << asciiStream.str() << std::endl;
+        std::string asciiString = asciiStream.str();
+        std::regex xssPattern(R"(<script>)", std::regex_constants::icase);
+        std::regex sql_injection_pattern(
+            R"((?:'|\bOR\b|\bAND\b|\bSELECT\b|\bUNION\b|\bINSERT\b|\bUPDATE\b|
+        \bDELETE\b|--|#|/\*|\*/|;|=|LIKE|\\b[0-9]+=[0-9]+\\b))");
+        if (std::regex_search(uri, sql_injection_pattern) |
+            std::regex_search(asciiString, sql_injection_pattern)) {
+            sqlInjectionAttempts[sourceIp]++;
+            isSQL = true;
+        }
+
+        if (std::regex_search(asciiString, xssPattern)) {
+            xssAttempts[sourceIp]++;
+            isXSS = true;
+        }
+
+
+        if (isXSS && isSQL) {
+            warnings[packet.captureTime] = Warning(sourceIp, std::string("Potential SQL Injection and XSS attempt: " + asciiString + " at " + packet.captureTime));
+        } else if (isXSS) {
+            warnings[packet.captureTime] = Warning(sourceIp, std::string("Potential XSS attempt: " + asciiString + " at " + packet.captureTime));
+        } else {
+            warnings[packet.captureTime] = Warning(sourceIp, std::string("Potential SQL Injection attempt: " + asciiString + " at " + packet.captureTime));
+        }
+    } else {
+    }
+}

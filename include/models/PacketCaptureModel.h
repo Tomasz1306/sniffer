@@ -44,6 +44,8 @@ private:
     std::shared_ptr<MainController> controller;
     std::mutex dequeGuard;
     std::condition_variable dequeCV;
+    std::atomic<bool> isRunning{true};
+
 };
 
 

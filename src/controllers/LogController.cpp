@@ -27,6 +27,9 @@ void LogController::addLog(std::string date, std::string description, LogType ty
 std::vector<LogData>& LogController::getLogs() {
     return this->model->getLogs();
 }
+const std::vector<LogData>& LogController::getLogsConst() {
+    return this->model->getLogsConst();
+}
 
 void LogController::setModel(std::shared_ptr<LogModel> model) {
     this->model = model;

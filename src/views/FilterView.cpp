@@ -26,7 +26,7 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
         ImGui::SetColumnWidth(0,310);
         ImGui::SetColumnWidth(1, 310);
         ImGui::SetColumnWidth(2, 180);
-        ImGui::SetColumnWidth(3, 180);
+        ImGui::SetColumnWidth(3, 220);
         ImGui::SetNextItemWidth(300);
         this->addressIpSection(model);
         ImGui::NextColumn();
@@ -36,9 +36,9 @@ void FilterView::draw(std::shared_ptr<FilterController> controller, std::shared_
         ImGui::SetNextItemWidth(300);
         this->tcpFlagsSection(model);
         ImGui::NextColumn();
-        ImGui::SetNextItemWidth(300);
+        ImGui::SetNextItemWidth(390);
         this->protocolsSection(model);
-        ImGui::NextColumn();
+        ImGui::Columns(1);
         this->portSection(model);
     } else {
         ImGui::Text("Device is not opened. Please open interface");
@@ -142,8 +142,8 @@ void FilterView::protocolsSection(std::shared_ptr<FilterModel> model) {
     ImGui::Text("Protocols");
     ImGui::BeginChild("InnerColumnsProtocol");
     ImGui::Columns(2, "protocolSectionColumns", false);
-    ImGui::SetColumnWidth(0,70);
-    ImGui::SetColumnWidth(1, 70);
+    ImGui::SetColumnWidth(0,90);
+    ImGui::SetColumnWidth(1, 90);
     auto i = 0;
     for (auto &ethType : model->getEtherTypeFilterVector()) {
         ImGui::Checkbox(ethType.first.c_str(),  ethType.second.get());

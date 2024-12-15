@@ -373,11 +373,13 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::ARP)) {
-            buildArpQuery(packet, arpLayer, firstField, arp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            buildArpQuery(packet, arpLayer, firstField, arp_id, packetsQuery,
+                values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::ICMP)) {
-            buildIcmpQuery(packet, icmpLayer, firstField, icmp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            buildIcmpQuery(packet, icmpLayer, firstField, icmp_id, packetsQuery,
+                values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::TCP)) {
@@ -465,6 +467,9 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             prep_stmt->setInt(index++, dhcpv4_id);
         }
         prep_stmt->executeUpdate();
+        if (prep_stmt) {
+            delete prep_stmt;
+        }
 
     } catch (sql::SQLException &e) {
         std::lock_guard<std::mutex> lock(logGuard);
@@ -506,6 +511,9 @@ void DataBaseController::buildIpv4Query(CapturedPackets &packet, std::shared_ptr
     }
     packetsQuery += "ipv4_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer,
@@ -540,6 +548,9 @@ void DataBaseController::buildIpv6Query(CapturedPackets &packet, std::shared_ptr
     }
     packetsQuery += "ipv6_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer,
@@ -572,6 +583,9 @@ void DataBaseController::buildArpQuery(CapturedPackets &packet, std::shared_ptr<
     }
     packetsQuery += "arp_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer,
@@ -599,6 +613,9 @@ void DataBaseController::buildIcmpQuery(CapturedPackets &packet, std::shared_ptr
     }
     packetsQuery += "icmp_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer,
@@ -641,6 +658,9 @@ void DataBaseController::buildTcpQuery(CapturedPackets &packet, std::shared_ptr<
     }
     packetsQuery += "tcp_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer,
@@ -668,6 +688,9 @@ void DataBaseController::buildUdpQuery(CapturedPackets &packet, std::shared_ptr<
     }
     packetsQuery += "udp_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer,
@@ -702,6 +725,9 @@ void DataBaseController::buildEthernetQuery(CapturedPackets &packet, std::shared
     }
     packetsQuery += "ethernet_id";
     values += "?";
+    if (prep_stmt) {
+        delete prep_stmt;
+    }
 }
 
 // void DataBaseController::buildSshQuery(CapturedPackets &packet, std::shared_ptr<pcpp::SSHLayer> &layer, bool firstField, int &ssh_id, std::string &packetsQuery, std::string &values) {
@@ -773,54 +799,6 @@ void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_p
         values += ", ";
     }
     packetsQuery += "telnet_id";
-    values += "?";
-}
-
-void DataBaseController::buildDhcpv4Query(CapturedPackets &packet, std::shared_ptr<pcpp::DhcpLayer> &layer,
-    bool &firstField, int &dhcpv4_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
-    layer = std::make_shared<pcpp::DhcpLayer>(*packet.packet.getLayerOfType<pcpp::DhcpLayer>());
-    std::string query = R"(INSERT INTO dhcpv4 (op_code, hardware_type, client_ip, your_ip, server_ip, gateway_ip, client_mac, options) VALUES (?,?,?,?,?,?,?,?))";
-    prep_stmt = connection->prepareStatement(query);
-
-    // Setting basic DHCP fields
-    prep_stmt->setInt(1, layer->getOpCode());
-    prep_stmt->setInt(2, layer->getDhcpHeader()->opCode);
-    prep_stmt->setString(3, layer->getClientIpAddress().toString().c_str());
-    prep_stmt->setString(4, layer->getYourIpAddress().toString().c_str());
-    prep_stmt->setString(5, layer->getServerIpAddress().toString().c_str());
-    prep_stmt->setString(6, layer->getGatewayIpAddress().toString().c_str());
-    prep_stmt->setString(7, layer->getClientHardwareAddress().toString().c_str());
-
-    std::string dhcpOptions;
-    auto dhcpPrevOption = layer->getFirstOptionData();
-    for (int i = 0; i < layer->getOptionsCount(); i++) {
-        dhcpOptions += dhcpPrevOption.getValueAsString();
-        dhcpPrevOption = layer->getNextOptionData(dhcpPrevOption);
-        if (dhcpPrevOption.isNull()) {
-            return;
-        }
-    }
-
-    std::istringstream dhcpOptionsStream(dhcpOptions.c_str());
-    prep_stmt->setBlob(8, &dhcpOptionsStream);
-
-    // Executing statement and retrieving ID
-    prep_stmt->executeUpdate();
-    query = "";
-    stmt = connection->createStatement();
-    res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
-    if (res->next()) {
-        dhcpv4_id = res->getInt(1);
-    }
-
-    // Updating packetsQuery and values
-    if (firstField) {
-        firstField = false;
-    } else {
-        packetsQuery += ", ";
-        values += ", ";
-    }
-    packetsQuery += "dhcp_id";
     values += "?";
 }
 

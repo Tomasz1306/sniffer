@@ -91,7 +91,7 @@ void DataBaseView::draw(std::shared_ptr<DataBaseController> controller) {
         if (ImGui::Button("Disconnect", ImVec2(300, 40))) {
             controller->disconnectFromDataBase();
         }
-        this->drawProgressBar(controller);
+        // this->drawProgressBar(controller);
     }
 
     ImGui::PopFont();

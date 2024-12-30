@@ -390,23 +390,25 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
+            std::cout << "HTTP request received" << std::endl;
             buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
         if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
+            std::cout << "HTTP response received" << std::endl;
             buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
-        // auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
-        // if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
-        //     buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-        //     isProtocolSupported = true;
-        // } else if (auto isftpResponseLayer = dynamic_cast<pcpp::FtpResponseLayer*>(ftpLayer)) {
-        //     buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-        //     isProtocolSupported = true;
-        // } else {
-        //     //std::cout << "Unknown FTP type." << std::endl;
-        // }
+        auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
+        if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
+            buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
+        } else if (auto isftpResponseLayer = dynamic_cast<pcpp::FtpResponseLayer*>(ftpLayer)) {
+            buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
+        } else {
+            //std::cout << "Unknown FTP type." << std::endl;
+        }
         // if (packet.packet.isPacketOfType(pcpp::SSH)) {
         //     // this->buildSshQuery(packet, sshLayer, firstField, ssh_id, packetsQuery, values);
         // }
@@ -422,7 +424,7 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         //     buildDhcpv4Query(packet, dhcpv4Layer, firstField, dhcpv4_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
         //     isProtocolSupported = true;
         // }
-        if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1 && dns_id == -1 && dhcpv4_id == -1) {
+        if (ethernet_id == -1 && ipv4_id == -1 && ipv6_id == -1 && arp_id == -1 && icmp_id == -1 && tcp_id == -1 && udp_id == -1 && icmpv6_id == -1 && dns_id == -1 && dhcpv4_id == -1 && httpRequest_id == -1 && httpResponse_id == -1) {
             return;
         }
         if (!isProtocolSupported) {
@@ -464,6 +466,12 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
         }
         if (dhcpv4_id != -1) {
             prep_stmt->setInt(index++, dhcpv4_id);
+        }
+        if (httpRequest_id != -1) {
+            prep_stmt->setInt(index++, httpRequest_id);
+        }
+        if (httpResponse_id != -1) {
+            prep_stmt->setInt(index++, httpResponse_id);
         }
         prep_stmt->executeUpdate();
         if (prep_stmt) {
@@ -804,7 +812,7 @@ void DataBaseController::buildTelnetQuery(CapturedPackets &packet, std::shared_p
 void DataBaseController::buildHttpResponseQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpResponseLayer> &layer,
     bool &firstField, int &httpResponse_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
     layer = std::make_shared<pcpp::HttpResponseLayer>(*packet.packet.getLayerOfType<pcpp::HttpResponseLayer>());
-    std::string query = R"(INSERT INTO http_responses(http_status_code, http_reason_phrase, http_version, http_headers, http_body) VALUES (?,?,?,?,?))";
+    std::string query = R"(INSERT INTO http_response(http_status_code, http_reason_phrase, http_version, http_headers, http_body) VALUES (?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
 
     // Setting status code and reason phrase
@@ -855,7 +863,7 @@ void DataBaseController::buildHttpResponseQuery(CapturedPackets &packet, std::sh
 void DataBaseController::buildHttpRequestQuery(CapturedPackets &packet, std::shared_ptr<pcpp::HttpRequestLayer> &layer,
     bool &firstField, int &httpRequest_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res) {
    layer = std::make_shared<pcpp::HttpRequestLayer>(*packet.packet.getLayerOfType<pcpp::HttpRequestLayer>());
-    std::string query = R"(INSERT INTO http_requests(http_url, http_version, http_method, http_headers, http_body) VALUES (?,?,?,?,?))";
+    std::string query = R"(INSERT INTO http_request(http_url, http_version, http_method, http_headers, http_body) VALUES (?,?,?,?,?))";
     prep_stmt = connection->prepareStatement(query);
 
     // Setting URL

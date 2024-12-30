@@ -57,6 +57,38 @@ void SearchController::search(std::string key) {
     }
 }
 
+void SearchController::search(std::string key, std::vector<CapturedPackets> &vectorToSearch) {
+    this->findedPackets.clear();
+    for (const auto &packet: vectorToSearch) {
+        std::vector<std::string> layerList;
+        std::stringstream asciiStream;
+        packet.packet.toStringList(layerList);
+        for (const auto &layer: layerList) {
+            if (std::string::npos != layer.find(key)) {
+                this->findedPackets.push_back(packet);
+                break;
+            }
+            pcpp::PayloadLayer* payloadLayer = packet.packet.getLayerOfType<pcpp::PayloadLayer>();
+            if (payloadLayer !=nullptr) {
+                const uint8_t *payload = packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayload();
+                int payloadSize = packet.packet.getLayerOfType<pcpp::PayloadLayer>()->getPayloadLen();
+                if (payload) {
+                    for (int i = 0; i < payloadSize; i++) {
+                        unsigned char byte = payload[i];
+                        std::stringstream hexStream;
+                        asciiStream << (isprint(byte) ? static_cast<char>(byte) : '.');
+                    }
+                }
+            }
+            std::string asciiString = asciiStream.str();
+            if (std::string::npos != asciiString.find(key)) {
+                this->findedPackets.push_back(packet);
+                break;
+            }
+        }
+    }
+}
+
 std::vector<CapturedPackets>& SearchController::getFindedPackets() {
     return this->findedPackets;
 }

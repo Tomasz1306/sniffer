@@ -3,6 +3,7 @@ add_executable(Tests LogTest.cpp
         DeviceTest.cpp
         AnalyzerTest.cpp
         FilterTest.cpp
+        SearchTest.cpp
         ${SRC_FILES}
 )
 

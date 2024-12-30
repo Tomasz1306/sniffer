@@ -18,62 +18,6 @@
 #include "views/DeviceView.h"
 #include "gtest/gtest.h"
 
-class MockCapturedPackets : public CapturedPackets {
-public:
-  MockCapturedPackets(const std::string &sourceIP, uint16_t destPort,
-                      const std::string &captureTime,
-                      const std::string &uri = "",
-                      const std::string &payload = "")
-      : CapturedPackets(0, false, captureTime, pcpp::Packet(1024), true) {
-    // Create Ethernet layer and add it to the packet
-    pcpp::EthLayer *newEthernetLayer =
-        new pcpp::EthLayer(pcpp::MacAddress("00:50:43:11:22:33"),
-                           pcpp::MacAddress("aa:bb:cc:dd:ee:ff"));
-    // Add to packet ownership (heap allocated)
-
-    // Create IPv4 layer and add it to the packet
-    pcpp::IPv4Layer *newIPLayer = new pcpp::IPv4Layer(
-        pcpp::IPv4Address("192.168.1.1"), pcpp::IPv4Address("10.0.0.1"));
-    newIPLayer->getIPv4Header()->ipId = pcpp::hostToNet16(2000);
-    newIPLayer->getIPv4Header()->timeToLive = 64;
-
-    // Create TCP layer
-    pcpp::TcpLayer *newTCPLayer = new pcpp::TcpLayer(12444, destPort);
-
-    packet.addLayer(newEthernetLayer);
-    packet.addLayer(newIPLayer);
-    packet.addLayer(newTCPLayer);
-    // Add optional HTTP layer
-    if (!uri.empty()) {
-      pcpp::HttpRequestLayer *httpRequestLayer = new pcpp::HttpRequestLayer(
-          pcpp::HttpRequestLayer::HttpGET, uri, pcpp::HttpVersionUnknown);
-      packet.addLayer(httpRequestLayer);
-    }
-
-    // Add optional Payload layer
-    if (!payload.empty()) {
-      pcpp::PayloadLayer *payloadLayer = new pcpp::PayloadLayer(
-          reinterpret_cast<const uint8_t *>(payload.c_str()), payload.length());
-      packet.addLayer(payloadLayer);
-    }
-
-    // Finalize the packet
-    packet.computeCalculateFields();
-  }
-  ~MockCapturedPackets() {
-    // while (packet.getFirstLayer() != nullptr) {
-    //     packet.removeFirstLayer(); // Remove the first layer
-    // }
-    // pcpp::Layer* layer = packet.getFirstLayer();
-    // while (layer != nullptr) {
-    //     pcpp::ProtocolType layerType = layer->getProtocol(); // Get the
-    //     protocol type of the layer packet.removeLayer(layerType);  // Remove
-    //     the layer by protocol type layer = packet.getFirstLayer(); // Restart
-    //     iteration after removal
-    // }
-  }
-};
-
 TEST(AnalyzerControllerTest, AnalyzePacketForBruteForce) {
   auto model = std::make_shared<AnalyzerModel>();
   auto view = std::make_shared<AnalyzerView>();

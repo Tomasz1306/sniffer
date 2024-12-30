@@ -26,6 +26,7 @@ public:
     void display();
 
     void search(std::string key);
+    void search(std::string key, std::vector<CapturedPackets> &packets);
     std::vector<CapturedPackets>& getFindedPackets();
     void displayPacket(int id);
 private:

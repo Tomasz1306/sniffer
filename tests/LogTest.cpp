@@ -28,5 +28,4 @@ TEST(LogTest, AddLogTest) {
     EXPECT_EQ(controller->getLogs()[0], model1.getLogs()[0]);
     EXPECT_EQ(controller->getLogs()[1], model2.getLogs()[0]);
     EXPECT_EQ(controller->getLogs()[2], model3.getLogs()[0]);
-
 }

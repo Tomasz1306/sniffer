@@ -199,7 +199,6 @@ int DataBaseController::getNumberOfThreads() {
     return this->dbThreadPool.size();
 }
 
-
 void DataBaseController::createTables() {
     auto createTableTask = [this]() {
         try {
@@ -390,14 +389,14 @@ void DataBaseController::insertNewPacket(CapturedPackets &packet, sql::Connectio
             buildUdpQuery(packet, udpLayer, firstField, udp_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
             isProtocolSupported = true;
         }
-        // if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
-        //     buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-        //     isProtocolSupported = true;
-        // }
-        // if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
-        //     buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
-        //     isProtocolSupported = true;
-        // }
+        if (packet.packet.isPacketOfType(pcpp::HTTPRequest)) {
+            buildHttpRequestQuery(packet, httpRequestLayer, firstField,  httpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
+        }
+        if (packet.packet.isPacketOfType(pcpp::HTTPResponse)) {
+            buildHttpResponseQuery(packet, httpResponseLayer, firstField,  httpResponse_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);
+            isProtocolSupported = true;
+        }
         // auto ftpLayer = packet.packet.getLayerOfType<pcpp::FtpLayer>();
         // if (auto isftpRequestLayer = dynamic_cast<pcpp::FtpRequestLayer*>(ftpLayer)) {
         //     buildFtpRequestQuery(packet, ftpRequestLayer, firstField, ftpRequest_id, packetsQuery, values, connection_local, prep_stmt, stmt, res);

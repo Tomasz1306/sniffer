@@ -32,6 +32,7 @@
 #include <memory>
 #include <thread>
 #include <future>
+#include <IcmpV6Layer.h>
 
 class MainController;
 class DataBaseModel;
@@ -63,6 +64,7 @@ public:
     void buildIpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IPv6Layer> &layer, bool &firstField, int &ipv6_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     void buildArpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::ArpLayer> &layer, bool &firstField, int &arp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     void buildIcmpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpLayer> &layer, bool &firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
+    void buildIcmpv6Query(CapturedPackets &packet, std::shared_ptr<pcpp::IcmpV6Layer> &layer, bool &firstField, int &icmp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     void buildTcpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::TcpLayer> &layer, bool &firstField, int &tcp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     void buildUdpQuery(CapturedPackets &packet, std::shared_ptr<pcpp::UdpLayer> &layer, bool &firstField, int &udp_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
     void buildEthernetQuery(CapturedPackets &packet, std::shared_ptr<pcpp::EthLayer> &layer, bool &firstField, int &ethernet_id, std::string &packetsQuery, std::string &values, sql::Connection* &connection, sql::PreparedStatement* &prep_stmt, sql::Statement* &stmt, sql::ResultSet* &res);
@@ -85,10 +87,37 @@ public:
     float getMaxVectorSize() {return this->maxVectorSize;};
     int getCapturedPacketVectorDatabaseSize();
     int getNumberOfThreads();
+    void setCatchPackets(bool catchPackets) {this->catchPackets = catchPackets;}
+    bool getCatchPackets() {return this->catchPackets;}
+    void setDatabaseCreated(bool dbCreated) {this->databaseCreated = dbCreated;}
+    bool getDatabaseCreated() {return this->databaseCreated;}
+    void setTableCreated(bool tableCreated) {this->tableCreated = tableCreated;}
+    bool getTableCreated() {return this->tableCreated;}
+    void selectIndex(int index) {this->model->selectDatabaseIndex(index);}
+    sql::Connection *getConnection() {return this->connection;}
+
+    std::atomic<int> ethernetCount{0};
+    std::atomic<int> ipv4Count{0};
+    std::atomic<int> ipv6Count{0};
+    std::atomic<int> arpCount{0};
+    std::atomic<int> icmpCount{0};
+    std::atomic<int> icmpv6Count{0};
+    std::atomic<int> httpRequestCount{0};
+    std::atomic<int> httpResponseCount{0};
+    std::atomic<int> dnsCount{0};
+    std::atomic<int> ftpRequestCount{0};
+    std::atomic<int> ftpResponseCount{0};
+    std::atomic<int> tcpCount{0};
+    std::atomic<int> udpCount{0};
 
 private:
 
     const float maxVectorSize = 10000.0f;
+
+    std::atomic<bool> tableCreated{false};
+    std::atomic<bool> databaseCreated{false};
+
+    std::atomic<bool> catchPackets{true};
 
     std::shared_ptr<DataBaseModel> model;
     std::shared_ptr<DataBaseView> view;
@@ -96,11 +125,11 @@ private:
 
     std::map<int, std::string> currentSessionInterfacesIds;
 
-    sql::mysql::MySQL_Driver *driver;
-    sql::Connection *connection;
-    sql::Statement *stmt;
-    sql::PreparedStatement *prep_stmt;
-    sql::ResultSet *res;
+    sql::mysql::MySQL_Driver *driver{nullptr};
+    sql::Connection *connection{nullptr};
+    sql::Statement *stmt{nullptr};
+    sql::PreparedStatement *prep_stmt{nullptr};
+    sql::ResultSet *res{nullptr};
 
     std::shared_ptr<MainController> mainController;
 

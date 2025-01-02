@@ -9,11 +9,12 @@ StatisticModel::StatisticModel(std::string date) {
 }
 
 void StatisticModel::addPacketToStatistics(pcpp::Packet &packet) {
-    // if (packet.isPacketOfType(pcpp::Ethernet))
-    //     ethernetCount++;
-
     if (packet.isPacketOfType(pcpp::ARP))
         arpCount++;
+    else if (packet.isPacketOfType(pcpp::FTP))
+        ftpCount++;
+    else if (packet.isPacketOfType(pcpp::HTTP))
+        httpCount++;
     else if (packet.isPacketOfType(pcpp::ICMP))
         imcpv4Count++;
     else if (packet.isPacketOfType(pcpp::TCP))
@@ -24,10 +25,6 @@ void StatisticModel::addPacketToStatistics(pcpp::Packet &packet) {
         dhcpv4Count++;
     else if (packet.isPacketOfType(pcpp::DNS))
         dnsCount++;
-    else if (packet.isPacketOfType(pcpp::FTP))
-        ftpCount++;
-    else if (packet.isPacketOfType(pcpp::HTTP))
-        httpCount++;
     else if (packet.isPacketOfType(pcpp::SSH))
         sshCount++;
     else if (packet.isPacketOfType(pcpp::Telnet))

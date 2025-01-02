@@ -39,6 +39,10 @@ public:
         std::shared_ptr<StatisticController> _statisticController,
         std::shared_ptr<DeviceController> _deviceController,
         std::shared_ptr<SearchController> _searchController);
+    MainController(std::shared_ptr<PacketCaptureModel> _model,
+        std::shared_ptr<PacketCaptureView> _view,
+        std::shared_ptr<Listener> _listener,
+        std::shared_ptr<StatisticController> _statisticController);
 
     void display();
     static void onPacketArrivesBlockingMode(pcpp::RawPacket *packet, pcpp::PcapLiveDevice *dev, void *cookie);
@@ -65,6 +69,14 @@ public:
     std::vector<CapturedPackets> &getCapturedPacketVectorDatabase();
     std::shared_ptr<DeviceController> getDeviceController();
     std::shared_ptr<MainController> getSharedPtr() { return shared_from_this(); }
+    void insertPacketToTable(pcpp::Packet packet);
+
+    std::shared_ptr<StatisticController> getStatisticController(){return this->statisticController;}
+    std::shared_ptr<FilterController> getFilterController(){return this->filterController;}
+    std::shared_ptr<DataBaseController> getDataBaseController(){return this->databaseController;}
+    std::shared_ptr<AnalyzerController> getAnalyzerController(){return this->analyzerController;}
+    std::shared_ptr<SearchController> getSearchController(){return this->searchController;}
+
 
 private:
     bool isPacketDisplayed{false};

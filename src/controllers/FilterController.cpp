@@ -124,7 +124,6 @@ void FilterController::update() {
         std::string filterString;
         andFilter.parseToString(filterString);
 
-        std::cout << filterString << std::endl;
         this->actualBfsFilter = filterString;
         this->listener->setFilters(andFilter);
         LogController::getInstance()->addLog(Utils::getTime(), filterString,
@@ -133,7 +132,6 @@ void FilterController::update() {
       } else {
         std::string filterString;
         orFilter.parseToString(filterString);
-        std::cout << filterString << std::endl;
         this->actualBfsFilter = filterString;
         this->listener->setFilters(orFilter);
         LogController::getInstance()->addLog(Utils::getTime(), filterString,

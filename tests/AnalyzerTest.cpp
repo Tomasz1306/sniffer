@@ -10,12 +10,8 @@
 #include "SystemUtils.h"
 #include "TcpLayer.h"
 #include "controllers/AnalyzerController.h"
-#include "controllers/DeviceController.h"
-#include "listeners/Listener.h"
-#include "models/DeviceModel.h"
 #include "models/PacketModel.h"
 #include "stdlib.h"
-#include "views/DeviceView.h"
 #include "gtest/gtest.h"
 
 TEST(AnalyzerControllerTest, AnalyzePacketForBruteForce) {

@@ -10,7 +10,7 @@ DeviceController::DeviceController(std::shared_ptr<DeviceModel> _deviceModel, st
     this->deviceView = _deviceView;
     this->listener = _listener;
     this->deviceModel->setDevices(this->listener->getDevices());
-    this->deviceView->fillDeviceNames(this->deviceModel);
+    // this->deviceView->fillDeviceNames(this->deviceModel);
 }
 
 std::vector<pcpp::PcapLiveDevice*> & DeviceController::getDevices() {

@@ -53,8 +53,8 @@ void glfw_error_callback(int error, const char* description) {
 }
 
 int main(int argc, char** argv) {
-    // ::testing::InitGoogleTest(&argc, argv);
-    // return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
     auto utils = Utils::getInstance();
     // Ustawienie callbacka błędów GLFW
     glfwSetErrorCallback(glfw_error_callback);

@@ -4,6 +4,9 @@ add_executable(Tests LogTest.cpp
         AnalyzerTest.cpp
         FilterTest.cpp
         SearchTest.cpp
+        DatabaseTest.cpp
+        MainTest.cpp
+        StatisticTest.cpp
         ${SRC_FILES}
 )
 

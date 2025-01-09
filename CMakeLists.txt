@@ -60,6 +60,10 @@ find_package(GTest REQUIRED)
 
 include_directories(include)
 include_directories(lib/imgui)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+endif()
 
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")

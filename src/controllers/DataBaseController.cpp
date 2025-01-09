@@ -382,7 +382,7 @@ void DataBaseController::createTables() {
             LogController::getInstance()->addLog(Utils::getTime(), "CREATED ALL TABLES", LogType::SUCCESFULL);
         } catch (sql::SQLException& e) {
             this->tableCreated = false;
-            std::cout << e.what() << std::endl;
+            // std::cout << e.what() << std::endl;
             LogController::getInstance()->addLog(Utils::getTime(), e.what(), LogType::ERROR);
         }
     this->tableCreated = true;

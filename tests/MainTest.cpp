@@ -9,27 +9,13 @@
 #include "listeners/Listener.h"
 #include "utils/Utils.h"
 #include "controllers/FilterController.h"
-#include "models/FilterModel.h"
-#include "views/FilterView.h"
-#include "controllers/DeviceController.h"
-#include "models/DeviceModel.h"
-#include <views/DeviceView.h>
-#include <views/PacketView.h>
 #include "controllers/StatisticController.h"
 #include "models/StatisticModel.h"
 #include "views/StatisticView.h"
 #include "controllers/LogController.h"
-#include "models/LogModel.h"
-#include "views/LogView.h"
 #include "controllers/DataBaseController.h"
-#include "models/DataBaseModel.h"
-#include "views/DataBaseView.h"
 #include "controllers/AnalyzerController.h"
-#include "models/AnalyzerModel.h"
-#include "views/AnalyzerView.h"
 #include "controllers/SearchController.h"
-#include "models/SearchModel.h"
-#include "views/SearchView.h"
 
 TEST(MainTest, InsertingPacket) {
     std::vector<CapturedPackets> packets;
